@@ -4,12 +4,19 @@
 
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ExampleSubsystem extends SubsystemBase {
+
+
+  AHRS gyro;
   /** Creates a new ExampleSubsystem. */
-  public ExampleSubsystem() {}
+  public ExampleSubsystem() {
+    gyro = new AHRS();
+  }
 
   /**
    * Example command factory method.
@@ -23,6 +30,10 @@ public class ExampleSubsystem extends SubsystemBase {
         () -> {
           /* one-time action goes here */
         });
+  }
+  // Method to call NavX2 for pitch data
+  public float Pitch() {
+    return gyro.getPitch();
   }
 
   /**
