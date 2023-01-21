@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
 
 
 public class Drivetrain extends SubsystemBase {
@@ -14,6 +15,8 @@ public class Drivetrain extends SubsystemBase {
 	private WPI_TalonSRX leftSlave;
 	private WPI_TalonSRX rightMaster;
 	private WPI_TalonSRX rightSlave;
+
+	private AHRS gyro;
 
 	public static Drivetrain getInstance(){
 		if (mInstance == null){
@@ -31,7 +34,44 @@ public class Drivetrain extends SubsystemBase {
 		this.rightSlave = new WPI_TalonSRX(4);
 		rightSlave.follow(rightMaster);
 
+		gyro = new AHRS();
+
 	}
+
+	/**
+	 * Gets pitch fron NavX
+	 * @return Pitch angle in degrees (180 to -180)
+	 */
+	public float getPitch() {
+		return gyro.getPitch();
+	}
+
+	/**
+	 * Gets compass heading from Nav
+	 * @return Compass heading in degrees
+	 */
+	public float getHeading() {
+
+		return gyro.getCompassHeading();
+
+	}
+
+	/**
+	 * 
+	 */
+	void setSpeed(double leftSpeed, double rightSpeed) {
+
+		leftMaster.set(leftSpeed);
+
+		rightMaster.set(rightSpeed);
+
+	}
+
+	void stopMotor() {
+		setSpeed(0, 0);
+	}
+
+
 }
 
 
