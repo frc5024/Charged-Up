@@ -4,15 +4,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 
 public class Drivetrain extends SubsystemBase {
     private static Drivetrain mInstance = null;
 
-	private TalonSRX leftMaster;
-	private TalonSRX leftSlave;
-	private TalonSRX rightMaster;
-	private TalonSRX rightSlave;
+	private WPI_TalonFX leftMaster;
+	private WPI_TalonFX leftSlave;
+	private WPI_TalonFX rightMaster;
+	private WPI_TalonFX rightSlave;
 
 	public static Drivetrain getInstance(){
 		if (mInstance == null){
@@ -22,12 +23,12 @@ public class Drivetrain extends SubsystemBase {
 	}
 	private Drivetrain(){
 		
-		this.leftMaster = new TalonSRX(1);
-		this.leftSlave = new TalonSRX(2);
+		this.leftMaster = new WPI_TalonFX(1);
+		this.leftSlave = new WPI_TalonFX(2);
 		leftSlave.follow(leftMaster);
 
-		this.rightMaster = new TalonSRX(3);
-		this.rightSlave = new TalonSRX(4);
+		this.rightMaster = new WPI_TalonFX(3);
+		this.rightSlave = new WPI_TalonFX(4);
 		rightSlave.follow(rightMaster);
 
 	}
