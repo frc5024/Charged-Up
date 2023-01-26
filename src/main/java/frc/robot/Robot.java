@@ -6,8 +6,11 @@ package frc.robot;
 
 import java.util.concurrent.DelayQueue;
 
+import frc.robot.subsystems.Drivetrain;
 
-
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -25,8 +28,14 @@ import frc.robot.subsystems.ExampleSubsystem;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+  double speed;
+  XboxController operatorController;
 
-  
+  private WPI_TalonSRX leftMaster;
+	private WPI_TalonSRX leftFollower;
+	private WPI_TalonSRX rightMaster;
+	private WPI_TalonSRX rightFollower;
+  private int motorInversionMultiplier = 1;
 
   ExampleSubsystem subsystem;
   
@@ -41,8 +50,30 @@ public class Robot extends TimedRobot {
 
     subsystem = new ExampleSubsystem();
 
-    
+    operatorController = new XboxController(0);
+
+    leftMaster = new WPI_TalonSRX(1);
+		leftFollower = new WPI_TalonSRX(2);
+		leftFollower.follow(leftMaster);
+
+		rightMaster = new WPI_TalonSRX(3);
+		rightFollower = new WPI_TalonSRX(4);
+		rightFollower.follow(rightMaster);
+
   }
+
+  public double getSpeed(){
+    double speed = 0;
+    speed += operatorController.getRightTriggerAxis();
+    speed -= operatorController.getLeftTriggerAxis();
+    return speed;
+}
+  public void setSpeed(double speed){
+    speed = getSpeed();
+    rightMaster.set(speed); //motorInversionMultiplier);
+    leftMaster.set(speed * motorInversionMultiplier);
+}
+
 
   /**
    * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics
@@ -99,9 +130,17 @@ public class Robot extends TimedRobot {
     }
   }
 
-  /** This function is called periodically during operator control. */
+  /** This function is called periodically during operator control. 
+   * @return */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    
+    setSpeed(speed);
+    
+  }
+
+
+
 
   @Override
   public void testInit() {
