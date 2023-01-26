@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,7 +24,11 @@ public class Robot extends TimedRobot {
 
   XboxController controller = new XboxController(0);
 
-  private WPI
+  private WPI_TalonFX talon1 = new WPI_TalonFX(1);
+  private WPI_TalonFX talon2 = new WPI_TalonFX(2);
+
+  private WPI_TalonFX talon3 = new WPI_TalonFX(3);
+  private WPI_TalonFX talon4 = new WPI_TalonFX(4);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -88,9 +94,15 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     if(controller.getAButton()){
-
+        talon1.set(.5);
+        talon2.set(.5);
+        talon3.set(.5);
+        talon4.set(.5);
     }else{
-
+      talon1.set(0);
+      talon2.set(0);
+      talon3.set(0);
+      talon4.set(0);
     }
 
   }
