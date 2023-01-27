@@ -25,7 +25,7 @@ public class Box extends SubsystemBase {
 
     }
 
-    //Creates the variable that stores the state machine 
+    //Creates the variable that stores the state machine
     private StateMachine<BoxStates> stateMachine;
 
     //Assigns the states to their methods
