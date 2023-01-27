@@ -25,9 +25,10 @@ public class Box extends SubsystemBase {
 
     }
 
-    //
+    //Creates the variable that stores the states machine 
     private StateMachine<BoxStates> stateMachine;
 
+    //Assigns the states to their methods
     private Box() {
         stateMachine.setDefaultState(BoxStates.IDLE, this::handleIdle);
         stateMachine.addState(BoxStates.EMPTYIN, this::handleEmptyIn);
@@ -36,26 +37,32 @@ public class Box extends SubsystemBase {
         stateMachine.addState(BoxStates.STOREDOUT, this::handleStoredOut);
     }
 
+    //Method for IDLE State
     public void handleIdle(StateMetadata<BoxStates> metaData) {
 
     }
 
+    //Method for EMPTYIN State
     public void handleEmptyIn(StateMetadata<BoxStates> metaData) {
 
     }
 
+    //Method for EMPTYOUT State
     public void handleEmptyOut(StateMetadata<BoxStates> metaData) {
 
     }
 
+    //Method for STOREDIN State
     public void handleStoredIN(StateMetadata<BoxStates> metaData) {
 
     }
 
+    //Method for STOREDOUT State
     public void handleStoredOut(StateMetadata<BoxStates> metaData) {
 
     }
 
+    //Makes the state machine run periodically
     @Override
     public void periodic() {
         stateMachine.update();
