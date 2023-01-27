@@ -19,8 +19,13 @@ public class Grabber extends SubsystemBase {
    //Creates the states for the BOX
     public enum GrabberStates {
         
+    //IDLE State, waiting for state change
         IDLE,
+    
+    //State when the grabber is open 
         GRABBEROPEN,
+
+    //State when the grabber is closed
         GRABBERCLOSED;
     }
 
