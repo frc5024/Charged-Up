@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.liblite.StateMachine;
@@ -10,7 +10,7 @@ import frc.robot.liblite.StateMetadata;
 public class Drawer extends SubsystemBase {
     private static Drawer mInstance = null;
 
-    private DoubleSolenoid extender;
+    private Solenoid extender;
 
     //Makes it a singleton
     public static Drawer getInstance() {
@@ -22,10 +22,20 @@ public class Drawer extends SubsystemBase {
 
     //Creates the states for the Drawer
     public enum drawerStates {
+
+    //IDLE State, waiting for state change 
         IDLE,
+
+    //State when the drawer is empty and retracted
         EMPTYIN,
+
+    //State when the drawer is empty and extended
         EMPTYOUT,
+
+    //State when the drawer has a piece and is retracted
         STOREDIN,
+
+    //State when the drawer has a piece and is extended
         STOREDOUT;
 
     }
@@ -41,37 +51,36 @@ public class Drawer extends SubsystemBase {
         stateMachine.addState(drawerStates.STOREDIN, this::handleStoredIN);
         stateMachine.addState(drawerStates.STOREDOUT, this::handleStoredOut);
 
-        extender = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 1, 2);
     }
 
     //Method for IDLE State
     public void handleIdle(StateMetadata<drawerStates> metaData) {
     
-        extender.set(Value.kReverse);
+        extender.set(false);
     }
 
     //Method for EMPTYIN State
     public void handleEmptyIn(StateMetadata<drawerStates> metaData) {
     
-        extender.set(Value.kReverse);
+        extender.set(false);
     }
 
     //Method for EMPTYOUT State
     public void handleEmptyOut(StateMetadata<drawerStates> metaData) {
 
-        extender.set(Value.kForward);
+        extender.set(true);
     }
 
     //Method for STOREDIN State
     public void handleStoredIN(StateMetadata<drawerStates> metaData) {
 
-        extender.set(Value.kReverse);
+        extender.set(false);
     }
 
     //Method for STOREDOUT State
     public void handleStoredOut(StateMetadata<drawerStates> metaData) {
 
-        extender.set(Value.kForward);
+        extender.set(true);
     }
 
     //Makes the state machine run periodically
