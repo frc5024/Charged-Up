@@ -16,7 +16,7 @@ public class Grabber extends SubsystemBase {
         return mInstance;
     }
 
-   //Creates the states for the BOX
+   //Creates the states for the Grabber
     public enum GrabberStates {
         
     //IDLE State, waiting for state change
