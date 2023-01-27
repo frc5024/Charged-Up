@@ -16,7 +16,7 @@ public class Drawer extends SubsystemBase {
     }
 
     //Creates the states for the Drawer
-    public enum DrawerStates {
+    public enum drawerStates {
         IDLE,
         EMPTYIN,
         EMPTYOUT,
@@ -26,39 +26,39 @@ public class Drawer extends SubsystemBase {
     }
 
     //Creates the variable that stores the state machine
-    private StateMachine<DrawerStates> stateMachine;
+    private StateMachine<drawerStates> stateMachine;
 
     //Assigns the states to their methods
     private Drawer() {
-        stateMachine.setDefaultState(DrawerStates.IDLE, this::handleIdle);
-        stateMachine.addState(DrawerStates.EMPTYIN, this::handleEmptyIn);
-        stateMachine.addState(DrawerStates.EMPTYOUT, this::handleEmptyOut);
-        stateMachine.addState(DrawerStates.STOREDIN, this::handleStoredIN);
-        stateMachine.addState(DrawerStates.STOREDOUT, this::handleStoredOut);
+        stateMachine.setDefaultState(drawerStates.IDLE, this::handleIdle);
+        stateMachine.addState(drawerStates.EMPTYIN, this::handleEmptyIn);
+        stateMachine.addState(drawerStates.EMPTYOUT, this::handleEmptyOut);
+        stateMachine.addState(drawerStates.STOREDIN, this::handleStoredIN);
+        stateMachine.addState(drawerStates.STOREDOUT, this::handleStoredOut);
     }
 
     //Method for IDLE State
-    public void handleIdle(StateMetadata<DrawerStates> metaData) {
+    public void handleIdle(StateMetadata<drawerStates> metaData) {
 
     }
 
     //Method for EMPTYIN State
-    public void handleEmptyIn(StateMetadata<DrawerStates> metaData) {
+    public void handleEmptyIn(StateMetadata<drawerStates> metaData) {
 
     }
 
     //Method for EMPTYOUT State
-    public void handleEmptyOut(StateMetadata<DrawerStates> metaData) {
+    public void handleEmptyOut(StateMetadata<drawerStates> metaData) {
 
     }
 
     //Method for STOREDIN State
-    public void handleStoredIN(StateMetadata<DrawerStates> metaData) {
+    public void handleStoredIN(StateMetadata<drawerStates> metaData) {
 
     }
 
     //Method for STOREDOUT State
-    public void handleStoredOut(StateMetadata<DrawerStates> metaData) {
+    public void handleStoredOut(StateMetadata<drawerStates> metaData) {
 
     }
 
