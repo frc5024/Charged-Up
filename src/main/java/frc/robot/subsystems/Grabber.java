@@ -33,14 +33,18 @@ public class Grabber extends SubsystemBase {
         stateMachine.addState(GrabberStates.GRABBEROPEN, this::handleGrabberOpen);
         stateMachine.addState(GrabberStates.GRABBERCLOSED, this::handleGrabberClosed);
     }
+
+    //Method for IDLE State
     public void handleIdle(StateMetadata<GrabberStates> metaData) {
 
     }
 
+    //Method for GRABBEROPEN State
     public void handleGrabberOpen(StateMetadata<GrabberStates> metaData) {
 
     }
 
+    //METHOD FOR GRABBERCLOSED State
     public void handleGrabberClosed(StateMetadata<GrabberStates> metaData) {
 
     }
