@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.XboxController;
 
 public class OI {
     private static OI instance = null;
+
+    private XboxController driverController;
    
     public static OI getInstance(){
         if (instance == null) {
@@ -16,6 +18,9 @@ public class OI {
 
 
     private OI() {
+
+        driverController = new XboxController(Constants.Controllers.driverController);
+
         
     }
     
