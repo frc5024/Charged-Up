@@ -16,12 +16,12 @@ public class Grabber extends SubsystemBase {
         return mInstance;
     }
 
-   //Creates the states for the BOX
+    // Creates the states for the grabber.
     public enum GrabberStates {
-        
-        IDLE,
+
         GRABBEROPEN,
         GRABBERCLOSED;
+
     }
 
     //Creates the variable that stores the state machine 
@@ -29,24 +29,57 @@ public class Grabber extends SubsystemBase {
    
     //Assigns the states to their methods
     private Grabber() {
-        stateMachine.setDefaultState(GrabberStates.IDLE, this::handleIdle);
         stateMachine.addState(GrabberStates.GRABBEROPEN, this::handleGrabberOpen);
         stateMachine.addState(GrabberStates.GRABBERCLOSED, this::handleGrabberClosed);
     }
 
-    //Method for IDLE State
-    public void handleIdle(StateMetadata<GrabberStates> metaData) {
+    @Override
+    public void periodic() {
+        // updates the current state, periodically.
+        stateMachine.update();
+
 
     }
 
-    //Method for GRABBEROPEN State
+    /**
+     * Controls the functions of the system when in the "Grabber Open" state.
+     * 
+     * @param metaData
+     */
     public void handleGrabberOpen(StateMetadata<GrabberStates> metaData) {
 
     }
 
-    //METHOD FOR GRABBERCLOSED State
+    /**
+     * Controls the functions of the system when in the "Grabber Closed" state.
+     * 
+     * @param metaData
+     */
     public void handleGrabberClosed(StateMetadata<GrabberStates> metaData) {
 
+    }
+
+
+
+    /** 
+     * TODO: This method should check and then decide if the claw will be allowed to open.
+     * 
+     * @return true or false based on if grabber is allowed to open.
+    */
+    public boolean canOpen() {
+        // Placeholder
+        return false;
+    }
+
+
+    /**
+     * TODO: Should do the same as the previous method, but for closing the grabber.
+     * 
+     * @return true or false based on if the grabber is allowed to close.
+     */
+    public boolean canClose() {
+        // Placeholder
+        return false;
     }
 
 
