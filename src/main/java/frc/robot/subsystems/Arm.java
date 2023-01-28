@@ -9,11 +9,14 @@ import edu.wpi.first.wpilibj.motorcontrol.Talon;
 
 public class Arm extends SubsystemBase {
     private static Arm mInstance = null;
+    
     private Talon MotorOne;
     private Talon MotorTwo;
-    //this is where to set the motor serial adresses
+
+    // this is where to set the motor serial adresses
     static int PortOne = 0;
     static int PortTwo = 0;
+
     // Makes it a singleton
     public static Arm getInstance() {
         if (mInstance == null) {
@@ -39,9 +42,11 @@ public class Arm extends SubsystemBase {
     private StateMachine<ArmStates> stateMachine;
 
     private Arm() {
+
         // adds motor control to the arm
         MotorOne = new Talon(PortOne);
         MotorTwo = new Talon(PortTwo);
+
         // sets states for the arm, and what methods
         stateMachine.setDefaultState(ArmStates.IDLE, this::handleIdle);
         stateMachine.addState(ArmStates.PICKUP, this::handlePickup);
@@ -49,7 +54,8 @@ public class Arm extends SubsystemBase {
         stateMachine.addState(ArmStates.MIDDLEGOAL, this::handleMiddleGoal);
         stateMachine.addState(ArmStates.HYBRIDGOAL, this::handleHYBRIDGOAL);
     }
-    //creates the methods for each individual state.
+
+    // creates the methods for each individual state.
     public void handleIdle(StateMetadata<ArmStates> metaData) {
 
     }
@@ -68,7 +74,8 @@ public class Arm extends SubsystemBase {
     public void handleHYBRIDGOAL(StateMetadata<ArmStates> metaData) {
 
     }
-    //adds code to the main periodic command in robot
+
+    // adds code to the main periodic command in robot
     @Override
     public void periodic() {
         stateMachine.update();
