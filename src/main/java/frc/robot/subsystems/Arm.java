@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+//this is where we import stuff
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.liblite.StateMachine;
@@ -30,6 +31,9 @@ public class Arm extends SubsystemBase {
         HYBRIDGOAL;
 
     }
+
+    //Motor encoding added
+
 
     //
     private StateMachine<ArmStates> stateMachine;
