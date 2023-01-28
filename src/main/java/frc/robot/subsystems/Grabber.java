@@ -1,14 +1,24 @@
 package frc.robot.subsystems;
 
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.liblite.StateMachine;
 import frc.robot.liblite.StateMetadata;
 
 public class Grabber extends SubsystemBase {
     private static Grabber mInstance = null;
+
+    private DoubleSolenoid grabberSolenoid;
    
-    //Makes it a singleton
+    /**
+     * Gets the instance for the grabber
+     * 
+     * @return Grabber instance
+     */
     public static Grabber getInstance() {
         if (mInstance == null) {
             mInstance = new Grabber();
@@ -30,8 +40,14 @@ public class Grabber extends SubsystemBase {
     //Creates the variable that stores the state machine 
     private StateMachine<GrabberStates> stateMachine;
    
-    //Assigns the states to their methods
+    // Constructor for the Grabber subsystem
     private Grabber() {
+
+
+        // Construct the grabber solenoid
+        grabberSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.GrabberConstants.solenoidForward, Constants.GrabberConstants.solenoidReverse);
+
+        // Setup statemachine states
         stateMachine.addState(GrabberStates.GRABBEROPEN, this::handleGrabberOpen);
         stateMachine.addState(GrabberStates.GRABBERCLOSED, this::handleGrabberClosed);
     }
@@ -51,6 +67,13 @@ public class Grabber extends SubsystemBase {
      */
     public void handleGrabberOpen(StateMetadata<GrabberStates> metaData) {
 
+        // Run code only on first run of state method
+        if (metaData.isFirstRun()) {
+
+            // sets the pnuematic cylinder to retract and open the grabber
+            grabberSolenoid.set(Value.kReverse);
+        }
+
     }
 
     /**
@@ -60,30 +83,79 @@ public class Grabber extends SubsystemBase {
      */
     public void handleGrabberClosed(StateMetadata<GrabberStates> metaData) {
 
+        // Run this code only on first run of state method
+        if (metaData.isFirstRun()) {
+            
+            // Sets the pneumatic cylinder to extend and close the grabber
+            grabberSolenoid.set(Value.kForward);
+        }
+
     }
-
-
 
     /** 
      * TODO: This method should check and then decide if the claw will be allowed to open.
      * 
-     * @return true or false based on if grabber is allowed to open.
+     * @return True or False
     */
     public boolean canOpen() {
         // Placeholder
         return false;
     }
 
-
     /**
      * TODO: Should do the same as the previous method, but for closing the grabber.
      * 
-     * @return true or false based on if the grabber is allowed to close.
+     * @return True or False
      */
     public boolean canClose() {
         // Placeholder
         return false;
     }
+
+    /**
+     * Opens the grabber if it is allowed
+     */
+    public void openGrabber() {
+
+        // set state to GRABBEROPEN only if canOpen returns true
+        if (canOpen()) {
+            stateMachine.setState(GrabberStates.GRABBEROPEN);
+        }
+
+    }
+
+    /**
+     * Closes the grabber if it is allowed
+     */
+    public void closeGrabber() {
+
+        // set state to GRABBERCLOSED only if canClose returns true
+        if (canClose()) {
+            stateMachine.setState(GrabberStates.GRABBERCLOSED);
+        }
+
+    }
+
+    /**
+     * Checks if the grabber is in the open state
+     * 
+     * @return True or False
+     */
+    public boolean isOpen() {
+
+        // Returns wether the current state is GRABBEROPEN or not
+        return stateMachine.getCurrentState() == GrabberStates.GRABBEROPEN;
+    }
+
+    public boolean isClosed() {
+
+        // Returns wether the current state is GRABBERCLOSED or not
+        return stateMachine.getCurrentState() == GrabberStates.GRABBERCLOSED;
+    }
+
+
+
+
 
 
 

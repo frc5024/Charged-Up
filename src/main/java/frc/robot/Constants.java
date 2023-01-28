@@ -16,4 +16,15 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+
+  // Grabber Constants
+  public static class GrabberConstants {
+
+    // Double solenoid channel ids
+    // Currently placeholder, please reomve this comment when final values are input.
+    public static final int solenoidForward = 1;
+    public static final int solenoidReverse = 0;
+
+  }
+
 }
