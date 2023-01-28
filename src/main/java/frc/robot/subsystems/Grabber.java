@@ -19,7 +19,10 @@ public class Grabber extends SubsystemBase {
     // Creates the states for the grabber.
     public enum GrabberStates {
 
+    //State when the grabber is open 
         GRABBEROPEN,
+
+    //State when the grabber is closed
         GRABBERCLOSED;
 
     }
