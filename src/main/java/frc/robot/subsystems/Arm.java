@@ -1,17 +1,36 @@
 package frc.robot.subsystems;
 
-//this is where we import stuff
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.liblite.StateMachine;
 import frc.robot.liblite.StateMetadata;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+
+import frc.lib.math.Conversions;
+import frc.lib.util.CTREModuleState;
+import frc.lib.util.SwerveModuleConstants;
+
+//these are broken, but theyre also broken in swerve integration, where I'm stealing the encoder code from
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.sensors.CANCoder;
+
 
 public class Arm extends SubsystemBase {
     private static Arm mInstance = null;
     
     private Talon MotorOne;
     private Talon MotorTwo;
+    //im stealing encoder code from swerve, I frankly have no idea whats happening
+    private CANCoder angleEncoder;
+    public int moduleNumber;
+    private Rotation2d angleOffset;
+    private Rotation2d lastAngle;
 
     // this is where to set the motor serial adresses
     static int PortOne = 0;
