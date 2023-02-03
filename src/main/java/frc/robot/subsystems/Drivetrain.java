@@ -3,7 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-//import frc.robot.commands.DriveCommand;
+import frc.robot.commands.DriveCommand;
 
 public class Drivetrain extends SubsystemBase {
   private static Drivetrain mInstance = null;
@@ -13,7 +13,7 @@ public class Drivetrain extends SubsystemBase {
   private WPI_TalonFX leftMaster;
   private WPI_TalonFX leftFollower;
 
-  //Set Singleton
+  //Sets Singleton
   public static Drivetrain getInstance() {
 		if (mInstance == null) {
 			mInstance = new Drivetrain();
