@@ -6,9 +6,11 @@ package frc.robot;
 
 import java.util.concurrent.DelayQueue;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -18,6 +20,11 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj2.command.PIDSubsystem;
+import edu.wpi.first.wpilibj2.command.PIDCommand;
+import edu.wpi.first.math.controller.PIDController;
+
+
 
 
 /**
@@ -33,13 +40,13 @@ public class Robot extends TimedRobot {
   XboxController controller = new XboxController(0);
   ExampleSubsystem subsystem;
   Drivetrain driveTrain;
- 
-  private WPI_TalonFX talon1 = new WPI_TalonFX(1);
-  private WPI_TalonFX talon2 = new WPI_TalonFX(2);
 
-  private WPI_TalonFX talon3 = new WPI_TalonFX(3);
-  private WPI_TalonFX talon4 = new WPI_TalonFX(4);
+  private WPI_TalonFX rightMaster;
+  private WPI_TalonFX rightFollower;
+  private WPI_TalonFX leftMaster;
+  private WPI_TalonFX leftFollower;
   
+  private double startTime;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -70,7 +77,7 @@ public class Robot extends TimedRobot {
     //Gets pitch from Navex
     float pitch = subsystem.Pitch();
     // Send pitch data to console
-    System.out.println(pitch);
+    //System.out.println(pitch);
     // Send pitch data to shuffleboard
     SmartDashboard.putNumber("Gyro", pitch);
   }
@@ -85,7 +92,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-   
+   startTime = Timer.getFPGATimestamp();
 
     // schedule the autonomous command (example)
     // if (m_autonomousCommand != null) {
@@ -95,7 +102,43 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+     float pitch = subsystem.Pitch();
+
+    super.addPeriodic(null, pitch);
+
+    leftMaster = new WPI_TalonFX(1);
+    leftFollower = new WPI_TalonFX(2);
+    rightMaster = new WPI_TalonFX(3);
+    rightFollower = new WPI_TalonFX(4);
+
+    leftFollower.follow(leftMaster);
+    rightFollower.follow(rightMaster);
+
+    leftMaster.set(ControlMode.MotionMagic, pitch);
+    
+
+   /* if(pitch > 2){
+  
+      rightMaster.set(0.3);
+      rightFollower.set(0.3);
+      leftMaster.set(-0.3);
+      leftFollower.set(-0.3);
+      System.out.println("Drive Forward");
+
+    } else if(pitch < -2){
+      rightMaster.set(-0.3);
+      rightFollower.set(-0.3);
+      leftMaster.set(0.3);
+      leftFollower.set(0.3);
+      System.out.println("Drive Backwards");
+
+    } else {
+      leftMaster.stopMotor();
+      rightMaster.stopMotor();
+      System.out.println("Level");
+    }*/
+  }
 
   @Override
   public void teleopInit() {
@@ -124,6 +167,8 @@ public class Robot extends TimedRobot {
     //   talon3.set(0);
     //   talon4.set(0);
     //}
+
+
   }
 
   @Override

@@ -24,11 +24,12 @@ public class Drivetrain extends SubsystemBase {
 	}
   public Drivetrain() {
     super();
-    //
-    rightMaster = new WPI_TalonFX(3);
-    rightFollower = new WPI_TalonFX(4);
+
     leftMaster = new WPI_TalonFX(1);
     leftFollower = new WPI_TalonFX(2);
+    rightMaster = new WPI_TalonFX(3);
+    rightFollower = new WPI_TalonFX(4);
+    
 
     leftFollower.follow(leftMaster);
     rightFollower.follow(rightMaster);
