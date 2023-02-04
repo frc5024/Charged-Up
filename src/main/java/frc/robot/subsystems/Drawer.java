@@ -9,6 +9,8 @@ import frc.robot.liblite.StateMachine;
 import frc.robot.liblite.StateMetadata;
 import edu.wpi.first.wpilibj.XboxController;
 
+import frc.robot.RobotContainer;
+
 //Able to switch between two states with a button press (Y) (This trigger will be changed in the future)
 //Line-break sensor needs to be implemented
 //The intention is to delete the simplified states once the sensor is implemented
@@ -94,11 +96,6 @@ public class Drawer extends SubsystemBase {
         }
 
         // When Y is pressed sets drawer to DRAWEROUT State
-        if (testingController.getYButtonPressed()) {
-
-            stateMachine.setState(drawerStates.DRAWEROUT);
-
-        }
 
     }
 
@@ -110,13 +107,44 @@ public class Drawer extends SubsystemBase {
             extender.set(true);
         }
 
+    }
+
+    public boolean canExtend() {
         // When Y is pressed sets drawer to DRAWERIN State
-        if (testingController.getYButtonPressed()) {
+    
+        return false;
 
-            stateMachine.setState(drawerStates.DRAWERIN);
+    }
 
+    public boolean canRetract() {
+
+        return false;
+    }
+
+    public void extendDrawer() {
+
+        if (canExtend()) {
+            stateMachine.setState(drawerStates.DRAWEROUT);
         }
 
+    }
+
+    public void retractDrawer() {
+
+        if (canRetract()) {
+            stateMachine.setState(drawerStates.DRAWERIN);
+        }
+
+    }
+
+    public boolean isExtended() {
+
+        return stateMachine.getCurrentState() == drawerStates.DRAWEROUT;
+    }
+
+    public boolean isRetracted() {
+
+        return stateMachine.getCurrentState() == drawerStates.DRAWERIN;
     }
 
     // Method for IDLE State
