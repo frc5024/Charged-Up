@@ -34,6 +34,8 @@ import edu.wpi.first.math.controller.PIDController;
  * project.
  */
 public class Robot extends TimedRobot {
+
+  //Declaring or initializing required variables
   private Command m_autonomousCommand;
 
   
@@ -74,7 +76,8 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    //Gets pitch from Navex
+
+    //Gets pitch from Navx
     float pitch = subsystem.Pitch();
     // Send pitch data to console
     //System.out.println(pitch);
@@ -103,40 +106,55 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-     float pitch = subsystem.Pitch();
 
-    super.addPeriodic(null, pitch);
+    float pitch = subsystem.Pitch(); //Call for the Pitch method in ExampleSubsystem (Change later please)
 
-    leftMaster = new WPI_TalonFX(1);
+    //initializing all of the motors
+    leftMaster = new WPI_TalonFX(1); 
     leftFollower = new WPI_TalonFX(2);
     rightMaster = new WPI_TalonFX(3);
     rightFollower = new WPI_TalonFX(4);
-
+    
+    //Preparing the follower motors
     leftFollower.follow(leftMaster);
     rightFollower.follow(rightMaster);
+
 
     leftMaster.set(ControlMode.MotionMagic, pitch);
     
 
-   /* if(pitch > 2){
-  
+   /* 
+    //To run while the front of the robot is pitched upwards
+    if(pitch > 2){
+      
+      //Setting the speed of the motors to drive forwards
       rightMaster.set(0.3);
       rightFollower.set(0.3);
       leftMaster.set(-0.3);
       leftFollower.set(-0.3);
       System.out.println("Drive Forward");
 
-    } else if(pitch < -2){
+    } 
+    //To run while the front of the robot is pitched downwards
+    else if(pitch < -2){
+
+      //Setting the speed of the motors to drive backwards
       rightMaster.set(-0.3);
       rightFollower.set(-0.3);
       leftMaster.set(0.3);
       leftFollower.set(0.3);
       System.out.println("Drive Backwards");
 
-    } else {
+    } 
+
+    //To run while robot is in a level state
+    else {
+
+      //Stops the motors
       leftMaster.stopMotor();
       rightMaster.stopMotor();
       System.out.println("Level");
+
     }*/
   }
 
