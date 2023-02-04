@@ -1,40 +1,25 @@
 package frc.robot.subsystems;
 
-import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.liblite.StateMachine;
 import frc.robot.liblite.StateMetadata;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.SwerveModulePosition;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
-
-import frc.lib.math.Conversions;
-import frc.lib.util.CTREModuleState;
-import frc.lib.util.SwerveModuleConstants;
-
-//these are broken, but theyre also broken in swerve integration, where I'm stealing the encoder code from
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.sensors.CANCoder;
-
 
 public class Arm extends SubsystemBase {
     private static Arm mInstance = null;
-    
+
     private Talon MotorOne;
     private Talon MotorTwo;
-    //im stealing encoder code from swerve, I frankly have no idea whats happening
-    private CANCoder angleEncoder;
+    private double rate;
+    private double distance;
     public int moduleNumber;
-    private Rotation2d angleOffset;
-    private Rotation2d lastAngle;
+    // the numbers are the connected pins
+    Encoder encoder = new Encoder(3, 2);
 
     // this is where to set the motor serial adresses
     static int PortOne = 0;
-    static int PortTwo = 0;
+    static int PortTwo = 1;
 
     // Makes it a singleton
     public static Arm getInstance() {
@@ -54,13 +39,26 @@ public class Arm extends SubsystemBase {
 
     }
 
-    //Motor encoding added
-
+    // Motor encoding added
 
     //
     private StateMachine<ArmStates> stateMachine;
 
     private Arm() {
+        // Configures the encoder to return a distance of 4 for every 256 pulses
+        // Also changes the units of getRate
+        encoder.setDistancePerPulse(4. / 256.);
+
+        // Configures the encoder to consider itself stopped after .1 seconds
+        encoder.setMinRate(.1);
+
+        // Reverses the direction of the encoder
+        encoder.setReverseDirection(true);
+
+        // Configures an encoder to average its period measurement over 5 samples
+        // Can be between 1 and 127 samples
+        encoder.setSamplesToAverage(5);
+        stateMachine = new StateMachine<>(getName());
 
         // adds motor control to the arm
         MotorOne = new Talon(PortOne);
@@ -98,6 +96,9 @@ public class Arm extends SubsystemBase {
     @Override
     public void periodic() {
         stateMachine.update();
-
+        // test code, can be deleted
+        rate = encoder.getRate();
+        distance=encoder.getDistance();
+        System.out.println("rate:"+rate+" distance:"+distance);
     }
 }
