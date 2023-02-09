@@ -92,6 +92,7 @@ public class Drawer extends SubsystemBase {
 
         // Sets the solenoid to retracted position when in this state
         if (metaData.isFirstRun()) {
+          
             extender.set(false);
         }
 
