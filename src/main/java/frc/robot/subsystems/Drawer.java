@@ -61,7 +61,7 @@ public class Drawer extends SubsystemBase {
     // Creates the variable that stores the state machine
     private StateMachine<drawerStates> stateMachine;
 
-    private Drawer() {
+    public Drawer() {
 
         stateMachine = new StateMachine<>("Drawer Statemachine");
 
