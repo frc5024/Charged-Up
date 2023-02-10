@@ -38,10 +38,12 @@ public class Robot extends TimedRobot {
   //Declaring or initializing required variables
   private Command m_autonomousCommand;
 
-  
+  PIDController pid = new PIDController(1, 1, 1);
   XboxController controller = new XboxController(0);
   ExampleSubsystem subsystem;
   Drivetrain driveTrain;
+
+  float pitch = subsystem.Pitch(); //Call for the Pitch method in ExampleSubsystem (Change later please)
 
   private WPI_TalonFX rightMaster;
   private WPI_TalonFX rightFollower;
@@ -80,7 +82,7 @@ public class Robot extends TimedRobot {
     //Gets pitch from Navx
     float pitch = subsystem.Pitch();
     // Send pitch data to console
-    //System.out.println(pitch);
+    System.out.println(pitch);
     // Send pitch data to shuffleboard
     SmartDashboard.putNumber("Gyro", pitch);
   }
@@ -107,22 +109,23 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
 
-    float pitch = subsystem.Pitch(); //Call for the Pitch method in ExampleSubsystem (Change later please)
-
     //initializing all of the motors
     leftMaster = new WPI_TalonFX(1); 
     leftFollower = new WPI_TalonFX(2);
     rightMaster = new WPI_TalonFX(3);
     rightFollower = new WPI_TalonFX(4);
     
-    //Preparing the follower motors
-   // leftFollower.follow(leftMaster);
-   // rightFollower.follow(rightMaster);
-    
+    // Preparing the follower motors
+    leftFollower.follow(leftMaster);
+    rightFollower.follow(rightMaster);
 
-   
+    rightMaster.set(pid.calculate(subsystem.Pitch(), 0));
+    leftMaster.set(pid.calculate(subsystem.Pitch(), 0));
+    
+    }
+
     //To run while the front of the robot is pitched upwards
-    if(pitch > 2){
+    /*if(pitch > 2){
       
       //Setting the speed of the motors to drive forwards
       rightMaster.set(0.25);
@@ -152,8 +155,8 @@ public class Robot extends TimedRobot {
       rightMaster.stopMotor();
       System.out.println("Level");
 
-    }
-  }
+    } */
+  
 
   @Override
   public void teleopInit() {
