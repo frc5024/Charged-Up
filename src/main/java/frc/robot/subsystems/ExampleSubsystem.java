@@ -36,6 +36,11 @@ public class ExampleSubsystem extends SubsystemBase {
     return gyro.getPitch();
   }
 
+  public void Reset(){
+    gyro.resetDisplacement();
+    gyro.calibrate();
+  }
+
   /**
    * An example method querying a boolean state of the subsystem (for example, a digital sensor).
    *

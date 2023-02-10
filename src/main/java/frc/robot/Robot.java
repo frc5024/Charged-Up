@@ -38,19 +38,17 @@ public class Robot extends TimedRobot {
   //Declaring or initializing required variables
   private Command m_autonomousCommand;
 
-  PIDController pid = new PIDController(1, 1, 1);
+  PIDController pid = new PIDController(1, 0, 0);
   XboxController controller = new XboxController(0);
   ExampleSubsystem subsystem;
   Drivetrain driveTrain;
-
-  float pitch = subsystem.Pitch(); //Call for the Pitch method in ExampleSubsystem (Change later please)
 
   private WPI_TalonFX rightMaster;
   private WPI_TalonFX rightFollower;
   private WPI_TalonFX leftMaster;
   private WPI_TalonFX leftFollower;
   
-  private double startTime;
+  
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -61,6 +59,10 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
 
     subsystem = new ExampleSubsystem();
+   
+
+
+    //subsystem.Reset();
 
   }
 
@@ -79,11 +81,12 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
 
+    
     //Gets pitch from Navx
     float pitch = subsystem.Pitch();
-    // Send pitch data to console
-    System.out.println(pitch);
-    // Send pitch data to shuffleboard
+    //Send pitch data to console
+    //System.out.println(pitch+1.4);
+    //Send pitch data to shuffleboard
     SmartDashboard.putNumber("Gyro", pitch);
   }
 
@@ -97,7 +100,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-   startTime = Timer.getFPGATimestamp();
+   
 
     // schedule the autonomous command (example)
     // if (m_autonomousCommand != null) {
@@ -109,6 +112,8 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
 
+    float pitch = subsystem.Pitch(); //Call for the Pitch method in ExampleSubsystem (Change later please)
+
     //initializing all of the motors
     leftMaster = new WPI_TalonFX(1); 
     leftFollower = new WPI_TalonFX(2);
@@ -119,8 +124,9 @@ public class Robot extends TimedRobot {
     leftFollower.follow(leftMaster);
     rightFollower.follow(rightMaster);
 
-    rightMaster.set(pid.calculate(subsystem.Pitch(), 0));
-    leftMaster.set(pid.calculate(subsystem.Pitch(), 0));
+    System.out.println(pid.calculate(subsystem.Pitch(), -1.4));
+    //rightMaster.set(pid.calculate(subsystem.Pitch(), 0));
+    //leftMaster.set(pid.calculate(subsystem.Pitch(), 0));
     
     }
 
