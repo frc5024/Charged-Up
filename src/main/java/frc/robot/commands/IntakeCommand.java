@@ -5,19 +5,26 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Drawer;
+import frc.robot.subsystems.DrawerSensor;
 
 public class IntakeCommand extends CommandBase {
- 
+
   public IntakeCommand() {
   
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    //only works with drawer
+    Drawer.getInstance().isRetracted();
+  }
 
  
   @Override
-  public void execute() {}
+  public void execute() {
+    
+  }
 
 
   @Override
