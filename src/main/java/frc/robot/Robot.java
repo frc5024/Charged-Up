@@ -116,22 +116,19 @@ public class Robot extends TimedRobot {
     rightFollower = new WPI_TalonFX(4);
     
     //Preparing the follower motors
-    leftFollower.follow(leftMaster);
-    rightFollower.follow(rightMaster);
-
-
-    leftMaster.set(ControlMode.MotionMagic, pitch);
+   // leftFollower.follow(leftMaster);
+   // rightFollower.follow(rightMaster);
     
 
-   /* 
+   
     //To run while the front of the robot is pitched upwards
     if(pitch > 2){
       
       //Setting the speed of the motors to drive forwards
-      rightMaster.set(0.3);
-      rightFollower.set(0.3);
-      leftMaster.set(-0.3);
-      leftFollower.set(-0.3);
+      rightMaster.set(0.25);
+      rightFollower.set(0.25);
+      leftMaster.set(-0.25);
+      leftFollower.set(-0.25);
       System.out.println("Drive Forward");
 
     } 
@@ -139,10 +136,10 @@ public class Robot extends TimedRobot {
     else if(pitch < -2){
 
       //Setting the speed of the motors to drive backwards
-      rightMaster.set(-0.3);
-      rightFollower.set(-0.3);
-      leftMaster.set(0.3);
-      leftFollower.set(0.3);
+      rightMaster.set(-0.25);
+      rightFollower.set(-0.25);
+      leftMaster.set(0.25);
+      leftFollower.set(0.25);
       System.out.println("Drive Backwards");
 
     } 
@@ -155,7 +152,7 @@ public class Robot extends TimedRobot {
       rightMaster.stopMotor();
       System.out.println("Level");
 
-    }*/
+    }
   }
 
   @Override

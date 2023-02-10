@@ -37,8 +37,8 @@ public class Drivetrain extends SubsystemBase {
   }
   //Tells motors to go forwards/backwards
   public void setSpeed(double leftSpeed, double rightSpeed){
-    leftMaster.set(-leftSpeed);
-    rightMaster.set(rightSpeed);
+    leftMaster.set(-leftSpeed*0.5);
+    rightMaster.set(rightSpeed*0.5);
   }
   //Tells motors to stop
   public void stop(){
