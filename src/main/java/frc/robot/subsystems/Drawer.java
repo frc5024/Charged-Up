@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -21,8 +22,8 @@ public class Drawer extends SubsystemBase {
 
     private XboxController testingController;
 
-    private Compressor compressor;
-    private Solenoid extender;
+    
+    private DoubleSolenoid extender;
 
     // Makes it a singleton
     public static Drawer getInstance() {
@@ -61,7 +62,7 @@ public class Drawer extends SubsystemBase {
     // Creates the variable that stores the state machine
     private StateMachine<drawerStates> stateMachine;
 
-    private Drawer() {
+    public Drawer() {
 
         stateMachine = new StateMachine<>("Drawer Statemachine");
 
@@ -75,12 +76,10 @@ public class Drawer extends SubsystemBase {
         // stateMachine.addState(drawerStates.STOREDIN, this::handleStoredIN);
         // stateMachine.addState(drawerStates.STOREDOUT, this::handleStoredOut);
 
-        // Initialize Compressor
-        compressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
-        compressor.disable();
+       
 
         // Initialize Single Solenoid
-        extender = new Solenoid(PneumaticsModuleType.CTREPCM, 7);
+        extender = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 0);
 
         // Inicialize testing Controller
         testingController = new XboxController(0);
@@ -93,7 +92,7 @@ public class Drawer extends SubsystemBase {
         // Sets the solenoid to retracted position when in this state
         if (metaData.isFirstRun()) {
           
-            extender.set(false);
+            extender.set(Value.kReverse);;
         }
 
         // When Y is pressed sets drawer to DRAWEROUT State
@@ -105,7 +104,7 @@ public class Drawer extends SubsystemBase {
         // Sets the solenoid to extended position when in this state
         if (metaData.isFirstRun()) {
 
-            extender.set(true);
+            extender.set(Value.kForward);
         }
 
     }
@@ -124,17 +123,16 @@ public class Drawer extends SubsystemBase {
 
     public void extendDrawer() {
 
-        if (canExtend()) {
             stateMachine.setState(drawerStates.DRAWEROUT);
-        }
+        
 
     }
 
     public void retractDrawer() {
 
-        if (canRetract()) {
+     
             stateMachine.setState(drawerStates.DRAWERIN);
-        }
+        
 
     }
 

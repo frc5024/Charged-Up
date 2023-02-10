@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -32,7 +33,7 @@ public class RobotContainer {
       private final Joystick operator = new Joystick(1);
       
   private final JoystickButton backExtender = new JoystickButton(driver, XboxController.Button.kStart.value);
-  private final JoystickButton startExender= new JoystickButton(driver, XboxController.Button.kBack.value);
+  private final JoystickButton startExtender= new JoystickButton(driver, XboxController.Button.kBack.value);
 
   private final Drawer s_Drawer = new Drawer();
 
@@ -45,7 +46,11 @@ public class RobotContainer {
  
   private void configureBindings() {
  
-    backExtender.onTrue (new InstantCommand (() -> s_Drawer.canExtend()));
+    //backExtender.onTrue  (new InstantCommand (() -> s_Drawer.canExtend()));
+
+    backExtender.onTrue(new InstantCommand (() -> s_Drawer.extendDrawer()));
+
+    startExtender.onTrue(new InstantCommand (() -> s_Drawer.retractDrawer()));
    
   }
 
