@@ -18,12 +18,12 @@ public class Gripper extends SubsystemBase {
     private DoubleSolenoid extender;
 
     // Makes it a singleton
-    // public static Drawer getInstance() {
-    //     if (mInstance == null) {
-    //         mInstance = new Drawer();
-    //     }
-    //     return mInstance;
-    // }
+     public static Gripper getInstance() {
+         if (mInstance == null) {
+             mInstance = new Gripper();
+         }
+         return mInstance;
+     }
     // Creates the states for the Gripper
     public enum GripperStates {
 

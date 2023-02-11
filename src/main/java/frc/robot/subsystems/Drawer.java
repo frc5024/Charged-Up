@@ -18,22 +18,24 @@ public class Drawer extends SubsystemBase {
 
     private DoubleSolenoid extender;
 
-    double distanceMillimeters;
+    private Ultrasonic m_rangeFinder;
+
+    private double distanceMillimeters;
     // distance from sensor to drawer wall, MUST be in mm
-    final double distanceWall = 0;
+    private final double distanceWall = 0;
     // says if an object is in the drawer
-    Boolean objectIn = false;
+    private Boolean objectIn = false;
 
     // Makes it a singleton
-    // public static Drawer getInstance() {
-    // if (mInstance == null) {
-    // mInstance = new Drawer();
-    // }
-    // return mInstance;
-    // }
+    public static Drawer getInstance() {
+        if (mInstance == null) {
+            mInstance = new Drawer();
+        }
+        return mInstance;
+    }
 
     // Creates the states for the Drawer
-    public enum drawerStates {
+    public enum DrawerStates {
 
         // Simplified state where the drawer is retracted
         DRAWERIN,
@@ -44,14 +46,14 @@ public class Drawer extends SubsystemBase {
     }
 
     // Creates the variable that stores the state machine
-    private StateMachine<drawerStates> stateMachine;
+    private StateMachine<DrawerStates> stateMachine;
 
-    public Drawer() {
+    private Drawer() {
 
         // creates the UtraSensor
         Ultrasonic m_rangeFinder = new Ultrasonic(1, 2);
         // distance returned from sensor
-        
+
         distanceMillimeters = m_rangeFinder.getRangeMM();
         if (distanceMillimeters < distanceWall) {
             objectIn = true;
@@ -62,8 +64,8 @@ public class Drawer extends SubsystemBase {
         stateMachine = new StateMachine<>("Drawer Statemachine");
 
         // Assigns the states to their methods
-        stateMachine.setDefaultState(drawerStates.DRAWERIN, this::handleDrawerIn);
-        stateMachine.addState(drawerStates.DRAWEROUT, this::handleDrawerOut);
+        stateMachine.setDefaultState(DrawerStates.DRAWERIN, this::handleDrawerIn);
+        stateMachine.addState(DrawerStates.DRAWEROUT, this::handleDrawerOut);
 
         // Initialize Double Solenoid
         extender = new DoubleSolenoid(50, PneumaticsModuleType.REVPH, 14, 15);
@@ -73,7 +75,7 @@ public class Drawer extends SubsystemBase {
     }
 
     // Method for DRAWERIN State
-    public void handleDrawerIn(StateMetadata<drawerStates> metaData) {
+    public void handleDrawerIn(StateMetadata<DrawerStates> metaData) {
 
         // Sets the solenoid to retracted position when in this state
         if (metaData.isFirstRun()) {
@@ -86,7 +88,7 @@ public class Drawer extends SubsystemBase {
 
     }
 
-    public void handleDrawerOut(StateMetadata<drawerStates> metaData) {
+    public void handleDrawerOut(StateMetadata<DrawerStates> metaData) {
 
         // Sets the solenoid to extended position when in this state
         if (metaData.isFirstRun()) {
@@ -113,7 +115,7 @@ public class Drawer extends SubsystemBase {
 
         System.out.println("extendDrawer");
 
-        stateMachine.setState(drawerStates.DRAWEROUT);
+        stateMachine.setState(DrawerStates.DRAWEROUT);
 
     }
 
@@ -121,18 +123,18 @@ public class Drawer extends SubsystemBase {
 
         System.out.println("retractDrawer");
 
-        stateMachine.setState(drawerStates.DRAWERIN);
+        stateMachine.setState(DrawerStates.DRAWERIN);
 
     }
 
     public boolean isExtended() {
 
-        return stateMachine.getCurrentState() == drawerStates.DRAWEROUT;
+        return stateMachine.getCurrentState() == DrawerStates.DRAWEROUT;
     }
 
     public boolean isRetracted() {
 
-        return stateMachine.getCurrentState() == drawerStates.DRAWERIN;
+        return stateMachine.getCurrentState() == DrawerStates.DRAWERIN;
     }
 
     // Makes the state machine run periodically

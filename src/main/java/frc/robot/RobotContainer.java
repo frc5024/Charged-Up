@@ -15,45 +15,39 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-
 
 public class RobotContainer {
 
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
+  private final CommandXboxController m_driverController = new CommandXboxController(
+      OperatorConstants.kDriverControllerPort);
 
-  private final CommandXboxController m_driverController = new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  /* Controllers */
+  private final Joystick driver = new Joystick(0);
+  private final Joystick operator = new Joystick(1);
 
-      /* Controllers */
-      private final Joystick driver = new Joystick(0);
-      private final Joystick operator = new Joystick(1);
-      
   private final JoystickButton backExtender = new JoystickButton(driver, XboxController.Button.kBack.value);
-  private final JoystickButton startExtender= new JoystickButton(driver, XboxController.Button.kStart.value);
+  private final JoystickButton startExtender = new JoystickButton(driver, XboxController.Button.kStart.value);
 
-  private final Drawer s_Drawer = new Drawer();
+  private final Drawer s_Drawer = Drawer.getInstance();
 
- 
   public RobotContainer() {
 
     configureBindings();
   }
 
- 
   private void configureBindings() {
- 
-   
-    startExtender.onTrue(new InstantCommand (() -> s_Drawer.extendDrawer()));
 
-    backExtender.onTrue(new InstantCommand (() -> s_Drawer.retractDrawer()));
-   
+    startExtender.onTrue(new InstantCommand(() -> s_Drawer.extendDrawer()));
+
+    backExtender.onTrue(new InstantCommand(() -> s_Drawer.retractDrawer()));
+
   }
 
- 
   public Command getAutonomousCommand() {
 
     return Autos.exampleAuto(m_exampleSubsystem);
