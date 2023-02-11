@@ -68,7 +68,7 @@ public class Drawer extends SubsystemBase {
         stateMachine.addState(DrawerStates.DRAWEROUT, this::handleDrawerOut);
 
         // Initialize Double Solenoid
-        extender = new DoubleSolenoid(50, PneumaticsModuleType.REVPH, 14, 15);
+        extender = new DoubleSolenoid(50, PneumaticsModuleType.REVPH, 13, 12);
 
         // Inicialize testing Controller
 

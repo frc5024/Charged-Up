@@ -33,7 +33,11 @@ public class RobotContainer {
   private final JoystickButton backExtender = new JoystickButton(driver, XboxController.Button.kBack.value);
   private final JoystickButton startExtender = new JoystickButton(driver, XboxController.Button.kStart.value);
 
+  private final JoystickButton gripClose = new JoystickButton(driver, XboxController.Button.kB.value);
+  private final JoystickButton gripOpen = new JoystickButton(driver, XboxController.Button.kA.value);
+
   private final Drawer s_Drawer = Drawer.getInstance();
+  private final Gripper sGripper = Gripper.getInstance();
 
   public RobotContainer() {
 
@@ -45,6 +49,9 @@ public class RobotContainer {
     startExtender.onTrue(new InstantCommand(() -> s_Drawer.extendDrawer()));
 
     backExtender.onTrue(new InstantCommand(() -> s_Drawer.retractDrawer()));
+    gripOpen.onTrue(new InstantCommand(() -> sGripper.openGripper()));
+
+    gripClose.onTrue(new InstantCommand(() -> sGripper.closeGripper()));
 
   }
 
