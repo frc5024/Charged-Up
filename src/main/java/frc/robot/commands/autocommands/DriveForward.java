@@ -2,46 +2,36 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.autocommands;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.Swerve;
 import frc.robot.subsystems.TankDrive;
 
-public class AutoLevel extends CommandBase {
-  /** Creates a new AutoLevel. */
+public class DriveForward extends CommandBase {
+
+  //Declaring Variables
   AHRS gyro = new AHRS();
+  float pitch;
 
-  //PID controller
-  PIDController pid = new PIDController(0.025, 0, 0.001);
-  
-  //Gets pitch from NavX
-  float pitch = gyro.getPitch();
-  //Sets Pidreal (Gives accurate pitch angle to PID)
-  double pidreal;
-
-  public AutoLevel() {
+  /** Creates a new DriveForward. */
+  public DriveForward() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // pull pitch
-    pidreal = pid.calculate(gyro.getPitch(), -1.4);
-    // set motor speed
-    TankDrive.getInstance().setSpeed(-pidreal, -pidreal);
-    System.out.println(pidreal);
+    //Gets pitch from NavX
+    pitch = gyro.getPitch();
+    //Tells robot to move forward
+    TankDrive.getInstance().setSpeed(0.4, 0.4);
+
   }
 
   // Called once the command ends or is interrupted.
@@ -51,6 +41,9 @@ public class AutoLevel extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    //when there is a change in pitch this command ends
+    if (pitch > 3 || pitch < -3) {
+      return true;
+    } else return false;
   }
 }
