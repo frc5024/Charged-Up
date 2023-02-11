@@ -32,8 +32,8 @@ public class RobotContainer {
       private final Joystick driver = new Joystick(0);
       private final Joystick operator = new Joystick(1);
       
-  private final JoystickButton backExtender = new JoystickButton(driver, XboxController.Button.kStart.value);
-  private final JoystickButton startExtender= new JoystickButton(driver, XboxController.Button.kBack.value);
+  private final JoystickButton backExtender = new JoystickButton(driver, XboxController.Button.kBack.value);
+  private final JoystickButton startExtender= new JoystickButton(driver, XboxController.Button.kStart.value);
 
   private final Drawer s_Drawer = new Drawer();
 
@@ -46,11 +46,10 @@ public class RobotContainer {
  
   private void configureBindings() {
  
-    //backExtender.onTrue  (new InstantCommand (() -> s_Drawer.canExtend()));
+   
+    startExtender.onTrue(new InstantCommand (() -> s_Drawer.extendDrawer()));
 
-    backExtender.onTrue(new InstantCommand (() -> s_Drawer.extendDrawer()));
-
-    startExtender.onTrue(new InstantCommand (() -> s_Drawer.retractDrawer()));
+    backExtender.onTrue(new InstantCommand (() -> s_Drawer.retractDrawer()));
    
   }
 

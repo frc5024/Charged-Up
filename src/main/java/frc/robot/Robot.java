@@ -24,10 +24,6 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
-  private Drawer Drawer;
-
-  private Compressor compressor;
-
   private PneumaticHub pHub;
 
   /**
@@ -40,16 +36,9 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
-     // Initialize Compressor
-    // compressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
-    // compressor.disable();
+     pHub = new PneumaticHub(50);
+     pHub.enableCompressorAnalog(80, 120);
 
-     pHub = new PneumaticHub(0);
-     pHub.enableCompressorDigital();
-
-    Drawer = Drawer.getInstance();
-
-    Drawer.register();
   }
 
   /**

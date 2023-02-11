@@ -12,26 +12,18 @@ import edu.wpi.first.wpilibj.XboxController;
 
 import frc.robot.RobotContainer;
 
-//Able to switch between two states with a button press (Y) (This trigger will be changed in the future)
-//Line-break sensor needs to be implemented
-//The intention is to delete the simplified states once the sensor is implemented
-//States for the drawer with and without the piece are already made, but commented off
-
 public class Drawer extends SubsystemBase {
     private static Drawer mInstance = null;
 
-    private XboxController testingController;
-
-    
     private DoubleSolenoid extender;
 
     // Makes it a singleton
-    public static Drawer getInstance() {
-        if (mInstance == null) {
-            mInstance = new Drawer();
-        }
-        return mInstance;
-    }
+    // public static Drawer getInstance() {
+    //     if (mInstance == null) {
+    //         mInstance = new Drawer();
+    //     }
+    //     return mInstance;
+    // }
 
     // Creates the states for the Drawer
     public enum drawerStates {
@@ -41,21 +33,6 @@ public class Drawer extends SubsystemBase {
 
         // Simplified state where the drawer is extended
         DRAWEROUT;
-
-        // IDLE State, waiting for state change
-        // IDLE,
-
-        // State when the drawer is empty and retracted
-        // EMPTYIN,
-
-        // State when the drawer is empty and extended
-        // EMPTYOUT,
-
-        // State when the drawer has a piece and is retracted
-        // STOREDIN,
-
-        // State when the drawer has a piece and is extended
-        // STOREDOUT;
 
     }
 
@@ -70,19 +47,13 @@ public class Drawer extends SubsystemBase {
         stateMachine.setDefaultState(drawerStates.DRAWERIN, this::handleDrawerIn);
         stateMachine.addState(drawerStates.DRAWEROUT, this::handleDrawerOut);
 
-        // stateMachine.setDefaultState(drawerStates.IDLE, this::handleIdle);
-        // stateMachine.addState(drawerStates.EMPTYIN, this::handleEmptyIn);
-        // stateMachine.addState(drawerStates.EMPTYOUT, this::handleEmptyOut);
-        // stateMachine.addState(drawerStates.STOREDIN, this::handleStoredIN);
-        // stateMachine.addState(drawerStates.STOREDOUT, this::handleStoredOut);
-
+       
        
 
-        // Initialize Single Solenoid
-        extender = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 0);
+        // Initialize Double Solenoid
+        extender = new DoubleSolenoid(50,PneumaticsModuleType.REVPH, 14, 15);
 
         // Inicialize testing Controller
-        testingController = new XboxController(0);
 
     }
 
@@ -92,7 +63,8 @@ public class Drawer extends SubsystemBase {
         // Sets the solenoid to retracted position when in this state
         if (metaData.isFirstRun()) {
           
-            extender.set(Value.kReverse);;
+            System.out.println("In");
+            extender.set(Value.kReverse);
         }
 
         // When Y is pressed sets drawer to DRAWEROUT State
@@ -104,14 +76,15 @@ public class Drawer extends SubsystemBase {
         // Sets the solenoid to extended position when in this state
         if (metaData.isFirstRun()) {
 
+            System.out.println("Out");
+
             extender.set(Value.kForward);
         }
 
     }
 
     public boolean canExtend() {
-        // When Y is pressed sets drawer to DRAWERIN State
-    
+
         return false;
 
     }
@@ -123,6 +96,8 @@ public class Drawer extends SubsystemBase {
 
     public void extendDrawer() {
 
+             System.out.println("extendDrawer");
+
             stateMachine.setState(drawerStates.DRAWEROUT);
         
 
@@ -130,7 +105,8 @@ public class Drawer extends SubsystemBase {
 
     public void retractDrawer() {
 
-     
+            System.out.println("retractDrawer");
+
             stateMachine.setState(drawerStates.DRAWERIN);
         
 
@@ -145,39 +121,6 @@ public class Drawer extends SubsystemBase {
 
         return stateMachine.getCurrentState() == drawerStates.DRAWERIN;
     }
-
-    // Method for IDLE State
-    // public void handleIdle(StateMetadata<drawerStates> metaData) {
-
-    // extender.set(false);
-
-    // }
-
-    // Method for EMPTYIN State
-    // public void handleEmptyIn(StateMetadata<drawerStates> metaData) {
-
-    // extender.set(false);
-    // stateMachine.setState(drawerStates.EMPTYIN);
-
-    // }
-
-    // Method for EMPTYOUT State
-    // public void handleEmptyOut(StateMetadata<drawerStates> metaData) {
-
-    // extender.set(true);
-    // }
-
-    // Method for STOREDIN State
-    // public void handleStoredIN(StateMetadata<drawerStates> metaData) {
-
-    // extender.set(false);
-    // }
-
-    // Method for STOREDOUT State
-    // public void handleStoredOut(StateMetadata<drawerStates> metaData) {
-
-    // extender.set(true);
-    // }
 
     // Makes the state machine run periodically
     @Override
