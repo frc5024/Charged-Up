@@ -94,6 +94,7 @@ public class Drawer extends SubsystemBase {
         return false;
     }
 
+    //sets drawer to extended state
     public void extendDrawer() {
 
              System.out.println("extendDrawer");
@@ -102,7 +103,8 @@ public class Drawer extends SubsystemBase {
         
 
     }
-
+    
+    //sets drawer to retracted position
     public void retractDrawer() {
 
             System.out.println("retractDrawer");
