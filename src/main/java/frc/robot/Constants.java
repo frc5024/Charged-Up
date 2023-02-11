@@ -15,5 +15,25 @@ package frc.robot;
 public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
-  }
-}
+    
+    }
+    public static final class ArmConstants {
+      public static final int topMotorID = 1;
+      public static final int bottomMotorID = 9;
+
+      public static final int innerLimitSwitchID = 9;
+      public static final int outerLimitSwitchID = 8;
+      
+      public static final double armSpeed = 0.15;
+
+    }
+    // Should log to USB
+    public static final boolean shouldLogToUSB = false;
+    
+    // Controller Constants
+    public static final class Controllers{
+  
+      public static final int driverController = 0;
+      public static final int operatorController = 1;
+      
+    }}
