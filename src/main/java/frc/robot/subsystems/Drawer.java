@@ -10,6 +10,7 @@ import frc.robot.liblite.StateMachine;
 import frc.robot.liblite.StateMetadata;
 import edu.wpi.first.wpilibj.XboxController;
 
+import edu.wpi.first.wpilibj.Ultrasonic;
 import frc.robot.RobotContainer;
 
 public class Drawer extends SubsystemBase {
@@ -17,12 +18,18 @@ public class Drawer extends SubsystemBase {
 
     private DoubleSolenoid extender;
 
+    double distanceMillimeters;
+    // distance from sensor to drawer wall, MUST be in mm
+    final double distanceWall = 0;
+    // says if an object is in the drawer
+    Boolean objectIn = false;
+
     // Makes it a singleton
     // public static Drawer getInstance() {
-    //     if (mInstance == null) {
-    //         mInstance = new Drawer();
-    //     }
-    //     return mInstance;
+    // if (mInstance == null) {
+    // mInstance = new Drawer();
+    // }
+    // return mInstance;
     // }
 
     // Creates the states for the Drawer
@@ -41,17 +48,25 @@ public class Drawer extends SubsystemBase {
 
     public Drawer() {
 
+        // creates the UtraSensor
+        Ultrasonic m_rangeFinder = new Ultrasonic(1, 2);
+        // distance returned from sensor
+        
+        distanceMillimeters = m_rangeFinder.getRangeMM();
+        if (distanceMillimeters < distanceWall) {
+            objectIn = true;
+        } else {
+            objectIn = false;
+        }
+
         stateMachine = new StateMachine<>("Drawer Statemachine");
 
         // Assigns the states to their methods
         stateMachine.setDefaultState(drawerStates.DRAWERIN, this::handleDrawerIn);
         stateMachine.addState(drawerStates.DRAWEROUT, this::handleDrawerOut);
 
-       
-       
-
         // Initialize Double Solenoid
-        extender = new DoubleSolenoid(50,PneumaticsModuleType.REVPH, 14, 15);
+        extender = new DoubleSolenoid(50, PneumaticsModuleType.REVPH, 14, 15);
 
         // Inicialize testing Controller
 
@@ -62,7 +77,7 @@ public class Drawer extends SubsystemBase {
 
         // Sets the solenoid to retracted position when in this state
         if (metaData.isFirstRun()) {
-          
+
             System.out.println("In");
             extender.set(Value.kReverse);
         }
@@ -96,19 +111,17 @@ public class Drawer extends SubsystemBase {
 
     public void extendDrawer() {
 
-             System.out.println("extendDrawer");
+        System.out.println("extendDrawer");
 
-            stateMachine.setState(drawerStates.DRAWEROUT);
-        
+        stateMachine.setState(drawerStates.DRAWEROUT);
 
     }
 
     public void retractDrawer() {
 
-            System.out.println("retractDrawer");
+        System.out.println("retractDrawer");
 
-            stateMachine.setState(drawerStates.DRAWERIN);
-        
+        stateMachine.setState(drawerStates.DRAWERIN);
 
     }
 
