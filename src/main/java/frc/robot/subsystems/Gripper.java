@@ -27,10 +27,10 @@ public class Gripper extends SubsystemBase {
     // Creates the states for the Gripper
     public enum GripperStates {
 
-        // Simplified state where the Gripper is retracted
+        // Simplified state where the Gripper is closed
         GripClose,
 
-        // Simplified state where the Gripper is extended
+        // Simplified state where the Gripper is Open
         GripOpen;
 
     }
@@ -52,8 +52,6 @@ public class Gripper extends SubsystemBase {
         // Initialize Double Solenoid
         extender = new DoubleSolenoid(50,PneumaticsModuleType.REVPH, 14, 15);
 
-        // Inicialize testing Controller
-
     }
 
     // Method for GripClose State
@@ -65,8 +63,6 @@ public class Gripper extends SubsystemBase {
             System.out.println("Close");
             extender.set(Value.kReverse);
         }
-
-        // When Y is pressed sets Gripper to GripOpen State
 
     }
 
