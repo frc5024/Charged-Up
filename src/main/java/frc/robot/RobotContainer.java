@@ -40,7 +40,7 @@ public class RobotContainer {
 
   /* Driver Buttons */
   
-   /* Operator Buttons */
+  /* Operator Buttons */
   private final JoystickButton Abutton = new JoystickButton(driver, XboxController.Button.kA.value);
   private final JoystickButton Bbutton = new JoystickButton(driver, XboxController.Button.kB.value);
   private final JoystickButton zeroEncoder = new JoystickButton(driver, XboxController.Button.kX.value);
@@ -62,8 +62,10 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {   
-    Abutton.onTrue(new Armcommand(-4000));
-    Bbutton.onTrue(new Armcommand(4000));
+
+    /* Arm Commands */
+    Abutton.onTrue(new Armcommand(-500));
+    Bbutton.onTrue(new Armcommand(-2200));
     zeroEncoder.onTrue(new InstantCommand(() -> arm.startZeroing()));
        
   }
@@ -74,7 +76,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
+    /* An example command will be run in autonomous */
     return Autos.exampleAuto(m_exampleSubsystem);
   }
 }

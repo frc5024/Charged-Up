@@ -14,15 +14,20 @@ import frc.robot.subsystems.Arm;
 
 
 public class Armcommand extends CommandBase {
-  private static final String topMotor = null;
+
+  private Arm arm;
 
   private int position;
 
   /** Creates a new Armcommand. */
   public Armcommand(int position) {
-    // Use addRequirements() here to declare subsystem dependencies.
+
+    // Intializes subsystems and variables.
+    arm = Arm.getInstance();
     this.position = position;
-    //addRequirements(Arm.getInstance());
+
+    // Adds arm subsystem as a requirement.
+    addRequirements(arm);
   }
 
   // Called when the command is initially scheduled.
@@ -32,11 +37,11 @@ public class Armcommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Arm.getInstance().setDesiredPosition(position);
-    Arm.getInstance().startMoving();
-    
 
-  
+    // Set the arms desried position and start the moving process.
+    arm.setDesiredPosition(position);
+    arm.startMoving();
+    
   }
 
   // Called once the command ends or is interrupted.
@@ -48,6 +53,7 @@ public class Armcommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    // End command after one run.
     return true;
   }
 }

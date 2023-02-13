@@ -17,6 +17,8 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
     
     }
+
+    // Create constants for the Arm subsystem
     public static final class ArmConstants {
       public static final int topMotorID = 1;
       public static final int bottomMotorID = 9;
