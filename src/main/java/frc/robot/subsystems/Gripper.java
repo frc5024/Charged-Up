@@ -18,12 +18,13 @@ public class Gripper extends SubsystemBase {
     private DoubleSolenoid extender;
 
     // Makes it a singleton
-     public static Gripper getInstance() {
-         if (mInstance == null) {
-             mInstance = new Gripper();
-         }
-         return mInstance;
-     }
+    public static Gripper getInstance() {
+        if (mInstance == null) {
+            mInstance = new Gripper();
+        }
+        return mInstance;
+    }
+
     // Creates the states for the Gripper
     public enum GripperStates {
 
@@ -38,7 +39,7 @@ public class Gripper extends SubsystemBase {
     // Creates the variable that stores the state machine
     private StateMachine<GripperStates> stateMachine;
 
-    public Gripper() {
+    private Gripper() {
 
         stateMachine = new StateMachine<>("Gripper Statemachine");
 
@@ -46,11 +47,8 @@ public class Gripper extends SubsystemBase {
         stateMachine.setDefaultState(GripperStates.GripClose, this::handleGripClose);
         stateMachine.addState(GripperStates.GripOpen, this::handleGripOpen);
 
-       
-       
-
         // Initialize Double Solenoid
-        extender = new DoubleSolenoid(50,PneumaticsModuleType.REVPH, 14, 15);
+        extender = new DoubleSolenoid(50, PneumaticsModuleType.REVPH, 14, 15);
 
     }
 
@@ -59,8 +57,7 @@ public class Gripper extends SubsystemBase {
 
         // Sets the solenoid to retracted position when in this state
         if (metaData.isFirstRun()) {
-          
-            System.out.println("Close");
+
             extender.set(Value.kReverse);
         }
 
@@ -71,39 +68,24 @@ public class Gripper extends SubsystemBase {
         // Sets the solenoid to extended position when in this state
         if (metaData.isFirstRun()) {
 
-            System.out.println("Open");
-
             extender.set(Value.kForward);
         }
 
     }
 
-    public boolean canOpen() {
-
-        return false;
-
-    }
-
-    public boolean canClose() {
-
-        return false;
-    }
-
+    // for some reason we don't talk to GripOpen directly. I didn't touch this, so
+    // I'm not changing it.
     public void openGripper() {
 
-             System.out.println("openGripper");
-
-            stateMachine.setState(GripperStates.GripOpen);
-        
+        stateMachine.setState(GripperStates.GripOpen);
 
     }
 
+    // for some reason we don't talk to GripClose directly. I didn't touch this, so
+    // I'm not changing it.
     public void closeGripper() {
 
-            System.out.println("closeGripper");
-
-            stateMachine.setState(GripperStates.GripClose);
-        
+        stateMachine.setState(GripperStates.GripClose);
 
     }
 

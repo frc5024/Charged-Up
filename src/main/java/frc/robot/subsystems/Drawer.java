@@ -14,12 +14,16 @@ import edu.wpi.first.wpilibj.Ultrasonic;
 import frc.robot.RobotContainer;
 
 public class Drawer extends SubsystemBase {
+    //tells us if an instance of this already exists
     private static Drawer mInstance = null;
-
+   
+    //initializes solenoid object
     private DoubleSolenoid extender;
 
-    private Ultrasonic m_rangeFinder;
+    //initializes the ultrasonic
+    private Ultrasonic m_rangeFinder  = new Ultrasonic(1, 2);;
 
+    //distance returned from the ultrasonic
     private double distanceMillimeters;
     // distance from sensor to drawer wall, MUST be in mm
     private final double distanceWall = 0;
@@ -50,17 +54,17 @@ public class Drawer extends SubsystemBase {
 
     private Drawer() {
 
-        // creates the UtraSensor
-        Ultrasonic m_rangeFinder = new Ultrasonic(1, 2);
+        // creates the UltraSensor
+       
         // distance returned from sensor
-
         distanceMillimeters = m_rangeFinder.getRangeMM();
+        //distance from sensor to wall is constant, so if the returned distance is less than that an object is inside
         if (distanceMillimeters < distanceWall) {
             objectIn = true;
         } else {
             objectIn = false;
         }
-
+        //creates state machine
         stateMachine = new StateMachine<>("Drawer Statemachine");
 
         // Assigns the states to their methods
@@ -80,7 +84,6 @@ public class Drawer extends SubsystemBase {
         // Sets the solenoid to retracted position when in this state
         if (metaData.isFirstRun()) {
 
-            System.out.println("In");
             extender.set(Value.kReverse);
         }
 
@@ -88,45 +91,37 @@ public class Drawer extends SubsystemBase {
 
     }
 
+
+    //I am aware that some of this is pointless, however it works and I don't want to break things
     public void handleDrawerOut(StateMetadata<DrawerStates> metaData) {
 
         // Sets the solenoid to extended position when in this state
         if (metaData.isFirstRun()) {
 
-            System.out.println("Out");
+           
 
             extender.set(Value.kForward);
         }
 
     }
 
-    public boolean canExtend() {
-
-        return false;
-
-    }
-
-    public boolean canRetract() {
-
-        return false;
-    }
-
+    //extends the drawer
     public void extendDrawer() {
 
-        System.out.println("extendDrawer");
 
         stateMachine.setState(DrawerStates.DRAWEROUT);
 
     }
 
+    //
     public void retractDrawer() {
 
-        System.out.println("retractDrawer");
 
         stateMachine.setState(DrawerStates.DRAWERIN);
 
     }
 
+    //says the drawe is extended
     public boolean isExtended() {
 
         return stateMachine.getCurrentState() == DrawerStates.DRAWEROUT;
