@@ -43,8 +43,10 @@ public class RobotContainer {
   /* Operator Buttons */
   private final JoystickButton Abutton = new JoystickButton(driver, XboxController.Button.kA.value);
   private final JoystickButton Bbutton = new JoystickButton(driver, XboxController.Button.kB.value);
+  private final JoystickButton Ybutton = new JoystickButton(driver, XboxController.Button.kY.value);
   private final JoystickButton zeroEncoder = new JoystickButton(driver, XboxController.Button.kX.value);
 
+  
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -66,6 +68,7 @@ public class RobotContainer {
     /* Arm Commands */
     Abutton.onTrue(new Armcommand(-500));
     Bbutton.onTrue(new Armcommand(-2200));
+    Ybutton.onTrue(new Armcommand(150));
     zeroEncoder.onTrue(new InstantCommand(() -> arm.startZeroing()));
        
   }

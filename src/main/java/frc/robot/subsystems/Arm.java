@@ -9,6 +9,7 @@ import frc.robot.liblite.StateMetadata;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
@@ -74,9 +75,9 @@ public class Arm extends SubsystemBase {
         stateMachine.addState(ArmStates.HOLD, this::handleHold);
         stateMachine.addState(ArmStates.ZEROING, this::handleZeroing);
 
-        kP = 0.0003;
+        kP = 0.95/1000;
         kI = 0;
-        kD = 0.00005;
+        kD = 0/1000;
 
         pid = new PIDController(kP, kI, kD);
 
@@ -123,7 +124,7 @@ public class Arm extends SubsystemBase {
 
             } else {
             // If at desired position, set subsystem state to HOLD.
-            stateMachine.setState(ArmStates.HOLD);
+            //stateMachine.setState(ArmStates.HOLD);
 
             }
             
@@ -203,6 +204,7 @@ public class Arm extends SubsystemBase {
    * Sets the percent speed of the arm motors to the input value.
    */
     public void setSpeed(double speed){
+        speed = MathUtil.clamp(speed, -0.25, 0.25);
         topMotor.set(ControlMode.PercentOutput,(speed));
         bottomMotor.set(ControlMode.PercentOutput,(speed));
                
