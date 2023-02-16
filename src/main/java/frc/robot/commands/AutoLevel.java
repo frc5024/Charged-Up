@@ -11,7 +11,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.Swerve;
-import frc.robot.subsystems.TankDrive;
 
 public class AutoLevel extends CommandBase {
   /** Creates a new AutoLevel. */
@@ -40,7 +39,6 @@ public class AutoLevel extends CommandBase {
     // pull pitch
     pidreal = pid.calculate(gyro.getPitch(), -1.4);
     // set motor speed
-    TankDrive.getInstance().setSpeed(-pidreal, -pidreal);
     System.out.println(pidreal);
   }
 

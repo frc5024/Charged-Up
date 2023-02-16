@@ -7,7 +7,6 @@ package frc.robot.commands.autocommands;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.TankDrive;
 
 public class DriveForward extends CommandBase {
 
@@ -30,7 +29,7 @@ public class DriveForward extends CommandBase {
     //Gets pitch from NavX
     pitch = gyro.getPitch();
     //Tells robot to move forward
-    TankDrive.getInstance().setSpeed(0.4, 0.4);
+    //TankDrive.getInstance().setSpeed(0.4, 0.4);
 
   }
 
