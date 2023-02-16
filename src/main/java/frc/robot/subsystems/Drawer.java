@@ -14,16 +14,16 @@ import edu.wpi.first.wpilibj.Ultrasonic;
 import frc.robot.RobotContainer;
 
 public class Drawer extends SubsystemBase {
-    //tells us if an instance of this already exists
+    // tells us if an instance of this already exists
     private static Drawer mInstance = null;
-   
-    //initializes solenoid object
+
+    // initializes solenoid object
     private DoubleSolenoid extender;
 
-    //initializes the ultrasonic
-    private Ultrasonic m_rangeFinder  = new Ultrasonic(1, 2);;
+    // initializes the ultrasonic
+    private Ultrasonic m_rangeFinder = new Ultrasonic(7, 6);;
 
-    //distance returned from the ultrasonic
+    // distance returned from the ultrasonic
     private double distanceMillimeters;
     // distance from sensor to drawer wall, MUST be in mm
     private final double distanceWall = 0;
@@ -54,17 +54,7 @@ public class Drawer extends SubsystemBase {
 
     private Drawer() {
 
-        // creates the UltraSensor
-       
-        // distance returned from sensor
-        distanceMillimeters = m_rangeFinder.getRangeMM();
-        //distance from sensor to wall is constant, so if the returned distance is less than that an object is inside
-        if (distanceMillimeters < distanceWall) {
-            objectIn = true;
-        } else {
-            objectIn = false;
-        }
-        //creates state machine
+        // creates state machine
         stateMachine = new StateMachine<>("Drawer Statemachine");
 
         // Assigns the states to their methods
@@ -91,23 +81,20 @@ public class Drawer extends SubsystemBase {
 
     }
 
-
-    //I am aware that some of this is pointless, however it works and I don't want to break things
+    // I am aware that some of this is pointless, however it works and I don't want
+    // to break things
     public void handleDrawerOut(StateMetadata<DrawerStates> metaData) {
 
         // Sets the solenoid to extended position when in this state
         if (metaData.isFirstRun()) {
-
-           
 
             extender.set(Value.kForward);
         }
 
     }
 
-    //extends the drawer
+    // extends the drawer
     public void extendDrawer() {
-
 
         stateMachine.setState(DrawerStates.DRAWEROUT);
 
@@ -116,12 +103,11 @@ public class Drawer extends SubsystemBase {
     //
     public void retractDrawer() {
 
-
         stateMachine.setState(DrawerStates.DRAWERIN);
 
     }
 
-    //says the drawe is extended
+    // says the drawe is extended
     public boolean isExtended() {
 
         return stateMachine.getCurrentState() == DrawerStates.DRAWEROUT;
@@ -136,6 +122,16 @@ public class Drawer extends SubsystemBase {
     @Override
     public void periodic() {
         stateMachine.update();
+        // distance returned from sensor
+        distanceMillimeters = m_rangeFinder.getRangeMM();
+        System.out.println(distanceMillimeters);
+        // distance from sensor to wall is constant, so if the returned distance is less
+        // than that an object is inside
+        if (distanceMillimeters < distanceWall) {
+            objectIn = true;
+        } else {
+            objectIn = false;
+        }
 
     }
 
