@@ -48,7 +48,8 @@ public class Gripper extends SubsystemBase {
         stateMachine.addState(GripperStates.GripOpen, this::handleGripOpen);
 
         // Initialize Double Solenoid
-        extender = new DoubleSolenoid(Constants.DrawerAndGripperConstants.PneumaticHub, PneumaticsModuleType.REVPH, Constants.DrawerAndGripperConstants.GripperOpenChanel, Constants.DrawerAndGripperConstants.GripperCloseChanel);
+        extender = new DoubleSolenoid(Constants.PneumaticConstants.PneumaticHub, PneumaticsModuleType.REVPH,
+                Constants.GripperConstants.GripperOpenChanel, Constants.GripperConstants.GripperCloseChanel);
 
     }
 

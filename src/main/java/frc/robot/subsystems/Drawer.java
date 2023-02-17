@@ -23,8 +23,8 @@ public class Drawer extends SubsystemBase {
     private DoubleSolenoid extender;
 
     // initializes the ultrasonic
-    private Ultrasonic m_rangeFinder = new Ultrasonic(Constants.DrawerAndGripperConstants.usPingChanel,
-            Constants.DrawerAndGripperConstants.usEchoChanel);
+    private Ultrasonic m_rangeFinder = new Ultrasonic(Constants.DrawerConstants.usPingChanel,
+            Constants.DrawerConstants.usEchoChanel);
 
     // distance returned from the ultrasonic
     private double distanceMillimeters;
@@ -56,6 +56,7 @@ public class Drawer extends SubsystemBase {
 
     private Drawer() {
 
+        Ultrasonic.setAutomaticMode(true);
         // creates state machine
         stateMachine = new StateMachine<>("Drawer Statemachine");
 
@@ -64,9 +65,9 @@ public class Drawer extends SubsystemBase {
         stateMachine.addState(DrawerStates.DRAWEROUT, this::handleDrawerOut);
 
         // Initialize Double Solenoid
-        extender = new DoubleSolenoid(Constants.DrawerAndGripperConstants.PneumaticHub, PneumaticsModuleType.REVPH,
-                Constants.DrawerAndGripperConstants.drawerForwardChanel,
-                Constants.DrawerAndGripperConstants.drawerReverseChanel);
+        extender = new DoubleSolenoid(Constants.PneumaticConstants.PneumaticHub, PneumaticsModuleType.REVPH,
+                Constants.DrawerConstants.drawerForwardChanel,
+                Constants.DrawerConstants.drawerReverseChanel);
 
         // Inicialize testing Controller
 
@@ -122,15 +123,15 @@ public class Drawer extends SubsystemBase {
         // distance from sensor to wall is constant, so if the returned distance is less
         // than that an object is inside
         // we also get a weird glitch where the cube reads at this value or higher
-        if (distanceMillimeters < Constants.DrawerAndGripperConstants.distanceWall
-                || distanceMillimeters >= Constants.DrawerAndGripperConstants.CubeNonsenseValue
+        if (distanceMillimeters < Constants.DrawerConstants.distanceWall
+                || distanceMillimeters >= Constants.DrawerConstants.CubeNonsenseValue
                         && drawerExtended == true) {
             objectIn = true;
             retractDrawer();
         } else {
             objectIn = false;
         }
-
+        System.out.println(objectIn);
     }
 
 }

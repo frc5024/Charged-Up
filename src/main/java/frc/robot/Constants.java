@@ -21,19 +21,26 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
 
-  public static class DrawerAndGripperConstants {
-    public static final int distanceWall = 200;
-    public static final int drawerForwardChanel = 13;
-    public static final int drawerReverseChanel = 12;
-    public static final int GripperOpenChanel = 14;
-    public static final int GripperCloseChanel = 15;
+  public static class PneumaticConstants {
     public static final int PneumaticHub = 50;
     public static final int minPressure = 80;
     public static final int maxPressure = 120;
-    //sometimes the ultrasonic reads a nonsense distance value when it sees the cube
-    //this stores it for a logic statement used in the drawer code
+  }
+
+  public static class DrawerConstants {
+    public static final int distanceWall = 200;
+    public static final int drawerForwardChanel = 13;
+    public static final int drawerReverseChanel = 12;
+    // sometimes the ultrasonic reads a nonsense distance value when it sees the
+    // cube
+    // this stores it for a logic statement used in the drawer code
     public static final int CubeNonsenseValue = 5000;
-    public static final int usPingChanel = 7;
-    public static final int usEchoChanel = 6;
+    public static final int usPingChanel = 6;
+    public static final int usEchoChanel = 7;
+  }
+
+  public static class GripperConstants {
+    public static final int GripperOpenChanel = 14;
+    public static final int GripperCloseChanel = 15;
   }
 }
