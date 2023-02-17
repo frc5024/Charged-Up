@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.liblite.StateMachine;
 import frc.robot.liblite.StateMetadata;
 import edu.wpi.first.wpilibj.XboxController;
-
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class Gripper extends SubsystemBase {
@@ -48,7 +48,7 @@ public class Gripper extends SubsystemBase {
         stateMachine.addState(GripperStates.GripOpen, this::handleGripOpen);
 
         // Initialize Double Solenoid
-        extender = new DoubleSolenoid(50, PneumaticsModuleType.REVPH, 14, 15);
+        extender = new DoubleSolenoid(Constants.DrawerAndGripperConstants.PneumaticHub, PneumaticsModuleType.REVPH, Constants.DrawerAndGripperConstants.GripperOpenChanel, Constants.DrawerAndGripperConstants.GripperCloseChanel);
 
     }
 
