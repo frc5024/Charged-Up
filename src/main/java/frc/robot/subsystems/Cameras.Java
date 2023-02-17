@@ -7,6 +7,8 @@ import edu.wpi.cscore.CvSource;
 public class Cameras extends SubsystemBase{
     private static Drawer mInstance = null;
 
+    private shuffleboard CameraFeed;
+  
      // Makes it a singleton
      public static Drawer getInstance() {
         if (mInstance == null) {
@@ -21,14 +23,18 @@ public class Cameras extends SubsystemBase{
 
         () -> {
 
+      
           // Get the UsbCamera from CameraServer
 
-          UsbCamera camera = CameraServer.startAutomaticCapture();
+          UsbCamera cameraFrame = CameraServer.startAutomaticCapture();
+          UsbCamera cameraArm = CameraServer.startAutomaticCapture();
 
           // Set the resolution
 
-          camera.setResolution(640, 480);
+          cameraFrame.setResolution(640, 480);
+          cameraArm.setResolution(640, 480);
 
+          CvSource outputStream = CameraServer.putVideo("View", 640, 480);
 
           // Get a CvSink. This will capture Mats from the camera
 

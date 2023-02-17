@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.liblite.StateMachine;
 import frc.robot.liblite.StateMetadata;
@@ -120,6 +121,7 @@ public class Drawer extends SubsystemBase {
         // distance returned from sensor
         distanceMillimeters = m_rangeFinder.getRangeMM();
         System.out.println(distanceMillimeters);
+        // drawerExtended == true
         // distance from sensor to wall is constant, so if the returned distance is less
         // than that an object is inside
         // we also get a weird glitch where the cube reads at this value or higher
