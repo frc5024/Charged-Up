@@ -44,7 +44,7 @@ public class AutoLevel extends CommandBase {
     // pull pitch
     pidreal = pid.calculate(gyro.getPitch());
     // set motor speed
-    s_Swerve.drive(new Translation2d(pidreal, 0), 0, true, false);
+    s_Swerve.drive(new Translation2d(1, 0), 0, true, false);
     System.out.println(pidreal);
   }
 
