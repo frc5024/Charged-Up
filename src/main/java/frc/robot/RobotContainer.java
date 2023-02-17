@@ -41,9 +41,9 @@ public class RobotContainer {
   /* Driver Buttons */
   
   /* Operator Buttons */
-  private final JoystickButton Abutton = new JoystickButton(driver, XboxController.Button.kA.value);
-  private final JoystickButton Bbutton = new JoystickButton(driver, XboxController.Button.kB.value);
-  private final JoystickButton zeroEncoder = new JoystickButton(driver, XboxController.Button.kX.value);
+  private final JoystickButton scoreMid = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton scoreHybrid = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
+  private final JoystickButton zeroEncoder = new JoystickButton(operator, XboxController.Button.kX.value);
 
   
 
@@ -65,8 +65,8 @@ public class RobotContainer {
   private void configureBindings() {   
 
     /* Arm Commands */
-    Abutton.onTrue(new Armcommand(-2500));
-    Bbutton.onTrue(new Armcommand(-3240));
+    scoreMid.onTrue(new Armcommand(-2500, true));
+    scoreHybrid.onTrue(new Armcommand(-3240, true));
     zeroEncoder.onTrue(new InstantCommand(() -> arm.startZeroing()));
        
   }

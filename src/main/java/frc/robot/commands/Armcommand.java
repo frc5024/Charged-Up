@@ -19,12 +19,15 @@ public class Armcommand extends CommandBase {
 
   private int position;
 
+  private boolean openGrabber;
+
   /** Creates a new Armcommand. */
-  public Armcommand(int position) {
+  public Armcommand(int position, boolean openGrabber) {
 
     // Intializes subsystems and variables.
     arm = Arm.getInstance();
     this.position = position;
+    this.openGrabber = openGrabber;
 
     // Adds arm subsystem as a requirement.
     addRequirements(arm);
@@ -40,6 +43,7 @@ public class Armcommand extends CommandBase {
 
     // Set the arms desried position and start the moving process.
     arm.setDesiredPosition(position);
+    arm.setReleaseOnFinish(openGrabber);
     arm.startMoving();
     
   }

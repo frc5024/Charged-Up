@@ -32,6 +32,7 @@ public class Arm extends SubsystemBase {
     
     private int desiredPosition;
     private boolean limitPushed;
+    private boolean releaseOnFinish;
 
     // Creates the states for the arm.
     public enum ArmStates {
@@ -85,6 +86,7 @@ public class Arm extends SubsystemBase {
 
         desiredPosition = 0;
         limitPushed = false;
+        releaseOnFinish = false;
     }
 
     // Creates the methods for each individual state.
@@ -97,9 +99,23 @@ public class Arm extends SubsystemBase {
 
     public void handleDispatch(StateMetadata<ArmStates> metaData) {
 
+        if (metaData.isFirstRun()) {
+            // TODO: open grabber here
+            
+            // Reset releaseOnFinish back to false.
+            releaseOnFinish = false;
+        }
+
+        // Stops the arm from moving.
+        stopArm();
     }
 
     public void handleMoving(StateMetadata<ArmStates> metaData) {
+
+        // Resets pid on first run
+        if (metaData.isFirstRun()) {
+            pid.reset();
+        }
 
         // Checks if the limit switches are triggered.
         if (innerLimitTriggered()) {
@@ -122,10 +138,13 @@ public class Arm extends SubsystemBase {
                 // Use pid to set the motor speed, to move the arm to its desired position.
                 setSpeed(pid.calculate(topMotor.getSelectedSensorPosition(), desiredPosition));
 
-            } else {
+            } else if (releaseOnFinish){
             // If at desired position, set subsystem state to HOLD.
-            //stateMachine.setState(ArmStates.HOLD);
+            stateMachine.setState(ArmStates.DISPATCH);
 
+            } else {
+               // If at desired position, set subsystem state to HOLD.
+            stateMachine.setState(ArmStates.HOLD); 
             }
             
         } else {
@@ -148,7 +167,7 @@ public class Arm extends SubsystemBase {
         if (innerLimitTriggered()) {
             // If triggered set limitPushed to true, and move the arm in the opposite direction at half the speed.
             limitPushed = true;
-            setSpeed(-Constants.ArmConstants.armSpeed/2);
+            setSpeed(-Constants.ArmConstants.armSpeed);
         } else if (!limitPushed) {
             setSpeed(Constants.ArmConstants.armSpeed);
 
@@ -173,6 +192,7 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putString("Arm State", stateMachine.getCurrentState().toString());
         SmartDashboard.putBoolean("Inner Limit Triggered", innerLimitTriggered());
         SmartDashboard.putBoolean("Outer Limit Triggered", outerLimitTriggered());
+        SmartDashboard.putNumber("Desired Position", desiredPosition);
 
         // Update the statemachine periodically.
         stateMachine.update();
@@ -241,6 +261,14 @@ public class Arm extends SubsystemBase {
    */
     public void startZeroing() {
         stateMachine.setState(ArmStates.ZEROING);
+
+    }
+
+    /**
+   * Set releaseOnFinished to true or false based on command input.
+   */
+    public void setReleaseOnFinish(boolean openGrabber) {
+        releaseOnFinish = openGrabber;
 
     }
 
