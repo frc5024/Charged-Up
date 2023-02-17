@@ -23,7 +23,15 @@ public class Swerve extends SubsystemBase {
     public SwerveModule[] mSwerveMods;
     public AHRS gyro;
 
-    public Swerve() {
+    private static Swerve mInstance;
+    public static Swerve getInstance() {
+        if (mInstance == null) {
+        mInstance = new Swerve();
+        }
+        return mInstance;
+    }
+
+    private Swerve() {
         gyro = new AHRS();
 
         mSwerveMods = new SwerveModule[] {

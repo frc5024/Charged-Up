@@ -17,7 +17,7 @@ import frc.robot.subsystems.Swerve;
 public class AutoLevel extends CommandBase {
   /** Creates a new AutoLevel. */
   AHRS gyro = new AHRS();
-  private Swerve s_Swerve;
+  Swerve s_Swerve = Swerve.getInstance();
 
   //PID controller
   PIDController pid = new PIDController(0.025, 0, 0.001);
@@ -29,8 +29,6 @@ public class AutoLevel extends CommandBase {
 
   public AutoLevel() {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.s_Swerve = s_Swerve;
-    addRequirements(s_Swerve);
   }
 
   // Called when the command is initially scheduled.
@@ -44,7 +42,7 @@ public class AutoLevel extends CommandBase {
     // pull pitch
     pidreal = pid.calculate(gyro.getPitch());
     // set motor speed
-    s_Swerve.drive(new Translation2d(1, 0), 0, true, false);
+    s_Swerve.drive(new Translation2d(10, 0), 0, true, false);
     System.out.println(pidreal);
   }
 
