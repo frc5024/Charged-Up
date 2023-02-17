@@ -43,4 +43,8 @@ public final class Constants {
     public static final int GripperOpenChanel = 14;
     public static final int GripperCloseChanel = 15;
   }
+
+  public static class CameraConstants {
+    
+  }
 }
