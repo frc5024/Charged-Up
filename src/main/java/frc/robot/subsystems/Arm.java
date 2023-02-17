@@ -204,7 +204,7 @@ public class Arm extends SubsystemBase {
    * Sets the percent speed of the arm motors to the input value.
    */
     public void setSpeed(double speed){
-        speed = MathUtil.clamp(speed, -0.25, 0.25);
+        speed = MathUtil.clamp(speed, -0.25, 0.25 );
         topMotor.set(ControlMode.PercentOutput,(speed));
         bottomMotor.set(ControlMode.PercentOutput,(speed));
                
