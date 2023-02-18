@@ -90,15 +90,7 @@ public class Gripper extends SubsystemBase {
 
     }
 
-    public boolean isOpen() {
-
-        return stateMachine.getCurrentState() == GripperStates.GripOpen;
-    }
-
-    public boolean isClosed() {
-
-        return stateMachine.getCurrentState() == GripperStates.GripClose;
-    }
+   
 
     // Makes the state machine run periodically
     @Override
