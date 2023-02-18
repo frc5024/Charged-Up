@@ -6,7 +6,7 @@ package frc.robot.autos;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.AutoLevel;
-import frc.robot.commands.autocommands.DriveForward;
+import frc.robot.commands.Park;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -16,6 +16,6 @@ public class levelingAuto extends SequentialCommandGroup {
   public levelingAuto() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new DriveForward(), new AutoLevel());
+    addCommands(new AutoLevel(), new Park());
   };
 }

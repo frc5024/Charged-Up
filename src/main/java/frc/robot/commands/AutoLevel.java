@@ -4,43 +4,31 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.networktables.GenericEntry;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.wpilibj.AddressableLED;
-import edu.wpi.first.wpilibj.SynchronousInterrupt;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Swerve;
 
 
 public class AutoLevel extends CommandBase {
   
+  // create new NavX object
   AHRS gyro = new AHRS();
+
+  // grab swerve singleton
   Swerve s_Swerve = Swerve.getInstance();
 
   //PID controller
   PIDController pid = new PIDController(0.07, 0, 0.0);
-  
-  //Gets pitch from NavX
-  float pitch = gyro.getPitch();
-  //Sets Pidreal (Gives accurate pitch angle to PID)
-  double pidreal;
 
   //Enter leveling mode or not
   boolean levelingMode = false;
 
-  //Sends simulated pitch angle to shuffleboard
-  private ShuffleboardTab tab = Shuffleboard.getTab("Balance Testing");
-  private GenericEntry angleTest =
-    tab.add("Simulated Angle", 0)
-    .getEntry();
+  // create new timertinme
+  Timer timer = new Timer();
 
   /** Creates a new AutoLevel. */
   public AutoLevel() {
@@ -60,28 +48,33 @@ public class AutoLevel extends CommandBase {
 
     // if in leveling mode, attempt to balance, if not, drive forward until robot is
     if (levelingMode == true) {
-      // pull pitch
-      pidreal = pid.calculate(gyro.getPitch());
+
       // set motor speed
-      s_Swerve.drive(new Translation2d(-pidreal, 0), 0, false, true);
-      System.out.println(pidreal);
+      s_Swerve.drive(new Translation2d(-pid.calculate(gyro.getPitch()), 0), 0, false, true);
+
     } else if (levelingMode == false) {
 
       // drive forward to get onto charge station
       s_Swerve.drive(new Translation2d(1.2, 0), 0, false, true);
 
       // switch to leveling mode when angle is great enough
-      if (gyro.getPitch() < -3 || gyro.getPitch() > 3) levelingMode = true;
+      if ( Math.abs(gyro.getPitch()) > 3 ) levelingMode = true;
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+
+    // stop motors
+    s_Swerve.drive(new Translation2d(0,0), 0, false, true);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+
+
     return false;
   }
 }

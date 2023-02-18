@@ -70,6 +70,6 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
         //eturn new levelingAuto();
-        return new AutoLevel();
+        return new levelingAuto();
     }
 }
