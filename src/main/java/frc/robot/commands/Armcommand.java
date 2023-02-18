@@ -12,8 +12,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 
-
-public class Armcommand extends CommandBase {
+public class ArmCommand extends CommandBase {
 
   private Arm arm;
 
@@ -22,7 +21,7 @@ public class Armcommand extends CommandBase {
   private boolean openGrabber;
 
   /** Creates a new Armcommand. */
-  public Armcommand(int position, boolean openGrabber) {
+  public ArmCommand(int position, boolean openGrabber) {
 
     // Intializes subsystems and variables.
     arm = Arm.getInstance();
@@ -35,7 +34,8 @@ public class Armcommand extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -45,7 +45,7 @@ public class Armcommand extends CommandBase {
     arm.setDesiredPosition(position);
     arm.setReleaseOnFinish(openGrabber);
     arm.startMoving();
-    
+
   }
 
   // Called once the command ends or is interrupted.

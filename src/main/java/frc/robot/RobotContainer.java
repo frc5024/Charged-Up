@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.Arm;
-import frc.robot.commands.Armcommand;
+import frc.robot.commands.ArmCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -66,8 +66,8 @@ public class RobotContainer {
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
 
     /* Operator Buttons */
-    scoreMid.onTrue(new Armcommand(-2500, true));
-    scoreHybrid.onTrue(new Armcommand(-3240, true));
+    scoreMid.onTrue(new ArmCommand(Constants.ArmConstants.midArmPosition, true));
+    scoreHybrid.onTrue(new ArmCommand(Constants.ArmConstants.hybridArmPosition, true));
     zeroEncoder.onTrue(new InstantCommand(() -> arm.startZeroing()));
 
   }
