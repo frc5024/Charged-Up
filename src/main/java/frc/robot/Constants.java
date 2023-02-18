@@ -185,7 +185,7 @@ public final class Constants {
   public static class DrawerConstants {
 
     // Distance that the robot thinks the drawer wall is at
-    public static final int distanceWall = 400;
+    public static final int distanceWall = 115;
 
     // Channels that the solenoids in the drawer use
     public static final int drawerForwardChanel = 12;

@@ -44,7 +44,7 @@ public class RobotContainer {
   //Sets up controller bindings
   private final JoystickButton drawerRetractor = new JoystickButton(driver, XboxController.Button.kBack.value);
   private final JoystickButton drawerExtender = new JoystickButton(driver, XboxController.Button.kStart.value);
-  private final JoystickButton gripperClose = new JoystickButton(driver, XboxController.Button.kY.value);
+  private final JoystickButton gripperClose = new JoystickButton(driver, XboxController.Button.kB.value);
   private final JoystickButton gripperOpen = new JoystickButton(driver, XboxController.Button.kA.value);
 
   /* Subsystems */
