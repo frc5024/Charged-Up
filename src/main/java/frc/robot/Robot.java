@@ -22,6 +22,8 @@ import frc.robot.subsystems.Drawer;
  * project.
  */
 public class Robot extends TimedRobot {
+  public static CTREConfigs ctreConfigs;
+
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
@@ -35,8 +37,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    // Instantiate our RobotContainer. This will perform all our button bindings,
-    // and put our
+    ctreConfigs = new CTREConfigs();
+    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
@@ -46,9 +48,8 @@ public class Robot extends TimedRobot {
   }
 
   /**
-   * This function is called every 20 ms, no matter the mode. Use this for items
-   * like diagnostics
-   * that you want ran during disabled, autonomous, teleoperated and test.
+   * This function is called every robot packet, no matter the mode. Use this for items like
+   * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
    *
    * <p>
    * This runs after the mode specific periodic functions, but before LiveWindow
