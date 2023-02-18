@@ -5,14 +5,14 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.Arm;
 import frc.robot.commands.ArmCommand;
+import frc.robot.commands.TeleopSwerve;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 
-import frc.robot.autos.*;
-import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
 /**
@@ -41,11 +41,19 @@ public class RobotContainer {
   private final JoystickButton scoreHybrid = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
   private final JoystickButton zeroEncoder = new JoystickButton(operator, XboxController.Button.kX.value);
 
+  //Sets up controller bindings
+  private final JoystickButton drawerRetractor = new JoystickButton(driver, XboxController.Button.kBack.value);
+  private final JoystickButton drawerExtender = new JoystickButton(driver, XboxController.Button.kStart.value);
+  private final JoystickButton gripperClose = new JoystickButton(driver, XboxController.Button.kB.value);
+  private final JoystickButton gripperOpen = new JoystickButton(driver, XboxController.Button.kA.value);
+
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
   private final Arm arm = Arm.getInstance();
+  //Gets instances for the two classes used in the button bidings
+  private final Drawer s_Drawer = Drawer.getInstance();
+  private final Gripper s_Gripper = Gripper.getInstance();
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     s_Swerve.setDefaultCommand(
         new TeleopSwerve(s_Swerve, () -> -driver.getRawAxis(translationAxis), () -> -driver.getRawAxis(strafeAxis),
@@ -70,15 +78,18 @@ public class RobotContainer {
     scoreHybrid.onTrue(new ArmCommand(Constants.ArmConstants.hybridArmPosition, true));
     zeroEncoder.onTrue(new InstantCommand(() -> arm.startZeroing()));
 
+    //When a button is pressed runs its respective method inside drawer
+    drawerRetractor.onTrue(new InstantCommand(() -> s_Drawer.retractDrawer()));
+    drawerExtender.onTrue(new InstantCommand(() -> s_Drawer.extendDrawer()));
+
+    //When a button is pressed runs its respective method inside gripper
+    gripperOpen.onTrue(new InstantCommand(() -> s_Gripper.openGripper()));
+    gripperClose.onTrue(new InstantCommand(() -> s_Gripper.closeGripper()));
+
   }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return new exampleAuto(s_Swerve);
+    return null;
+
   }
 }
