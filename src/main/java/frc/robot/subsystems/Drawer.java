@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.hal.I2CJNI;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -25,12 +26,12 @@ public class Drawer extends SubsystemBase {
     // initializes the ultrasonic
     private Ultrasonic m_rangeFinder = new Ultrasonic(Constants.DrawerConstants.usPingChanel,
             Constants.DrawerConstants.usEchoChanel);
-
-    // distance returned from the ultrasonic
-    private double distanceMillimeters;
+    private double distanceMillimeters = 0.0;
     // distance from sensor to drawer wall, MUST be in mm
     // says if an object is in the drawer
     private Boolean objectIn = false;
+
+    
 
     // Makes it a singleton
     public static Drawer getInstance() {
@@ -54,9 +55,12 @@ public class Drawer extends SubsystemBase {
     // Creates the variable that stores the state machine
     private StateMachine<DrawerStates> stateMachine;
 
-    private Drawer() {
+    
 
-        Ultrasonic.setAutomaticMode(true);
+    private Drawer() {
+     
+    //m_rangeFinder = new Ultrasonic(Constants.DrawerConstants.usPingChanel,Constants.DrawerConstants.usEchoChanel);
+
         // creates state machine
         stateMachine = new StateMachine<>("Drawer Statemachine");
 
@@ -68,7 +72,7 @@ public class Drawer extends SubsystemBase {
         extender = new DoubleSolenoid(Constants.PneumaticConstants.PneumaticHub, PneumaticsModuleType.REVPH,
                 Constants.DrawerConstants.drawerForwardChanel,
                 Constants.DrawerConstants.drawerReverseChanel);
-
+        m_rangeFinder.setAutomaticMode(true);
         // Inicialize testing Controller
 
     }
@@ -118,6 +122,7 @@ public class Drawer extends SubsystemBase {
     public void periodic() {
         stateMachine.update();
         // distance returned from sensor
+        //m_rangeFinder.ping();
         distanceMillimeters = m_rangeFinder.getRangeMM();
         System.out.println(distanceMillimeters);
         // distance from sensor to wall is constant, so if the returned distance is less

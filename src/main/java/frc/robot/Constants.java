@@ -35,8 +35,8 @@ public final class Constants {
     // cube
     // this stores it for a logic statement used in the drawer code
     public static final int CubeNonsenseValue = 5000;
-    public static final int usPingChanel = 6;
-    public static final int usEchoChanel = 7;
+    public static final int usPingChanel = 7;
+    public static final int usEchoChanel = 6;
   }
 
   public static class GripperConstants {
