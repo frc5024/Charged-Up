@@ -1,5 +1,6 @@
 # This gitignore has been specially created by the WPILib team.
 # If you remove items from this file, intellisense might break.
+# 5024 .gitignore
 
 ### C++ ###
 # Prerequisites
@@ -109,6 +110,7 @@ Temporary Items
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+!.vscode/java-formatter.xml
 
 ### Windows ###
 # Windows thumbnail cache files
