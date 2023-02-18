@@ -28,15 +28,15 @@ public final class Constants {
   }
 
   public static class DrawerConstants {
-    public static final int distanceWall = 200;
-    public static final int drawerForwardChanel = 13;
-    public static final int drawerReverseChanel = 12;
+    public static final int distanceWall = 400;
+    public static final int drawerForwardChanel = 12;
+    public static final int drawerReverseChanel = 13;
     // sometimes the ultrasonic reads a nonsense distance value when it sees the
     // cube
     // this stores it for a logic statement used in the drawer code
     public static final int CubeNonsenseValue = 5000;
-    public static final int usPingChanel = 7;
-    public static final int usEchoChanel = 6;
+    public static final int usPingChanel = 5;
+    public static final int usEchoChanel = 4;
   }
 
   public static class GripperConstants {

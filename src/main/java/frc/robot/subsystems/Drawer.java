@@ -1,37 +1,40 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.hal.I2CJNI;
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+
+//Used for the solenoids
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+//Allows the use of state machines
 import frc.robot.liblite.StateMachine;
 import frc.robot.liblite.StateMetadata;
-import edu.wpi.first.wpilibj.XboxController;
 
+//Allows for the use of an ultrasonic sensor
 import edu.wpi.first.wpilibj.Ultrasonic;
-import frc.robot.Constants;
-import frc.robot.RobotContainer;
 
 public class Drawer extends SubsystemBase {
-    // tells us if an instance of this already exists
+
+    // Tells us if an instance of this already exists
     private static Drawer mInstance = null;
-    private Boolean drawerExtended;
-    // initializes solenoid object
+
+    // Initializes Doublesolenoid
     private DoubleSolenoid extender;
 
-    // initializes the ultrasonic
+    // initializes the ultrasonic and creates it
     private Ultrasonic m_rangeFinder = new Ultrasonic(Constants.DrawerConstants.usPingChanel,
             Constants.DrawerConstants.usEchoChanel);
+
+    // Stores the distance that the ultrasoic is detecting
     private double distanceMillimeters = 0.0;
-    // distance from sensor to drawer wall, MUST be in mm
-    // says if an object is in the drawer
+
+    // Changes based on the output from the ultrasonic
     private Boolean objectIn = false;
 
-    
+    // Stores the current state of the drawer
+    private boolean drawerExtended;
 
     // Makes it a singleton
     public static Drawer getInstance() {
@@ -44,10 +47,10 @@ public class Drawer extends SubsystemBase {
     // Creates the states for the Drawer
     public enum DrawerStates {
 
-        // Simplified state where the drawer is retracted
+        // State where the drawer is retracted
         DRAWERIN,
 
-        // Simplified state where the drawer is extended
+        // State where the drawer is extended
         DRAWEROUT;
 
     }
@@ -55,11 +58,8 @@ public class Drawer extends SubsystemBase {
     // Creates the variable that stores the state machine
     private StateMachine<DrawerStates> stateMachine;
 
-    
-
+    // Constructor
     private Drawer() {
-     
-    //m_rangeFinder = new Ultrasonic(Constants.DrawerConstants.usPingChanel,Constants.DrawerConstants.usEchoChanel);
 
         // creates state machine
         stateMachine = new StateMachine<>("Drawer Statemachine");
@@ -72,71 +72,76 @@ public class Drawer extends SubsystemBase {
         extender = new DoubleSolenoid(Constants.PneumaticConstants.PneumaticHub, PneumaticsModuleType.REVPH,
                 Constants.DrawerConstants.drawerForwardChanel,
                 Constants.DrawerConstants.drawerReverseChanel);
-        m_rangeFinder.setAutomaticMode(true);
-        // Inicialize testing Controller
 
+        // Sets the ultrasonic to digital mode
+        m_rangeFinder.setAutomaticMode(true);
     }
 
-    // moves the drawer in, handles solenoids
+    // Method that states what the retracted state does
     public void handleDrawerIn(StateMetadata<DrawerStates> metaData) {
 
-        // Sets the solenoid to retracted position when in this state
         if (metaData.isFirstRun()) {
 
+            // Sets the solenoid to retracted position when in this state
             extender.set(Value.kReverse);
+
+            // Sets the variable that stores if the drawer is extended or not to false
             drawerExtended = false;
         }
 
-        // When Y is pressed sets drawer to DRAWEROUT State
-
     }
 
-    // moves the drawer out, handles solenoids
+    // Method that states what the extended state does
     public void handleDrawerOut(StateMetadata<DrawerStates> metaData) {
 
-        // Sets the solenoid to extended position when in this state
         if (metaData.isFirstRun()) {
 
+            // Sets the solenoid to extended position when in this state
             extender.set(Value.kForward);
+
+            // Sets the variable that stores if the drawer is extended or not to true
             drawerExtended = true;
         }
 
+        // Stores the distance (in MM) being detected by the ultrasonic inside the
+        // "distanceMillimeters" variable
+        distanceMillimeters = m_rangeFinder.getRangeMM();
+        System.out.println(distanceMillimeters);
+
+        // Checks if the distance being detected by the ultrasonic is smaller than the
+        // distance to the wall
+        // or if it is greater than 5000 (happens when an object is too close)
+        if (distanceMillimeters < Constants.DrawerConstants.distanceWall
+                || distanceMillimeters >= Constants.DrawerConstants.CubeNonsenseValue) {
+
+            objectIn = true;
+
+            // Sets the drawer to retracted state when coditions are met
+            retractDrawer();
+
+        } else {
+            objectIn = false;
+        }
+        System.out.println(objectIn);
+
     }
 
-    // extends the drawer, callable from outside the class
+    // Sets the drawer to extended state
     public void extendDrawer() {
-
+        System.out.println("extending");
         stateMachine.setState(DrawerStates.DRAWEROUT);
-
     }
 
-    // retracts drawer, callable from outside the class
+    // Sets the drawer to retracted state
     public void retractDrawer() {
-
+        System.out.println("retracting");
         stateMachine.setState(DrawerStates.DRAWERIN);
-
     }
 
     // Makes the state machine run periodically
     @Override
     public void periodic() {
         stateMachine.update();
-        // distance returned from sensor
-        //m_rangeFinder.ping();
-        distanceMillimeters = m_rangeFinder.getRangeMM();
-        System.out.println(distanceMillimeters);
-        // distance from sensor to wall is constant, so if the returned distance is less
-        // than that an object is inside
-        // we also get a weird glitch where the cube reads at this value or higher
-        if (distanceMillimeters < Constants.DrawerConstants.distanceWall
-                || distanceMillimeters >= Constants.DrawerConstants.CubeNonsenseValue
-                        && drawerExtended == true) {
-            objectIn = true;
-            retractDrawer();
-        } else {
-            objectIn = false;
-        }
-        System.out.println(objectIn);
-    }
 
+    }
 }
