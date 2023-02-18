@@ -12,6 +12,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.SynchronousInterrupt;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -70,7 +71,7 @@ public class AutoLevel extends CommandBase {
       s_Swerve.drive(new Translation2d(1.2, 0), 0, false, true);
 
       // switch to leveling mode when angle is great enough
-      if (gyro.getPitch() < -5 || gyro.getPitch() > 5) levelingMode = true;
+      if (gyro.getPitch() < -3 || gyro.getPitch() > 3) levelingMode = true;
     }
   }
 

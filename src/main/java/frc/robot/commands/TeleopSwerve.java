@@ -5,6 +5,7 @@ import frc.robot.subsystems.Swerve;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -17,6 +18,7 @@ public class TeleopSwerve extends CommandBase {
     private DoubleSupplier strafeSup;
     private DoubleSupplier rotationSup;
     private BooleanSupplier robotCentricSup;
+    AHRS gyro = new AHRS();
 
     public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup) {
         this.s_Swerve = s_Swerve;
@@ -30,6 +32,12 @@ public class TeleopSwerve extends CommandBase {
 
     @Override
     public void execute() {
+
+
+
+        System.out.println(gyro.getYaw());
+
+        System.out.println();
         /* Get Values, Deadband*/
         double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
         double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
@@ -41,6 +49,7 @@ public class TeleopSwerve extends CommandBase {
             rotationVal * Constants.Swerve.maxAngularVelocity, 
             !robotCentricSup.getAsBoolean(), 
             true
+
         );
     }
 }
