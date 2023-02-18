@@ -1,24 +1,21 @@
 package frc.robot.subsystems;
 
-//This is where we import stuff.
-import frc.robot.Constants;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.liblite.StateMachine;
-import frc.robot.liblite.StateMetadata;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.motorcontrol.Talon;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+//This is where we import stuff.
+import frc.robot.Constants;
+import frc.robot.liblite.StateMachine;
+import frc.robot.liblite.StateMetadata;
 
 public class Arm extends SubsystemBase {
     private static Arm mInstance = null;
-    
+
     private TalonSRX topMotor;
     private TalonSRX bottomMotor;
 
@@ -29,7 +26,7 @@ public class Arm extends SubsystemBase {
     private double kP;
     private double kI;
     private double kD;
-    
+
     private int desiredPosition;
     private boolean limitPushed;
     private boolean releaseOnFinish;
@@ -76,9 +73,9 @@ public class Arm extends SubsystemBase {
         stateMachine.addState(ArmStates.HOLD, this::handleHold);
         stateMachine.addState(ArmStates.ZEROING, this::handleZeroing);
 
-        kP = 0.95/1000;
+        kP = 0.95 / 1000;
         kI = 0;
-        kD = 0/1000;
+        kD = 0 / 1000;
 
         pid = new PIDController(kP, kI, kD);
 
@@ -101,7 +98,7 @@ public class Arm extends SubsystemBase {
 
         if (metaData.isFirstRun()) {
             // TODO: open grabber here
-            
+
             // Reset releaseOnFinish back to false.
             releaseOnFinish = false;
         }
@@ -126,8 +123,8 @@ public class Arm extends SubsystemBase {
         } else if (outerLimitTriggered()) {
             limitPushed = true;
             setSpeed(Constants.ArmConstants.armSpeed);
-            
-        // Check if the limited is currently being pushed
+
+            // Check if the limited is currently being pushed
         } else if (!limitPushed) {
 
             // if (topMotor.getSelectedSensorPosition() >= desiredPosition - 5 || topMotor.getSelectedSensorPosition() <= desiredPosition + 5)
@@ -138,21 +135,21 @@ public class Arm extends SubsystemBase {
                 // Use pid to set the motor speed, to move the arm to its desired position.
                 setSpeed(pid.calculate(topMotor.getSelectedSensorPosition(), desiredPosition));
 
-            } else if (releaseOnFinish){
-            // If at desired position, set subsystem state to HOLD.
-            stateMachine.setState(ArmStates.DISPATCH);
+            } else if (releaseOnFinish) {
+                // If at desired position, set subsystem state to HOLD.
+                stateMachine.setState(ArmStates.DISPATCH);
 
             } else {
-               // If at desired position, set subsystem state to HOLD.
-            stateMachine.setState(ArmStates.HOLD); 
+                // If at desired position, set subsystem state to HOLD.
+                stateMachine.setState(ArmStates.HOLD);
             }
-            
+
         } else {
             // If no longer triggering the limit switch,
             // Set limitedPushed to false and set subsystem state to HOLD.
             limitPushed = false;
-            stateMachine.setState(ArmStates.HOLD); 
-        }         
+            stateMachine.setState(ArmStates.HOLD);
+        }
 
     }
 
@@ -200,73 +197,73 @@ public class Arm extends SubsystemBase {
     }
 
     /**
-   * Sets the desired postion to the input value.
-   */
+    * Sets the desired postion to the input value.
+    */
     public void setDesiredPosition(int position) {
         desiredPosition = position;
     }
 
     /**
-   * Sets the subsystem state to MOVING.
-   */
+    * Sets the subsystem state to MOVING.
+    */
     public void startMoving() {
         stateMachine.setState(ArmStates.MOVING);
     }
 
     /**
-   * Sets the subsystem state to HOLD.
-   */
+    * Sets the subsystem state to HOLD.
+    */
     public void hold() {
-        stateMachine.setState(ArmStates.HOLD); 
+        stateMachine.setState(ArmStates.HOLD);
     }
 
     /**
-   * Sets the percent speed of the arm motors to the input value.
-   */
-    public void setSpeed(double speed){
-        speed = MathUtil.clamp(speed, -0.25, 0.25 );
-        topMotor.set(ControlMode.PercentOutput,(speed));
-        bottomMotor.set(ControlMode.PercentOutput,(speed));
-               
+    * Sets the percent speed of the arm motors to the input value.
+    */
+    public void setSpeed(double speed) {
+        speed = MathUtil.clamp(speed, -0.25, 0.25);
+        topMotor.set(ControlMode.PercentOutput, (speed));
+        bottomMotor.set(ControlMode.PercentOutput, (speed));
+
     }
 
     /**
-   * Sets the percent speed to zero.
-   */
+    * Sets the percent speed to zero.
+    */
     public void stopArm() {
-        topMotor.set(ControlMode.PercentOutput,(0));
-        bottomMotor.set(ControlMode.PercentOutput,(0));
+        topMotor.set(ControlMode.PercentOutput, (0));
+        bottomMotor.set(ControlMode.PercentOutput, (0));
     }
 
     /**
-   * Checks if the inner limit switch is currently triggered.
-   *
-   * @return true or false
-   */
+    * Checks if the inner limit switch is currently triggered.
+    *
+    * @return true or false
+    */
     public boolean innerLimitTriggered() {
         return !innerLimitSwitch.get();
     }
 
     /**
-   * Checks if the outer limit switch is currently triggered.
-   *
-   * @return true or false
-   */
+    * Checks if the outer limit switch is currently triggered.
+    *
+    * @return true or false
+    */
     public boolean outerLimitTriggered() {
         return !outerLimitSwitch.get();
     }
 
     /**
-   * Set the subsystem state to ZEROING.
-   */
+    * Set the subsystem state to ZEROING.
+    */
     public void startZeroing() {
         stateMachine.setState(ArmStates.ZEROING);
 
     }
 
     /**
-   * Set releaseOnFinished to true or false based on command input.
-   */
+    * Set releaseOnFinished to true or false based on command input.
+    */
     public void setReleaseOnFinish(boolean openGrabber) {
         releaseOnFinish = openGrabber;
 

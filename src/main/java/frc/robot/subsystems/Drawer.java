@@ -1,19 +1,16 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
-
 // Used for the solenoids
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+// Allows for the use of an ultrasonic sensor
+import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 // Allows the use of state machines
 import frc.robot.liblite.StateMachine;
 import frc.robot.liblite.StateMetadata;
-
-// Allows for the use of an ultrasonic sensor
-import edu.wpi.first.wpilibj.Ultrasonic;
 
 public class Drawer extends SubsystemBase {
 

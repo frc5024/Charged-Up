@@ -31,5 +31,8 @@
   "editor.formatOnSave": true,
   "java.format.comments.enabled": false,
   "java.compile.nullAnalysis.mode": "disabled",
-  "java.format.settings.url": ".vscode/java-formatter.xml"
+  "java.format.settings.url": ".vscode/java-formatter.xml",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  }
 }
