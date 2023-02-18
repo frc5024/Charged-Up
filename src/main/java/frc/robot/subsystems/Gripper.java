@@ -3,12 +3,12 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-//Used for the solenoids
+// Used for the solenoids
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
-//Allows the use of state machines
+// Allows the use of state machines
 import frc.robot.liblite.StateMachine;
 import frc.robot.liblite.StateMetadata;
 

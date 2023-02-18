@@ -1,45 +1,41 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 
-/**
- * The Constants class provides a convenient place for teams to hold robot-wide
- * numerical or boolean
- * constants. This class should not be used for any other purpose. All constants
- * should be declared
- * globally (i.e. public static). Do not put anything functional in this class.
- *
- * <p>
- * It is advised to statically import this class (or one of its inner classes)
- * wherever the
- * constants are needed, to reduce verbosity.
- */
 public final class Constants {
   public static class OperatorConstants {
+
+    // Port for the driver controller
     public static final int kDriverControllerPort = 0;
   }
 
   public static class PneumaticConstants {
+    // PneumaticHub port
     public static final int PneumaticHub = 50;
+
+    // Sets max and min pressures for the compressor
     public static final int minPressure = 80;
     public static final int maxPressure = 120;
   }
 
   public static class DrawerConstants {
+
+    // Distance that the robot thinks the drawer wall is at
     public static final int distanceWall = 400;
+
+    // Channels that the solenoids in the drawer use
     public static final int drawerForwardChanel = 12;
     public static final int drawerReverseChanel = 13;
-    // sometimes the ultrasonic reads a nonsense distance value when it sees the
-    // cube
-    // this stores it for a logic statement used in the drawer code
+
+    // Possible value that might be read by the ultrasonic if a piece is too close
     public static final int CubeNonsenseValue = 5000;
+
+    // Channels for the ultrasonic sensor
     public static final int usPingChanel = 5;
     public static final int usEchoChanel = 4;
   }
 
   public static class GripperConstants {
+
+    // Channels that the solenoids in the gripper use
     public static final int GripperOpenChanel = 14;
     public static final int GripperCloseChanel = 15;
   }
