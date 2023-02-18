@@ -42,7 +42,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
-    pHub = new PneumaticHub(Constants.PneumaticConstants.PneumaticHub);
+    pHub = new PneumaticHub(Constants.PneumaticConstants.pneumaticHub);
     pHub.enableCompressorAnalog(Constants.PneumaticConstants.minPressure, Constants.PneumaticConstants.maxPressure);
 
   }

@@ -52,9 +52,9 @@ public class Gripper extends SubsystemBase {
         stateMachine.addState(GripperStates.GripOpen, this::handleGripOpen);
 
         // Initialize Double Solenoid
-        extender = new DoubleSolenoid(Constants.PneumaticConstants.PneumaticHub, PneumaticsModuleType.REVPH,
-                Constants.GripperConstants.GripperOpenChanel,
-                Constants.GripperConstants.GripperCloseChanel);
+        extender = new DoubleSolenoid(Constants.PneumaticConstants.pneumaticHub, PneumaticsModuleType.REVPH,
+                Constants.GripperConstants.gripperOpenID,
+                Constants.GripperConstants.gripperCloseID);
     }
 
     // Method that states what the Closed state does

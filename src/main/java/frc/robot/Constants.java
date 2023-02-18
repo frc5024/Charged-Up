@@ -175,7 +175,7 @@ public final class Constants {
 
   public static class PneumaticConstants {
     // PneumaticHub port
-    public static final int PneumaticHub = 50;
+    public static final int pneumaticHub = 50;
 
     // Sets max and min pressures for the compressor
     public static final int minPressure = 80;
@@ -187,22 +187,22 @@ public final class Constants {
     // Distance that the robot thinks the drawer wall is at
     public static final int distanceWall = 115;
 
-    // Channels that the solenoids in the drawer use
-    public static final int drawerForwardChanel = 12;
-    public static final int drawerReverseChanel = 13;
+    // IDs that the solenoids in the drawer use
+    public static final int drawerForwardID = 12;
+    public static final int drawerReverseID = 13;
 
     // Possible value that might be read by the ultrasonic if a piece is too close
-    public static final int CubeNonsenseValue = 5000;
+    public static final int cubeNonsenseValue = 5000;
 
-    // Channels for the ultrasonic sensor
-    public static final int usPingChanel = 5;
-    public static final int usEchoChanel = 4;
+    // IDs for the ultrasonic sensor
+    public static final int usPingID = 5;
+    public static final int usEchoID = 4;
   }
 
   public static class GripperConstants {
 
-    // Channels that the solenoids in the gripper use
-    public static final int GripperOpenChanel = 14;
-    public static final int GripperCloseChanel = 15;
+    // IDs that the solenoids in the gripper use
+    public static final int gripperOpenID = 14;
+    public static final int gripperCloseID = 15;
   }
 }

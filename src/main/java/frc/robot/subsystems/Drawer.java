@@ -24,8 +24,8 @@ public class Drawer extends SubsystemBase {
     private DoubleSolenoid extender;
 
     // Initializes the ultrasonic and creates it
-    private Ultrasonic m_rangeFinder = new Ultrasonic(Constants.DrawerConstants.usPingChanel,
-            Constants.DrawerConstants.usEchoChanel);
+    private Ultrasonic m_rangeFinder = new Ultrasonic(Constants.DrawerConstants.usPingID,
+            Constants.DrawerConstants.usEchoID);
 
     // Stores the distance that the ultrasoic is detecting
     private double distanceMillimeters = 0.0;
@@ -69,9 +69,9 @@ public class Drawer extends SubsystemBase {
         stateMachine.addState(DrawerStates.DRAWEROUT, this::handleDrawerOut);
 
         // Initialize Double Solenoid
-        extender = new DoubleSolenoid(Constants.PneumaticConstants.PneumaticHub, PneumaticsModuleType.REVPH,
-                Constants.DrawerConstants.drawerForwardChanel,
-                Constants.DrawerConstants.drawerReverseChanel);
+        extender = new DoubleSolenoid(Constants.PneumaticConstants.pneumaticHub, PneumaticsModuleType.REVPH,
+                Constants.DrawerConstants.drawerForwardID,
+                Constants.DrawerConstants.drawerReverseID);
 
         // Sets the ultrasonic to digital mode
         m_rangeFinder.setAutomaticMode(true);
@@ -112,7 +112,7 @@ public class Drawer extends SubsystemBase {
         // distance to the wall
         // or if it is greater than 5000 (happens when an object is too close)
         if (distanceMillimeters < Constants.DrawerConstants.distanceWall
-                || distanceMillimeters >= Constants.DrawerConstants.CubeNonsenseValue) {
+                || distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue) {
 
             objectIn = true;
 
@@ -144,5 +144,5 @@ public class Drawer extends SubsystemBase {
         stateMachine.update();
 
     }
-    
+
 }
