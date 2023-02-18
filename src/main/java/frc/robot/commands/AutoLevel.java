@@ -20,7 +20,7 @@ import frc.robot.subsystems.Swerve;
 
 
 public class AutoLevel extends CommandBase {
-  /** Creates a new AutoLevel. */
+  
   AHRS gyro = new AHRS();
   Swerve s_Swerve = Swerve.getInstance();
 
@@ -32,12 +32,16 @@ public class AutoLevel extends CommandBase {
   //Sets Pidreal (Gives accurate pitch angle to PID)
   double pidreal;
 
+  //Enter leveling mode or not
+  boolean levelingMode = false;
+
   //Sends simulated pitch angle to shuffleboard
   private ShuffleboardTab tab = Shuffleboard.getTab("Balance Testing");
   private GenericEntry angleTest =
     tab.add("Simulated Angle", 0)
     .getEntry();
 
+  /** Creates a new AutoLevel. */
   public AutoLevel() {
     // Use addRequirements() here to declare subsystem dependencies.
 
@@ -52,11 +56,22 @@ public class AutoLevel extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // pull pitch
-    pidreal = pid.calculate(gyro.getPitch());
-    // set motor speed
-    s_Swerve.drive(new Translation2d(-pidreal, 0), 0, false, true);
-    System.out.println(pidreal);
+
+    // if in leveling mode, attempt to balance, if not, drive forward until robot is
+    if (levelingMode == true) {
+      // pull pitch
+      pidreal = pid.calculate(gyro.getPitch());
+      // set motor speed
+      s_Swerve.drive(new Translation2d(-pidreal, 0), 0, false, true);
+      System.out.println(pidreal);
+    } else if (levelingMode == false) {
+
+      // drive forward to get onto charge station
+      s_Swerve.drive(new Translation2d(1.2, 0), 0, false, true);
+
+      // switch to leveling mode when angle is great enough
+      if (gyro.getPitch() < -5 || gyro.getPitch() > 5) levelingMode = true;
+    }
   }
 
   // Called once the command ends or is interrupted.
