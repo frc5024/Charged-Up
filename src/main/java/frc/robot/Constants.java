@@ -197,6 +197,9 @@ public final class Constants {
     // IDs for the ultrasonic sensor
     public static final int usPingID = 5;
     public static final int usEchoID = 4;
+
+    // Elapsed time before the drawer will go in to avoid false inputs
+    public static final double drawerTimer = 3;
   }
 
   public static class GripperConstants {

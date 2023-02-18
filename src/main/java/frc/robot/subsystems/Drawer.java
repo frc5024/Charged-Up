@@ -3,9 +3,12 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+import javax.lang.model.util.ElementScanner14;
+
 // Used for the solenoids
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 // Allows the use of state machines
@@ -31,10 +34,11 @@ public class Drawer extends SubsystemBase {
     private double distanceMillimeters = 0.0;
 
     // Changes based on the output from the ultrasonic
-    private Boolean objectIn = false;
 
     // Stores the current state of the drawer
     private boolean drawerExtended;
+
+    private Timer timer = new Timer();
 
     // Makes it a singleton
     public static Drawer getInstance() {
@@ -111,19 +115,24 @@ public class Drawer extends SubsystemBase {
         // Checks if the distance being detected by the ultrasonic is smaller than the
         // distance to the wall
         // or if it is greater than 5000 (happens when an object is too close)
-        if (distanceMillimeters < Constants.DrawerConstants.distanceWall
-                || distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue) {
+        if ((distanceMillimeters < Constants.DrawerConstants.distanceWall
+                || distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue)) {
 
-            objectIn = true;
-
-            // Sets the drawer to retracted state when coditions are met
-            retractDrawer();
-
-        } else {
-            objectIn = false;
+            timer.start();
         }
-        System.out.println(objectIn);
 
+        if (timer.get() >= Constants.DrawerConstants.drawerTimer) {
+            if (distanceMillimeters < Constants.DrawerConstants.distanceWall
+                    || distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue) {
+                timer.stop();
+                timer.reset();
+                retractDrawer();
+
+            } else {
+
+            }
+
+        }
     }
 
     // Sets the drawer to extended state

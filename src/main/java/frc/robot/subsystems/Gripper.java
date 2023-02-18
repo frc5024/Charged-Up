@@ -48,8 +48,8 @@ public class Gripper extends SubsystemBase {
         stateMachine = new StateMachine<>("Gripper Statemachine");
 
         // Assigns the states to their methods
-        stateMachine.setDefaultState(GripperStates.GripClose, this::handleGripClose);
-        stateMachine.addState(GripperStates.GripOpen, this::handleGripOpen);
+        stateMachine.addState(GripperStates.GripClose, this::handleGripClose);
+        stateMachine.setDefaultState(GripperStates.GripOpen, this::handleGripOpen);
 
         // Initialize Double Solenoid
         extender = new DoubleSolenoid(Constants.PneumaticConstants.pneumaticHub, PneumaticsModuleType.REVPH,
