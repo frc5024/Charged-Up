@@ -3,16 +3,16 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-//Used for the solenoids
+// Used for the solenoids
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
-//Allows the use of state machines
+// Allows the use of state machines
 import frc.robot.liblite.StateMachine;
 import frc.robot.liblite.StateMetadata;
 
-//Allows for the use of an ultrasonic sensor
+// Allows for the use of an ultrasonic sensor
 import edu.wpi.first.wpilibj.Ultrasonic;
 
 public class Drawer extends SubsystemBase {
@@ -23,7 +23,7 @@ public class Drawer extends SubsystemBase {
     // Initializes Doublesolenoid
     private DoubleSolenoid extender;
 
-    // initializes the ultrasonic and creates it
+    // Initializes the ultrasonic and creates it
     private Ultrasonic m_rangeFinder = new Ultrasonic(Constants.DrawerConstants.usPingChanel,
             Constants.DrawerConstants.usEchoChanel);
 
@@ -61,7 +61,7 @@ public class Drawer extends SubsystemBase {
     // Constructor
     private Drawer() {
 
-        // creates state machine
+        // Creates state machine
         stateMachine = new StateMachine<>("Drawer Statemachine");
 
         // Assigns the states to their methods
@@ -144,4 +144,5 @@ public class Drawer extends SubsystemBase {
         stateMachine.update();
 
     }
+    
 }
