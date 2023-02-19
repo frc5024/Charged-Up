@@ -18,17 +18,15 @@ public class AutoLevel extends CommandBase {
   // create new NavX object
   AHRS gyro = new AHRS();
 
+  PIDController pid = new PIDController(0.07, 0, 0.0);
+
+  Timer timer = new Timer();
+
   // grab swerve singleton
   Swerve s_Swerve = Swerve.getInstance();
 
-  //PID controller
-  PIDController pid = new PIDController(0.07, 0, 0.0);
-
-  //Enter leveling mode or not
   boolean levelingMode = false;
-
-  // create new timertinme
-  Timer timer = new Timer();
+  boolean timerRunning;
 
   /** Creates a new AutoLevel. */
   public AutoLevel() {
@@ -47,12 +45,12 @@ public class AutoLevel extends CommandBase {
   public void execute() {
 
     // if in leveling mode, attempt to balance, if not, drive forward until robot is
-    if (levelingMode == true) {
+    if (levelingMode) {
 
       // set motor speed
       s_Swerve.drive(new Translation2d(-pid.calculate(gyro.getPitch()), 0), 0, false, true);
 
-    } else if (levelingMode == false) {
+    } else if (!levelingMode) {
 
       // drive forward to get onto charge station
       s_Swerve.drive(new Translation2d(1.2, 0), 0, false, true);
@@ -74,7 +72,20 @@ public class AutoLevel extends CommandBase {
   @Override
   public boolean isFinished() {
 
+    // Guard Clause
+    if (Math.abs(gyro.getPitch()) > 1){
+      timer.reset();
+      timerRunning = false;
+      return false;
+    }
 
-    return false;
+    // Start if not started
+    if(!timerRunning){
+      timer.start();
+      timerRunning = true;
+    }
+    
+    // Check for completion
+    return timer.hasElapsed(3);
   }
 }
