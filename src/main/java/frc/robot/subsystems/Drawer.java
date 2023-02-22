@@ -38,6 +38,8 @@ public class Drawer extends SubsystemBase {
     // Stores the current state of the drawer
     private boolean drawerExtended;
 
+    private boolean gripperOpen = true;
+
     private Timer timer = new Timer();
 
     // Makes it a singleton
@@ -130,9 +132,18 @@ public class Drawer extends SubsystemBase {
 
             } else {
 
+                timer.reset();
             }
 
         }
+    }
+
+    public void isGripperOpenSetFalse(){
+        gripperOpen = false;
+    }
+
+    public void isGripperOpenSetTrue(){
+        gripperOpen = true;
     }
 
     // Sets the drawer to extended state
@@ -143,10 +154,20 @@ public class Drawer extends SubsystemBase {
 
     // Sets the drawer to retracted state
     public void retractDrawer() {
+
+        if(gripperOpen = true){
         System.out.println("retracting");
         stateMachine.setState(DrawerStates.DRAWERIN);
+
+        }
+        else {
+
+            System.out.println("gripper is closed");
+
+        }
     }
 
+  
     // Makes the state machine run periodically
     @Override
     public void periodic() {

@@ -81,10 +81,13 @@ public class RobotContainer {
     //When a button is pressed runs its respective method inside drawer
     drawerRetractor.onTrue(new InstantCommand(() -> s_Drawer.retractDrawer()));
     drawerExtender.onTrue(new InstantCommand(() -> s_Drawer.extendDrawer()));
+    gripperClose.onTrue(new InstantCommand(() -> s_Drawer.isGripperOpenSetFalse()));
+    gripperOpen.onTrue(new InstantCommand(() -> s_Drawer.isGripperOpenSetTrue()));
 
     //When a button is pressed runs its respective method inside gripper
     gripperOpen.onTrue(new InstantCommand(() -> s_Gripper.openGripper()));
     gripperClose.onTrue(new InstantCommand(() -> s_Gripper.closeGripper()));
+  
 
   }
 
