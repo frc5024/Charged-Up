@@ -22,7 +22,7 @@ public class Drawer extends SubsystemBase {
     private DoubleSolenoid extender;
 
     // Initializes the ultrasonic and creates it
-    private Ultrasonic m_rangeFinder = new Ultrasonic(Constants.DrawerConstants.usPingID,
+    private static Ultrasonic m_rangeFinder = new Ultrasonic(Constants.DrawerConstants.usPingID,
             Constants.DrawerConstants.usEchoID);
 
     // Stores the distance that the ultrasoic is detecting
@@ -115,25 +115,7 @@ public class Drawer extends SubsystemBase {
         // It also has a timer that checks for how long an object has been in,
         // after an object has been in for a certain period of time retracts drawer,
         // f the object leaves the timer restarts
-        if ((distanceMillimeters < Constants.DrawerConstants.distanceWall
-                || distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue)) {
 
-            timer.start();
-        }
-
-        if (timer.get() >= Constants.DrawerConstants.drawerTimer) {
-            if (distanceMillimeters < Constants.DrawerConstants.distanceWall
-                    || distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue) {
-                timer.stop();
-                timer.reset();
-                retractDrawer();
-
-            } else {
-
-                timer.reset();
-            }
-
-        }
     }
 
     // Sets the drawer to extended state
@@ -152,6 +134,29 @@ public class Drawer extends SubsystemBase {
     @Override
     public void periodic() {
         stateMachine.update();
+
+        // if ((distanceMillimeters < Constants.DrawerConstants.distanceWall
+        //         || (distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue))) {
+
+        //     timer.start();
+        // }
+
+        // if (timer.get() >= Constants.DrawerConstants.drawerTimer) {
+        //     if (distanceMillimeters < Constants.DrawerConstants.distanceWall
+        //             || distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue) {
+        //         timer.stop();
+        //         timer.reset();
+        //         retractDrawer();
+
+        //     } else {
+
+        //         timer.reset();
+        //     }
+        // }
+
+       // System.out.println("Time value: " + timer.get());
+
+        System.out.println("Distance millimeters: " + distanceMillimeters);
 
     }
 

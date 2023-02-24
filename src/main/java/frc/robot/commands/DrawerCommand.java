@@ -2,9 +2,9 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Drawer;
 import frc.robot.subsystems.Gripper;
-import frc.robot.Constants;
 
 public class DrawerCommand extends CommandBase {
 
@@ -28,58 +28,10 @@ public class DrawerCommand extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-
-        // Check if command should extend
-        if (shouldExtend == true) {
-
-            timer.start();
-            gripper.openGripper();
-
-            if (timer.get() >= Constants.DrawerCommandConstants.gripperVSDrawer && (gripper.isOpen == true)) {
-
-                timer.reset();
-                drawer.extendDrawer();
-            } else {
-                System.out.println("gripper closed");
-                timer.reset();
-
-            }
-
-        } else if (shouldExtend == false) {
-
-            timer.start();
-            gripper.openGripper();
-
-            if (timer.get() >= Constants.DrawerCommandConstants.gripperVSDrawer && (gripper.isOpen == true)) {
-
-                timer.reset();
-                drawer.retractDrawer();
-            } else {
-
-                System.out.println("gripper closed 2");
-
-                timer.reset();
-            }
-
-        }
-
-        /*
-        //if the drawer is in and the gripper is closed it stays that way
-        if (drawer.drawerExtended == false && (gripper.isOpen == false)) {
-            drawer.retractDrawer();
-            //if the drawer is out and the gripper is closed,
-            //the gripper opens and the drawer retracts
-        } else if (drawer.drawerExtended == true && (gripper.isOpen == false)) {
-            gripper.openGripper();
-            drawer.retractDrawer();
-            //if the drawer is out and the gripper is open,
-            //the drawer retracts
-        } else if (drawer.drawerExtended == true && (gripper.isOpen == true)) {
-            drawer.retractDrawer();
-        } else if (drawer.drawerExtended == false && (gripper.isOpen == true)) {
-            drawer.extendDrawer();
-        }
-        */
+        
+        timer.reset();
+        timer.start();
+        gripper.openGripper();
 
     }
 
@@ -87,16 +39,32 @@ public class DrawerCommand extends CommandBase {
     @Override
     public void execute() {
 
+        if (gripper.isOpen == false) {
+
+            cancel();
+        }
+
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+
+        if (shouldExtend == true) {
+        
+            drawer.extendDrawer();
+        }
+
+        if (shouldExtend == false) {
+
+            
+            drawer.retractDrawer();
+        }
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return true;
+        return timer.get() >= Constants.DrawerCommandConstants.gripperVSDrawer;
     }
 }

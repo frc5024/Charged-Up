@@ -6,7 +6,6 @@ import frc.robot.subsystems.Gripper;
 public class GripperCommand extends CommandBase {
 
   private Gripper gripper;
-
   private Boolean shouldOpen;
 
   public GripperCommand(Boolean shouldOpen) {
@@ -26,7 +25,7 @@ public class GripperCommand extends CommandBase {
       gripper.openGripper();
 
     } else if (shouldOpen == false) {
-      // Open gripper and retract drawer.
+    
       gripper.closeGripper();
 
     }

@@ -19,7 +19,7 @@ public class Gripper extends SubsystemBase {
     private DoubleSolenoid extender;
 
     //used for talking to commands
-    public boolean isOpen = true;
+    public boolean isOpen = false;
 
     // Makes it a singleton
     public static Gripper getInstance() {
