@@ -44,8 +44,8 @@ public class RobotContainer {
     private final JoystickButton scoreMid = new JoystickButton(operator, XboxController.Button.kY.value);
     private final JoystickButton scoreHybrid = new JoystickButton(operator, XboxController.Button.kA.value);
     private final JoystickButton zeroEncoder = new JoystickButton(operator, XboxController.Button.kX.value);
-    private final JoystickButton gripperClose = new JoystickButton(operator, XboxController.Axis.kLeftTrigger.value);
-    private final JoystickButton gripperOpen = new JoystickButton(operator, XboxController.Axis.kRightTrigger.value);
+    private final JoystickButton gripperClose = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton gripperOpen = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();

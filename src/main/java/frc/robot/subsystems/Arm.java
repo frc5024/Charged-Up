@@ -110,6 +110,8 @@ public class Arm extends SubsystemBase {
         // Resets pid on first run
         if (metaData.isFirstRun()) {
             pid.reset();
+            pid.calculate(topMotor.getSelectedSensorPosition(), desiredPosition);
+            pid.setTolerance(50);
         }
 
         // Checks if the limit switches are triggered.
@@ -128,8 +130,7 @@ public class Arm extends SubsystemBase {
             // if (topMotor.getSelectedSensorPosition() >= desiredPosition - 5 || topMotor.getSelectedSensorPosition() <= desiredPosition + 5)
 
             // Check if the arm is at its desired position
-            if (topMotor.getSelectedSensorPosition() > desiredPosition + 30
-                    || topMotor.getSelectedSensorPosition() < desiredPosition - 30) {
+            if (!pid.atSetpoint()) {
 
                 // Use pid to set the motor speed, to move the arm to its desired position.
                 setSpeed(pid.calculate(topMotor.getSelectedSensorPosition(), desiredPosition));
