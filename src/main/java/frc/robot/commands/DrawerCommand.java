@@ -39,21 +39,33 @@ public class DrawerCommand extends CommandBase {
             timer.start();
             gripper.openGripper();
 
-            if (timer.get()>= Constants.DrawerCommandConstants.gripperVSDrawer && (gripper.isOpen == true));
+            if (timer.get()>= Constants.DrawerCommandConstants.gripperVSDrawer && (gripper.isOpen == true)){
            
             timer.reset();
             drawer.extendDrawer();
-            
+            }
+            else {
+                System.out.println("gripper closed");
+                timer.reset();
+
+            }
            
         } else if (shouldExtend == false) {
 
             timer.start();
             gripper.openGripper();
 
-            if (timer.get()>= Constants.DrawerCommandConstants.gripperVSDrawer && (gripper.isOpen == true));
+            if (timer.get()>= Constants.DrawerCommandConstants.gripperVSDrawer && (gripper.isOpen == true)){
            
             timer.reset();
             drawer.retractDrawer();
+            }
+            else{
+
+            System.out.println("gripper closed 2");
+
+            timer.reset();
+            }
 
         }
 
