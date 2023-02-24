@@ -101,8 +101,8 @@ public class Arm extends SubsystemBase {
             releaseOnFinish = false;
         }
 
-        // Stops the arm from moving.
-        stopArm();
+        setSpeed(pid.calculate(topMotor.getSelectedSensorPosition(), desiredPosition));
+
     }
 
     public void handleMoving(StateMetadata<ArmStates> metaData) {
@@ -128,7 +128,8 @@ public class Arm extends SubsystemBase {
             // if (topMotor.getSelectedSensorPosition() >= desiredPosition - 5 || topMotor.getSelectedSensorPosition() <= desiredPosition + 5)
 
             // Check if the arm is at its desired position
-            if (topMotor.getSelectedSensorPosition() != desiredPosition) {
+            if (topMotor.getSelectedSensorPosition() > desiredPosition + 30
+                    || topMotor.getSelectedSensorPosition() < desiredPosition - 30) {
 
                 // Use pid to set the motor speed, to move the arm to its desired position.
                 setSpeed(pid.calculate(topMotor.getSelectedSensorPosition(), desiredPosition));
@@ -188,6 +189,7 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putBoolean("Inner Limit Triggered", innerLimitTriggered());
         SmartDashboard.putBoolean("Outer Limit Triggered", outerLimitTriggered());
         SmartDashboard.putNumber("Desired Position", desiredPosition);
+        SmartDashboard.putNumber("PID Error", pid.getPositionError());
 
         // Update the statemachine periodically.
         stateMachine.update();
@@ -274,6 +276,16 @@ public class Arm extends SubsystemBase {
     */
     public boolean readyToDispatch() {
         return stateMachine.getCurrentState() == ArmStates.DISPATCH;
+
+    }
+
+    /**
+    * Check if the subsystem is not in the MOVING state.
+    *
+    * @return true or false
+    */
+    public boolean isNotMoving() {
+        return stateMachine.getCurrentState() != ArmStates.MOVING;
 
     }
 

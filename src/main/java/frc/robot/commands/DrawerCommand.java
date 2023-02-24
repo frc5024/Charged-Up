@@ -23,10 +23,6 @@ public class DrawerCommand extends CommandBase {
 
         this.shouldExtend = shouldExtend;
 
-        // Adds subsystems as requirements.
-        addRequirements(drawer);
-        addRequirements(gripper);
-
     }
 
     // Called when the command is initially scheduled.
@@ -35,36 +31,34 @@ public class DrawerCommand extends CommandBase {
 
         // Check if command should extend
         if (shouldExtend == true) {
-            
+
             timer.start();
             gripper.openGripper();
 
-            if (timer.get()>= Constants.DrawerCommandConstants.gripperVSDrawer && (gripper.isOpen == true)){
-           
-            timer.reset();
-            drawer.extendDrawer();
-            }
-            else {
+            if (timer.get() >= Constants.DrawerCommandConstants.gripperVSDrawer && (gripper.isOpen == true)) {
+
+                timer.reset();
+                drawer.extendDrawer();
+            } else {
                 System.out.println("gripper closed");
                 timer.reset();
 
             }
-           
+
         } else if (shouldExtend == false) {
 
             timer.start();
             gripper.openGripper();
 
-            if (timer.get()>= Constants.DrawerCommandConstants.gripperVSDrawer && (gripper.isOpen == true)){
-           
-            timer.reset();
-            drawer.retractDrawer();
-            }
-            else{
+            if (timer.get() >= Constants.DrawerCommandConstants.gripperVSDrawer && (gripper.isOpen == true)) {
 
-            System.out.println("gripper closed 2");
+                timer.reset();
+                drawer.retractDrawer();
+            } else {
 
-            timer.reset();
+                System.out.println("gripper closed 2");
+
+                timer.reset();
             }
 
         }

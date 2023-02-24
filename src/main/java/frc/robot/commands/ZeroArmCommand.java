@@ -20,24 +20,21 @@ public class ZeroArmCommand extends CommandBase {
     arm = Arm.getInstance();
     gripper = Gripper.getInstance();
 
-    // Adds subsystems as requirements.
-    addRequirements(arm);
-    addRequirements(gripper);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
-    // Open gripper and then start the zeroing process.
-    gripper.openGripper();
-    arm.startZeroing();
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
+    // Open gripper and then start the zeroing process.
+    gripper.openGripper();
+    arm.startZeroing();
+
   }
 
   // Called once the command ends or is interrupted.
