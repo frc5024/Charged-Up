@@ -1,13 +1,11 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
-
 // Used for the solenoids
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 // Allows the use of state machines
 import frc.robot.liblite.StateMachine;
 import frc.robot.liblite.StateMetadata;
@@ -19,6 +17,9 @@ public class Gripper extends SubsystemBase {
 
     // Initializes Doublesolenoid
     private DoubleSolenoid extender;
+
+    //used for talking to commands
+    public boolean isOpen = true;
 
     // Makes it a singleton
     public static Gripper getInstance() {
@@ -82,11 +83,13 @@ public class Gripper extends SubsystemBase {
     // Method that opens the gripper
     public void openGripper() {
         stateMachine.setState(GripperStates.GripOpen);
+        isOpen = true;
     }
 
     // Method that closes the gripper
     public void closeGripper() {
         stateMachine.setState(GripperStates.GripClose);
+        isOpen = false;
     }
 
     // Makes the state machine run periodically

@@ -4,6 +4,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Timer;
 // Allows for the use of an ultrasonic sensor
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -31,7 +32,10 @@ public class Drawer extends SubsystemBase {
     private Boolean objectIn = false;
 
     // Stores the current state of the drawer
-    private boolean drawerExtended;
+    public boolean drawerExtended;
+
+    // Creates the timer for the ultrasonic
+    private Timer timer = new Timer();
 
     // Makes it a singleton
     public static Drawer getInstance() {
@@ -108,19 +112,28 @@ public class Drawer extends SubsystemBase {
         // Checks if the distance being detected by the ultrasonic is smaller than the
         // distance to the wall
         // or if it is greater than 5000 (happens when an object is too close)
-        if (distanceMillimeters < Constants.DrawerConstants.distanceWall
-                || distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue) {
+        // It also has a timer that checks for how long an object has been in,
+        // after an object has been in for a certain period of time retracts drawer,
+        // f the object leaves the timer restarts
+        if ((distanceMillimeters < Constants.DrawerConstants.distanceWall
+                || distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue)) {
 
-            objectIn = true;
-
-            // Sets the drawer to retracted state when coditions are met
-            retractDrawer();
-
-        } else {
-            objectIn = false;
+            timer.start();
         }
-        System.out.println(objectIn);
 
+        if (timer.get() >= Constants.DrawerConstants.drawerTimer) {
+            if (distanceMillimeters < Constants.DrawerConstants.distanceWall
+                    || distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue) {
+                timer.stop();
+                timer.reset();
+                retractDrawer();
+
+            } else {
+
+                timer.reset();
+            }
+
+        }
     }
 
     // Sets the drawer to extended state

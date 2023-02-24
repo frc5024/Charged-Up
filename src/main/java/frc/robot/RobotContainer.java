@@ -7,7 +7,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ArmCommand;
+import frc.robot.commands.DrawerCommand;
 import frc.robot.commands.TeleopSwerve;
+import frc.robot.commands.ZeroArmCommand;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drawer;
 import frc.robot.subsystems.Gripper;
@@ -33,21 +35,20 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton drawerAlternator = new JoystickButton(driver, XboxController.Button.kStart.value);
+    private final JoystickButton drawerExtender = new JoystickButton(driver, XboxController.Button.kB.value);
+    private final JoystickButton drawerRetractor = new JoystickButton(driver, XboxController.Button.kStart.value);
 
     /* Operator Buttons */
-    private final JoystickButton scoreMid = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
-    private final JoystickButton scoreHybrid = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
+    private final JoystickButton scoreMid = new JoystickButton(operator, XboxController.Button.kY.value);
+    private final JoystickButton scoreHybrid = new JoystickButton(operator, XboxController.Button.kA.value);
     private final JoystickButton zeroEncoder = new JoystickButton(operator, XboxController.Button.kX.value);
-
-    //Sets up controller bindings
-    private final JoystickButton drawerRetractor = new JoystickButton(driver, XboxController.Button.kBack.value);
-    private final JoystickButton drawerExtender = new JoystickButton(driver, XboxController.Button.kStart.value);
-    private final JoystickButton gripperClose = new JoystickButton(driver, XboxController.Button.kB.value);
-    private final JoystickButton gripperOpen = new JoystickButton(driver, XboxController.Button.kA.value);
+    private final JoystickButton gripperClose = new JoystickButton(operator, XboxController.Axis.kLeftTrigger.value);
+    private final JoystickButton gripperOpen = new JoystickButton(operator, XboxController.Axis.kRightTrigger.value);
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
-    private final Arm arm = Arm.getInstance();
+    private final Arm s_arm = Arm.getInstance();
     //Gets instances for the two classes used in the button bidings
     private final Drawer s_Drawer = Drawer.getInstance();
     private final Gripper s_Gripper = Gripper.getInstance();
@@ -58,7 +59,7 @@ public class RobotContainer {
                         () -> -driver.getRawAxis(strafeAxis),
                         () -> -driver.getRawAxis(rotationAxis), () -> robotCentric.getAsBoolean()));
 
-        // Configure the button bindings
+        // Configure the button binding
         configureButtonBindings();
     }
 
@@ -75,15 +76,13 @@ public class RobotContainer {
         /* Operator Buttons */
         scoreMid.onTrue(new ArmCommand(Constants.ArmConstants.midArmPosition, true));
         scoreHybrid.onTrue(new ArmCommand(Constants.ArmConstants.hybridArmPosition, true));
-        zeroEncoder.onTrue(new InstantCommand(() -> arm.startZeroing()));
+        zeroEncoder.onTrue(new ZeroArmCommand());
 
         //When a button is pressed runs its respective method inside drawer
-        drawerRetractor.onTrue(new InstantCommand(() -> s_Drawer.retractDrawer()));
-        drawerExtender.onTrue(new InstantCommand(() -> s_Drawer.extendDrawer()));
+        drawerExtender.onTrue(new DrawerCommand(true));
+        drawerRetractor.onTrue(new DrawerCommand(false));
 
-        //When a button is pressed runs its respective method inside gripper
-        gripperOpen.onTrue(new InstantCommand(() -> s_Gripper.openGripper()));
-        gripperClose.onTrue(new InstantCommand(() -> s_Gripper.closeGripper()));
+        //When a button is pressed runs its respective method inside gripperCommand
 
     }
 
