@@ -97,8 +97,6 @@ public class Arm extends SubsystemBase {
     public void handleDispatch(StateMetadata<ArmStates> metaData) {
 
         if (metaData.isFirstRun()) {
-            // TODO: open grabber here
-
             // Reset releaseOnFinish back to false.
             releaseOnFinish = false;
         }
@@ -266,6 +264,16 @@ public class Arm extends SubsystemBase {
     */
     public void setReleaseOnFinish(boolean openGrabber) {
         releaseOnFinish = openGrabber;
+
+    }
+
+    /**
+    * Check if the subsystem is in the DISPATCH state.
+    *
+    * @return true or false
+    */
+    public boolean readyToDispatch() {
+        return stateMachine.getCurrentState() == ArmStates.DISPATCH;
 
     }
 
