@@ -32,9 +32,9 @@ public class DrawerCommand extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-
+        
+        timer.reset();
         timer.start();
-
         gripper.openGripper();
 
     }
@@ -55,13 +55,13 @@ public class DrawerCommand extends CommandBase {
     public void end(boolean interrupted) {
 
         if (shouldExtend == true) {
-            timer.reset();
+        
             drawer.extendDrawer();
         }
 
         if (shouldExtend == false) {
 
-            timer.reset();
+            
             drawer.retractDrawer();
         }
     }

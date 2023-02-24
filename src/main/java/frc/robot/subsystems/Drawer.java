@@ -135,24 +135,24 @@ public class Drawer extends SubsystemBase {
     public void periodic() {
         stateMachine.update();
 
-        if ((distanceMillimeters < Constants.DrawerConstants.distanceWall
-                || (distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue))) {
+        // if ((distanceMillimeters < Constants.DrawerConstants.distanceWall
+        //         || (distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue))) {
 
-            timer.start();
-        }
+        //     timer.start();
+        // }
 
-        if (timer.get() >= Constants.DrawerConstants.drawerTimer) {
-            if (distanceMillimeters < Constants.DrawerConstants.distanceWall
-                    || distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue) {
-                timer.stop();
-                timer.reset();
-                retractDrawer();
+        // if (timer.get() >= Constants.DrawerConstants.drawerTimer) {
+        //     if (distanceMillimeters < Constants.DrawerConstants.distanceWall
+        //             || distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue) {
+        //         timer.stop();
+        //         timer.reset();
+        //         retractDrawer();
 
-            } else {
+        //     } else {
 
-                timer.reset();
-            }
-        }
+        //         timer.reset();
+        //     }
+        // }
 
        // System.out.println("Time value: " + timer.get());
 
