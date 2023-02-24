@@ -85,6 +85,7 @@ public class RobotContainer {
 
         //When a button is pressed runs its respective method inside gripperCommand
         gripperOpen.onTrue(new GripperCommand(true));
+        gripperClose.onTrue(new GripperCommand(false));
 
 
     }
