@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DrawerCommand;
+import frc.robot.commands.GripperCommand;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.ZeroArmCommand;
 import frc.robot.subsystems.Arm;
@@ -35,7 +36,7 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-    private final JoystickButton drawerAlternator = new JoystickButton(driver, XboxController.Button.kStart.value);
+    
     private final JoystickButton drawerExtender = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton drawerRetractor = new JoystickButton(driver, XboxController.Button.kStart.value);
 
@@ -83,6 +84,8 @@ public class RobotContainer {
         drawerRetractor.onTrue(new DrawerCommand(false));
 
         //When a button is pressed runs its respective method inside gripperCommand
+        gripperOpen.onTrue(new GripperCommand(true));
+
 
     }
 

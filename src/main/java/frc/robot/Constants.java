@@ -196,6 +196,9 @@ public final class Constants {
     // IDs for the ultrasonic sensor
     public static final int usPingID = 5;
     public static final int usEchoID = 4;
+
+    //Timer that the ultrasonic uses to extend the drawer
+    public static final int drawerTimer = 1;
   }
 
   public static class GripperConstants {
@@ -203,5 +206,11 @@ public final class Constants {
     // IDs that the solenoids in the gripper use
     public static final int gripperOpenID = 14;
     public static final int gripperCloseID = 15;
+  }
+
+  public static class DrawerCommandConstants {
+   
+    //used to give the gripper time to open before drawer moves
+    public static final double gripperVSDrawer = 0.7;
   }
 }

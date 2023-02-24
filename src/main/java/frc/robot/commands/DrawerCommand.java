@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drawer;
 import frc.robot.subsystems.Gripper;
+import frc.robot.Constants;
 
 public class DrawerCommand extends CommandBase {
 
@@ -12,7 +13,7 @@ public class DrawerCommand extends CommandBase {
 
     private Boolean shouldExtend;
 
-    Timer timer = new Timer;
+    Timer timer = new Timer();
 
     public DrawerCommand(Boolean shouldExtend) {
 
@@ -33,15 +34,25 @@ public class DrawerCommand extends CommandBase {
     public void initialize() {
 
         // Check if command should extend
-        if (shouldExtend) {
-            // If gripper is open, extend drawer
-            if (gripper.isOpen == true) {
-                drawer.extendDrawer();
-            }
-
-        } else if (!shouldExtend) {
-            // Open gripper and retract drawer.
+        if (shouldExtend == true) {
+            
+            timer.start();
             gripper.openGripper();
+
+            if (timer.get()>= Constants.DrawerCommandConstants.gripperVSDrawer && (gripper.isOpen == true));
+           
+            timer.reset();
+            drawer.extendDrawer();
+            
+           
+        } else if (shouldExtend == false) {
+
+            timer.start();
+            gripper.openGripper();
+
+            if (timer.get()>= Constants.DrawerCommandConstants.gripperVSDrawer && (gripper.isOpen == true));
+           
+            timer.reset();
             drawer.retractDrawer();
 
         }

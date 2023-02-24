@@ -7,7 +7,9 @@ public class GripperCommand extends CommandBase {
 
   private Gripper gripper;
 
-  public GripperCommand() {
+  private Boolean shouldOpen;
+
+  public GripperCommand(Boolean shouldOpen) {
 
     // Intializes subsystems.
     gripper = Gripper.getInstance();
@@ -20,10 +22,15 @@ public class GripperCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (gripper.isOpen == true) {
-      gripper.closeGripper();
-    } else {
+
+    if (shouldOpen == true) {
+
       gripper.openGripper();
+
+    } else if (shouldOpen == false) {
+      // Open gripper and retract drawer.
+      gripper.closeGripper();
+
     }
   }
 
