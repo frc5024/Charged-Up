@@ -62,30 +62,12 @@ public class DrawerCommand extends CommandBase {
             }
             else{
 
-            System.out.println("gripper closed 2");
+            System.out.println("gripper closed 2"); // get rid of this once tested
 
             timer.reset();
             }
 
         }
-
-        /*
-        //if the drawer is in and the gripper is closed it stays that way
-        if (drawer.drawerExtended == false && (gripper.isOpen == false)) {
-            drawer.retractDrawer();
-            //if the drawer is out and the gripper is closed,
-            //the gripper opens and the drawer retracts
-        } else if (drawer.drawerExtended == true && (gripper.isOpen == false)) {
-            gripper.openGripper();
-            drawer.retractDrawer();
-            //if the drawer is out and the gripper is open,
-            //the drawer retracts
-        } else if (drawer.drawerExtended == true && (gripper.isOpen == true)) {
-            drawer.retractDrawer();
-        } else if (drawer.drawerExtended == false && (gripper.isOpen == true)) {
-            drawer.extendDrawer();
-        }
-        */
 
     }
 

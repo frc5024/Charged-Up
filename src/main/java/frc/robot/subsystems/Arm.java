@@ -33,8 +33,8 @@ public class Arm extends SubsystemBase {
 
     // Creates the states for the arm.
     public enum ArmStates {
-        IDLE,
-        PICKUP,
+        IDLE, // not used
+        PICKUP,// not used
         DISPATCH,
         MOVING,
         HOLD,

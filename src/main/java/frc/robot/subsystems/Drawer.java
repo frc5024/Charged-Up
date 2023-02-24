@@ -22,8 +22,9 @@ public class Drawer extends SubsystemBase {
     private DoubleSolenoid extender;
 
     // Initializes the ultrasonic and creates it
-    private Ultrasonic m_rangeFinder = new Ultrasonic(Constants.DrawerConstants.usPingID,
+    private static Ultrasonic m_rangeFinder = new Ultrasonic(Constants.DrawerConstants.usPingID,
             Constants.DrawerConstants.usEchoID);
+            
 
     // Stores the distance that the ultrasoic is detecting
     private double distanceMillimeters = 0.0;
