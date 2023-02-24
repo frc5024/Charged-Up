@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.autos.*;
 import frc.robot.commands.*;
+import frc.robot.commands.autocommands.FollowPath;
 import frc.robot.subsystems.*;
 
 /**
@@ -69,7 +70,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        //eturn new levelingAuto();
-        return new AutoLevel();
+        //return new AutoLevel();
+        return new FollowPath();
     }
 }
