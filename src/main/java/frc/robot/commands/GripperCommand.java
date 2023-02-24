@@ -15,7 +15,7 @@ public class GripperCommand extends CommandBase {
     gripper = Gripper.getInstance();
 
     // Adds subsystems as requirements.
-    addRequirements(gripper);
+   // addRequirements(gripper);
 
   }
 
