@@ -211,6 +211,6 @@ public final class Constants {
   public static class DrawerCommandConstants {
    
     //used to give the gripper time to open before drawer moves
-    public static final double gripperVSDrawer = 0.7;
+    public static final double gripperVSDrawer = 0.1;
   }
 }

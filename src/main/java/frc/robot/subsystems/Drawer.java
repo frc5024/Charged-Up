@@ -108,7 +108,7 @@ public class Drawer extends SubsystemBase {
         // Stores the distance (in MM) being detected by the ultrasonic inside the
         // "distanceMillimeters" variable
         distanceMillimeters = m_rangeFinder.getRangeMM();
-        System.out.println(distanceMillimeters);
+      
 
         // Checks if the distance being detected by the ultrasonic is smaller than the
         // distance to the wall
@@ -139,13 +139,13 @@ public class Drawer extends SubsystemBase {
 
     // Sets the drawer to extended state
     public void extendDrawer() {
-        System.out.println("extending");
+       
         stateMachine.setState(DrawerStates.DRAWEROUT);
     }
 
     // Sets the drawer to retracted state
     public void retractDrawer() {
-        System.out.println("retracting");
+        
         stateMachine.setState(DrawerStates.DRAWERIN);
     }
 
