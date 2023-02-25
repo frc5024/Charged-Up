@@ -6,16 +6,13 @@ import frc.robot.subsystems.Gripper;
 public class GripperCommand extends CommandBase {
 
   private Gripper gripper;
-
   private Boolean shouldOpen;
 
   public GripperCommand(Boolean shouldOpen) {
 
     // Intializes subsystems.
     gripper = Gripper.getInstance();
-
-    // Adds subsystems as requirements.
-    addRequirements(gripper);
+    this.shouldOpen = shouldOpen;
 
   }
 
@@ -28,7 +25,7 @@ public class GripperCommand extends CommandBase {
       gripper.openGripper();
 
     } else if (shouldOpen == false) {
-      // Open gripper and retract drawer.
+    
       gripper.closeGripper();
 
     }

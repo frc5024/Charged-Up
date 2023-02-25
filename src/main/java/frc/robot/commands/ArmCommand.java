@@ -27,9 +27,6 @@ public class ArmCommand extends CommandBase {
     this.position = position;
     this.openGrabber = openGrabber;
 
-    // Adds subsystems as requirements.
-    addRequirements(arm);
-    addRequirements(gripper);
   }
 
   // Called when the command is initially scheduled.
@@ -59,16 +56,13 @@ public class ArmCommand extends CommandBase {
 
     }
 
-    // Set the arm's state to hold
-    arm.hold();
-
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     // End command when arm is ready to dispatch the game piece.
-    return arm.readyToDispatch();
+    return arm.isNotMoving();
 
   }
 }
