@@ -26,14 +26,16 @@ public class FollowPath extends SequentialCommandGroup {
 
     // This will load the file "FullAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
 // for every path in the group
-List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup("Auto1", new PathConstraints(4, 3));
+List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup("Auto2", new PathConstraints(4, 3));
 
 // This is just an example event map. It would be better to have a constant, global event map
 // in your code that will be used by all path following commands.
 HashMap<String, Command> eventMap = new HashMap<>();
-//eventMap.put("Finish", new PrintCommand("Finished"));
+eventMap.put("", new PrintCommand("Finished"));
 
 Swerve swerve = Swerve.getInstance();
+swerve.resetModulesToAbsolute();
+swerve.resetOdometry(swerve.getPose());
 
 // Create the AutoBuilder. This only needs to be created once when robot code starts, not every time you want to create an auto command. A good place to put this is in RobotContainer along with your subsystems.
 SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
@@ -47,6 +49,7 @@ SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
     false,  //Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
     swerve // The drive subsystem. Used to properly set the requirements of path following commands
 );
+
 Command Auto = autoBuilder.fullAuto(pathGroup);
 
 addCommands(Auto);

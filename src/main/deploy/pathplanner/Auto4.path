@@ -2,13 +2,13 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 1.8683854034374745,
-        "y": 2.908676234019136
+        "x": 2.0003991436554305,
+        "y": 4.738179904931239
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.8683854034374754,
-        "y": 2.908676234019136
+        "x": 2.2580645161290325,
+        "y": 4.738179904931239
       },
       "holonomicAngle": 0,
       "isReversal": false,
@@ -24,12 +24,62 @@
     },
     {
       "anchorPoint": {
-        "x": 3.7193611887223783,
-        "y": 2.9225933451866917
+        "x": 5.836750244929061,
+        "y": 4.637976704524838
       },
       "prevControl": {
-        "x": 2.7193611887223783,
-        "y": 2.9225933451866917
+        "x": 5.707917558692261,
+        "y": 4.6236619616096375
+      },
+      "nextControl": {
+        "x": 5.965582931165862,
+        "y": 4.652291447440038
+      },
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 5.865379730759461,
+        "y": 3.1062992125984255
+      },
+      "prevControl": {
+        "x": 5.865379730759461,
+        "y": 3.3353350992416266
+      },
+      "nextControl": {
+        "x": 5.865379730759461,
+        "y": 3.0060960121920246
+      },
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 3.9472041801226463,
+        "y": 3.0776697267680255
+      },
+      "prevControl": {
+        "x": 4.118981095105047,
+        "y": 3.0776697267680255
       },
       "nextControl": null,
       "holonomicAngle": 0,
@@ -50,6 +100,12 @@
       "position": 1.0,
       "names": [
         "Balance"
+      ]
+    },
+    {
+      "position": 3.0,
+      "names": [
+        "AutoLevel"
       ]
     }
   ]
