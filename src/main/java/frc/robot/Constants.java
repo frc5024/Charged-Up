@@ -158,6 +158,7 @@ public final class Constants {
 
     public static final int midArmPosition = -2500;
     public static final int hybridArmPosition = -3240;
+    public static final int shelfPosition = -755;
 
   }
 
@@ -209,7 +210,7 @@ public final class Constants {
   }
 
   public static class DrawerCommandConstants {
-   
+
     //used to give the gripper time to open before drawer moves
     public static final double gripperVSDrawer = 0.1;
   }
