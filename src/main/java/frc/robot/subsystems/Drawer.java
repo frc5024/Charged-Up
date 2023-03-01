@@ -4,6 +4,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Timer;
 // Allows for the use of an ultrasonic sensor
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -21,7 +22,7 @@ public class Drawer extends SubsystemBase {
     private DoubleSolenoid extender;
 
     // Initializes the ultrasonic and creates it
-    private Ultrasonic m_rangeFinder = new Ultrasonic(Constants.DrawerConstants.usPingID,
+    private static Ultrasonic m_rangeFinder = new Ultrasonic(Constants.DrawerConstants.usPingID,
             Constants.DrawerConstants.usEchoID);
 
     // Stores the distance that the ultrasoic is detecting
@@ -31,7 +32,10 @@ public class Drawer extends SubsystemBase {
     private Boolean objectIn = false;
 
     // Stores the current state of the drawer
-    private boolean drawerExtended;
+    public boolean drawerExtended;
+
+    // Creates the timer for the ultrasonic
+    private Timer timer = new Timer();
 
     // Makes it a singleton
     public static Drawer getInstance() {
@@ -103,35 +107,26 @@ public class Drawer extends SubsystemBase {
         // Stores the distance (in MM) being detected by the ultrasonic inside the
         // "distanceMillimeters" variable
         distanceMillimeters = m_rangeFinder.getRangeMM();
-        System.out.println(distanceMillimeters);
+      
 
         // Checks if the distance being detected by the ultrasonic is smaller than the
         // distance to the wall
         // or if it is greater than 5000 (happens when an object is too close)
-        if (distanceMillimeters < Constants.DrawerConstants.distanceWall
-                || distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue) {
-
-            objectIn = true;
-
-            // Sets the drawer to retracted state when coditions are met
-            retractDrawer();
-
-        } else {
-            objectIn = false;
-        }
-        System.out.println(objectIn);
+        // It also has a timer that checks for how long an object has been in,
+        // after an object has been in for a certain period of time retracts drawer,
+        // f the object leaves the timer restarts
 
     }
 
     // Sets the drawer to extended state
     public void extendDrawer() {
-        System.out.println("extending");
+       
         stateMachine.setState(DrawerStates.DRAWEROUT);
     }
 
     // Sets the drawer to retracted state
     public void retractDrawer() {
-        System.out.println("retracting");
+        
         stateMachine.setState(DrawerStates.DRAWERIN);
     }
 
@@ -139,6 +134,29 @@ public class Drawer extends SubsystemBase {
     @Override
     public void periodic() {
         stateMachine.update();
+
+        // if ((distanceMillimeters < Constants.DrawerConstants.distanceWall
+        //         || (distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue))) {
+
+        //     timer.start();
+        // }
+
+        // if (timer.get() >= Constants.DrawerConstants.drawerTimer) {
+        //     if (distanceMillimeters < Constants.DrawerConstants.distanceWall
+        //             || distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue) {
+        //         timer.stop();
+        //         timer.reset();
+        //         retractDrawer();
+
+        //     } else {
+
+        //         timer.reset();
+        //     }
+        // }
+
+       // System.out.println("Time value: " + timer.get());
+
+        System.out.println("Distance millimeters: " + distanceMillimeters);
 
     }
 

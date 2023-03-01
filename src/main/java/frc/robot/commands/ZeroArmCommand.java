@@ -8,61 +8,43 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Gripper;
 
-public class ArmCommand extends CommandBase {
+public class ZeroArmCommand extends CommandBase {
 
   private Arm arm;
 
   private Gripper gripper;
 
-  private int position;
-
-  private boolean openGrabber;
-
-  /** Creates a new Armcommand. */
-  public ArmCommand(int position, boolean openGrabber) {
-
+  /** Creates a new ZeroArmCommand. */
+  public ZeroArmCommand() {
     // Intializes subsystems and variables.
     arm = Arm.getInstance();
     gripper = Gripper.getInstance();
-    this.position = position;
-    this.openGrabber = openGrabber;
 
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // Set the arms desried position and start the moving process.
-    arm.setDesiredPosition(position);
-    arm.setReleaseOnFinish(openGrabber);
-    arm.startMoving();
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
+    // Open gripper and then start the zeroing process.
+    gripper.openGripper();
+    arm.startZeroing();
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
-    // Make sure arm is ready to dispatch,
-    // In case the command is ending on an interruption.
-    if (arm.readyToDispatch()) {
-      // Open the gripper
-      gripper.openGripper();
-
-    }
-
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // End command when arm is ready to dispatch the game piece.
-    return arm.isNotMoving();
-
+    return true;
   }
 }
