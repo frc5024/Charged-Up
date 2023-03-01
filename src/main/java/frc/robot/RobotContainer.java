@@ -80,7 +80,7 @@ public class RobotContainer {
         scoreMid.onTrue(new ArmCommand(Constants.ArmConstants.midArmPosition, true));
         scoreHybrid.onTrue(new ArmCommand(Constants.ArmConstants.hybridArmPosition, true));
         scoreClosed.onTrue(new ArmCommand(Constants.ArmConstants.midArmPosition, false));
-        shelfPosition.onTrue(new ArmCommand(-755, false));
+        shelfPosition.onTrue(new ArmCommand(Constants.ArmConstants.shelfPosition, false));
         zeroEncoder.onTrue(new ZeroArmCommand());
 
         //When a button is pressed runs its respective method inside drawer

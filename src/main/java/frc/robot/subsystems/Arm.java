@@ -34,7 +34,7 @@ public class Arm extends SubsystemBase {
     // Creates the states for the arm.
     public enum ArmStates {
         IDLE, // not used
-        PICKUP,// not used
+        PICKUP, // not used
         DISPATCH,
         MOVING,
         HOLD,
@@ -115,7 +115,7 @@ public class Arm extends SubsystemBase {
         }
 
         // Checks if the limit switches are triggered.
-        if (innerLimitTriggered()) {
+        if (innerLimitTriggered() && desiredPosition > 0) {
             // If triggered set limitPushed to true, and move the arm in the opposite direction.
             limitPushed = true;
             setSpeed(-Constants.ArmConstants.armSpeed);
