@@ -31,7 +31,7 @@ public class Swerve extends SubsystemBase {
         return mInstance;
     }
 
-    private Swerve() {
+    public Swerve() {
         gyro = new AHRS();
 
         mSwerveMods = new SwerveModule[] {
