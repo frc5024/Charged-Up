@@ -102,7 +102,6 @@ public class Drawer extends SubsystemBase {
 
             // Sets the variable that stores if the drawer is extended or not to true
             drawerExtended = true;
-            System.out.println("OUT!OUT!OUT!\n\n\n\n\n\n\n\n\n\n");
         }
 
         // Stores the distance (in MM) being detected by the ultrasonic inside the
