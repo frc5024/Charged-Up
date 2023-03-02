@@ -122,7 +122,6 @@ public class Drawer extends SubsystemBase {
 
         stateMachine.setState(DrawerStates.DRAWEROUT);
 
-        
     }
 
     // Sets the drawer to retracted state
@@ -156,7 +155,7 @@ public class Drawer extends SubsystemBase {
             }
         }
 
-        System.out.println("Distance millimeters: " + distanceMillimeters);
+        //System.out.println("Distance millimeters: " + distanceMillimeters);
 
     }
 
