@@ -22,11 +22,22 @@ public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
+    public double speedModifier;
+    private static Swerve mInstance = null;
 
-    public Swerve() {
+        // Makes it a singleton.
+        public static Swerve getInstance() {
+            if (mInstance == null) {
+                mInstance = new Swerve();
+            }
+            return mInstance;
+        }
+
+    private Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
         gyro.configFactoryDefault();
         zeroGyro();
+        speedModifier = 1.0;
 
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -48,14 +59,14 @@ public class Swerve extends SubsystemBase {
         SwerveModuleState[] swerveModuleStates =
             Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
-                                    translation.getX(), 
-                                    translation.getY(), 
+                                    translation.getX()*speedModifier, 
+                                    translation.getY()*speedModifier, 
                                     rotation, 
                                     getYaw()
                                 )
                                 : new ChassisSpeeds(
-                                    translation.getX(), 
-                                    translation.getY(), 
+                                    translation.getX()*speedModifier, 
+                                    translation.getY()*speedModifier, 
                                     rotation)
                                 );
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
