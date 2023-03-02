@@ -184,21 +184,21 @@ public final class Constants {
   public static class DrawerConstants {
 
     // Distance that the robot thinks the drawer wall is at
-    public static final int distanceWall = 250;
+    public static final int distanceWall = 450;
 
     // IDs that the solenoids in the drawer use
     public static final int drawerForwardID = 12;
     public static final int drawerReverseID = 13;
 
     // Possible value that might be read by the ultrasonic if a piece is too close
-    public static final int cubeNonsenseValue = 5000;
+    public static final int cubeNonsenseValue = 50000;
 
     // IDs for the ultrasonic sensor
     public static final int usPingID = 5;
     public static final int usEchoID = 4;
 
     //Timer that the ultrasonic uses to extend the drawer
-    public static final int drawerTimer = 2;
+    public static final int drawerTimer = 1;
   }
 
   public static class GripperConstants {

@@ -102,12 +102,12 @@ public class Drawer extends SubsystemBase {
 
             // Sets the variable that stores if the drawer is extended or not to true
             drawerExtended = true;
+            System.out.println("OUT!OUT!OUT!\n\n\n\n\n\n\n\n\n\n");
         }
 
         // Stores the distance (in MM) being detected by the ultrasonic inside the
         // "distanceMillimeters" variable
         distanceMillimeters = m_rangeFinder.getRangeMM();
-      
 
         // Checks if the distance being detected by the ultrasonic is smaller than the
         // distance to the wall
@@ -120,13 +120,15 @@ public class Drawer extends SubsystemBase {
 
     // Sets the drawer to extended state
     public void extendDrawer() {
-       
+
         stateMachine.setState(DrawerStates.DRAWEROUT);
+
+        
     }
 
     // Sets the drawer to retracted state
     public void retractDrawer() {
-        
+
         stateMachine.setState(DrawerStates.DRAWERIN);
     }
 
@@ -135,26 +137,25 @@ public class Drawer extends SubsystemBase {
     public void periodic() {
         stateMachine.update();
 
-        // if ((distanceMillimeters < Constants.DrawerConstants.distanceWall
-        //         || (distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue))) {
+        if ((distanceMillimeters < Constants.DrawerConstants.distanceWall
+                || (distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue))) {
 
-        //     timer.start();
-        // }
+            timer.start();
 
-        // if (timer.get() >= Constants.DrawerConstants.drawerTimer) {
-        //     if (distanceMillimeters < Constants.DrawerConstants.distanceWall
-        //             || distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue) {
-        //         timer.stop();
-        //         timer.reset();
-        //         retractDrawer();
+        }
 
-        //     } else {
+        if (timer.get() >= Constants.DrawerConstants.drawerTimer) {
+            if (distanceMillimeters < Constants.DrawerConstants.distanceWall
+                    || distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue) {
+                timer.stop();
+                timer.reset();
+                retractDrawer();
 
-        //         timer.reset();
-        //     }
-        // }
+            } else {
 
-       // System.out.println("Time value: " + timer.get());
+                timer.reset();
+            }
+        }
 
         System.out.println("Distance millimeters: " + distanceMillimeters);
 
