@@ -9,16 +9,17 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.commands.ArmCommand;
+import frc.robot.commands.GripperCommand;
 import frc.robot.commands.ZeroArmCommand;
 import frc.robot.subsystems.Swerve;
 
 public class AutoPath extends SequentialCommandGroup {
     ArmCommand scoreMid = new ArmCommand(Constants.ArmConstants.midArmPosition, true);
+    GripperCommand close = new GripperCommand(false);
     ZeroArmCommand zeroArm = new ZeroArmCommand();
     AutoLevel level = new AutoLevel();
 
@@ -56,6 +57,6 @@ public class AutoPath extends SequentialCommandGroup {
         );
 
         Command fullAuto = autoBuilder.fullAuto(pathGroup);
-        addCommands(scoreMid, zeroArm, fullAuto, level);
+        addCommands(close, scoreMid, zeroArm, fullAuto, level);
     }
 }
