@@ -135,7 +135,7 @@ public class Drawer extends SubsystemBase {
     public void periodic() {
         stateMachine.update();
 
-        if ((distanceMillimeters < Constants.DrawerConstants.distanceWall
+      /*  if ((distanceMillimeters < Constants.DrawerConstants.distanceWall
                 || (distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue))) {
 
             timer.start();
@@ -155,7 +155,7 @@ public class Drawer extends SubsystemBase {
             }
         }
 
-        //System.out.println("Distance millimeters: " + distanceMillimeters);
+        //System.out.println("Distance millimeters: " + distanceMillimeters);*/
 
     }
 

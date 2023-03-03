@@ -20,6 +20,7 @@ import frc.robot.subsystems.Swerve;
 public class AutoPath extends SequentialCommandGroup {
 
     ArmCommand scoreMid = new ArmCommand(Constants.ArmConstants.midArmPosition, true);
+    GripperCommand close = new GripperCommand(false);
     ZeroArmCommand zeroArm = new ZeroArmCommand();
     AutoLevel level = new AutoLevel();
     GripperCommand closeClaw = new GripperCommand(false);
