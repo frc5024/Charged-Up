@@ -173,7 +173,7 @@ public final class Constants {
 
   }
 
-  public static class PneumaticConstants {
+  public static final class PneumaticConstants {
     // PneumaticHub port
     public static final int pneumaticHub = 50;
 
@@ -182,7 +182,7 @@ public final class Constants {
     public static final int maxPressure = 120;
   }
 
-  public static class DrawerConstants {
+  public static final class DrawerConstants {
 
     // Distance that the robot thinks the drawer wall is at
     public static final int distanceWall = 450;
@@ -191,8 +191,10 @@ public final class Constants {
     public static final int drawerForwardID = 12;
     public static final int drawerReverseID = 13;
 
-    // Possible value that might be read by the ultrasonic if a piece is too close
-    public static final int cubeNonsenseValue = 50000;
+    // Possible value that might be read by the ultrasonic if a cube is too close
+    public static final int cubeNonsenseValue = 5000;
+    //sometimes the sensor can be overly sensitive of things aboce the drawer, this serves to cap that
+    public static final int tooHigh = 10000;
 
     // IDs for the ultrasonic sensor
     public static final int usPingID = 5;
@@ -202,14 +204,14 @@ public final class Constants {
     public static final int drawerTimer = 1;
   }
 
-  public static class GripperConstants {
+  public static final class GripperConstants {
 
     // IDs that the solenoids in the gripper use
     public static final int gripperOpenID = 14;
     public static final int gripperCloseID = 15;
   }
 
-  public static class DrawerCommandConstants {
+  public static final class DrawerCommandConstants {
 
     //used to give the gripper time to open before drawer moves
     public static final double DrawerDelay = 0.1;

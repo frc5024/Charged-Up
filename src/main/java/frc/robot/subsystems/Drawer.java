@@ -123,9 +123,14 @@ public class Drawer extends SubsystemBase {
         //Logic for drawer
         //if distance from sensor is less than the distance wall an object must be in
         //the timer operates as a sensitivity adjuster. Somrthing has to stay in before it retracts
+        //also checks to make sure the drawer is out before doing any of this
+        //Occaisonally the cube gives a value of 5000 due to some weird reflection, so we check for that too
+        //tooHigh restricts some of the values that don't make sense from outside of the drawer
         distanceMillimeters = m_rangeFinder.getRangeMM();
         if ((distanceMillimeters < Constants.DrawerConstants.distanceWall
-                || (distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue)) && (drawerExtended == true)) {
+                || (distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue
+                        && distanceMillimeters <= Constants.DrawerConstants.tooHigh))
+                && (drawerExtended == true)) {
 
             timer.start();
 
@@ -133,7 +138,8 @@ public class Drawer extends SubsystemBase {
 
         if (timer.get() >= Constants.DrawerConstants.drawerTimer) {
             if ((distanceMillimeters < Constants.DrawerConstants.distanceWall
-                    || distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue)
+                    || distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue
+                            && distanceMillimeters <= Constants.DrawerConstants.tooHigh)
                     && (drawerExtended == true)) {
                 timer.stop();
                 timer.reset();
