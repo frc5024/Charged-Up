@@ -28,7 +28,7 @@ public class DrawerCommand extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        
+
         timer.reset();
         timer.start();
         gripper.openGripper();
@@ -51,13 +51,12 @@ public class DrawerCommand extends CommandBase {
     public void end(boolean interrupted) {
 
         if (shouldExtend == true) {
-        
+
             drawer.extendDrawer();
         }
 
         if (shouldExtend == false) {
 
-            
             drawer.retractDrawer();
         }
     }
@@ -65,6 +64,6 @@ public class DrawerCommand extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return timer.get() >= Constants.DrawerCommandConstants.gripperVSDrawer;
+        return timer.get() >= Constants.DrawerCommandConstants.DrawerDelay;
     }
 }
