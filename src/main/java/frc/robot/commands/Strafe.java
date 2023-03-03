@@ -15,10 +15,10 @@ public class Strafe extends CommandBase {
 
   /** Creates a new Strafe. */
   public Strafe(double strafeValue) {
+    // Use addRequirements() here to declare subsystem dependencies.
 
     strafeValue = this.strafeValue;
-    // Use addRequirements() here to declare subsystem dependencies.
-    this.s_Swerve = Swerve.getInstance();
+    s_Swerve = Swerve.getInstance();
   }
 
   // Called when the command is initially scheduled.
@@ -29,8 +29,9 @@ public class Strafe extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   
-    s_Swerve.drive new Translation2d(0, strafeValue);
+
+    s_Swerve.drive(new Translation2d(0, strafeValue), 0, false, false);
+    //strafeValue = 0.0;
   }
 
   // Called once the command ends or is interrupted.
@@ -41,6 +42,6 @@ public class Strafe extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

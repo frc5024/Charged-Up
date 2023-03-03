@@ -1,7 +1,5 @@
 package frc.robot;
 
-import com.fasterxml.jackson.annotation.JsonKey;
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -14,7 +12,6 @@ import frc.robot.commands.GripperCommand;
 import frc.robot.commands.SlowCommand;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.ZeroArmCommand;
-import frc.robot.commands.Strafe;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drawer;
 import frc.robot.subsystems.Gripper;
@@ -47,7 +44,6 @@ public class RobotContainer {
     private final JoystickButton strafeLeft = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     private final JoystickButton strafeRight = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
 
-
     /* Operator Buttons */
     private final JoystickButton scoreMid = new JoystickButton(operator, XboxController.Button.kY.value);
     private final JoystickButton scoreHybrid = new JoystickButton(operator, XboxController.Button.kA.value);
@@ -67,11 +63,26 @@ public class RobotContainer {
     public RobotContainer() {
         s_Swerve.setDefaultCommand(
                 new TeleopSwerve(s_Swerve, () -> -driver.getRawAxis(translationAxis),
-                        () -> -driver.getRawAxis(strafeAxis),
+                        () -> -getStrafe(),
                         () -> -driver.getRawAxis(rotationAxis), () -> robotCentric.getAsBoolean()));
 
         // Configure the button binding
         configureButtonBindings();
+    }
+
+    private double getStrafe() {
+
+        double strafe = driver.getRawAxis(strafeAxis);
+
+        if (strafeRight.getAsBoolean()) {
+            strafe = 1;
+        }
+
+        if (strafeLeft.getAsBoolean()) {
+            strafe = -1;
+        }
+
+        return strafe;
     }
 
     /**
@@ -84,8 +95,8 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         slowMode.onTrue(new SlowCommand());
-        strafeLeft.whileTrue(new Strafe(-1));
-        strafeRight.whileTrue(new Strafe(1));
+        //strafeLeft.whileTrue(new Strafe(-1));
+        //strafeRight.whileTrue(new Strafe(1));
 
         /* Operator Buttons */
         scoreMid.onTrue(new ArmCommand(Constants.ArmConstants.midArmPosition, true));
