@@ -6,19 +6,19 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-// Allows the use of state machines
+// Allows the use of state machines.
 import frc.robot.liblite.StateMachine;
 import frc.robot.liblite.StateMetadata;
 
 public class Gripper extends SubsystemBase {
 
-    // Tells us if an instance of this already exists
+    // Tells us if an instance of this already exists.
     private static Gripper mInstance = null;
 
-    // Initializes Doublesolenoid
+    // Initializes Doublesolenoid.
     private DoubleSolenoid extender;
 
-    //used for talking to commands
+    //used for talking to commands.
     public boolean isOpen = false;
 
     // Makes it a singleton
@@ -29,26 +29,26 @@ public class Gripper extends SubsystemBase {
         return mInstance;
     }
 
-    // Creates the states for the Gripper
+    // Creates the states for the Gripper.
     public enum GripperStates {
 
-        // State where the Gripper is closed
+        // State where the Gripper is closed.
         GripClose,
 
-        // State where the Gripper is Open
+        // State where the Gripper is Open.
         GripOpen;
 
     }
 
-    // Creates the variable that stores the state machine
+    // Creates the variable that stores the state machine.
     private StateMachine<GripperStates> stateMachine;
 
     private Gripper() {
 
-        // Creates state machine
+        // Creates state machine.
         stateMachine = new StateMachine<>("Gripper Statemachine");
 
-        // Assigns the states to their methods
+        // Assigns the states to their methods.
         stateMachine.setDefaultState(GripperStates.GripClose, this::handleGripClose);
         stateMachine.addState(GripperStates.GripOpen, this::handleGripOpen);
 
@@ -58,41 +58,41 @@ public class Gripper extends SubsystemBase {
                 Constants.GripperConstants.gripperCloseID);
     }
 
-    // Method that states what the Closed state does
+    // Method that states what the Closed state does.
     public void handleGripClose(StateMetadata<GripperStates> metaData) {
 
         if (metaData.isFirstRun()) {
 
-            // Sets the solenoid to retracted position when in this state
+            // Sets the solenoid to retracted position when in this state.
             extender.set(Value.kReverse);
         }
 
     }
 
-    // Method that states what the Closed state does
+    // Method that states what the Closed state does.
     public void handleGripOpen(StateMetadata<GripperStates> metaData) {
 
         if (metaData.isFirstRun()) {
 
-            // Sets the solenoid to extended position when in this state
+            // Sets the solenoid to extended position when in this state.
             extender.set(Value.kForward);
         }
 
     }
 
-    // Method that opens the gripper
+    // Method that opens the gripper.
     public void openGripper() {
         stateMachine.setState(GripperStates.GripOpen);
         isOpen = true;
     }
 
-    // Method that closes the gripper
+    // Method that closes the gripper.
     public void closeGripper() {
         stateMachine.setState(GripperStates.GripClose);
         isOpen = false;
     }
 
-    // Makes the state machine run periodically
+    // Makes the state machine run periodically.
     @Override
     public void periodic() {
         stateMachine.update();

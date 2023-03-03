@@ -174,46 +174,46 @@ public final class Constants {
   }
 
   public static final class PneumaticConstants {
-    // PneumaticHub port
+    // PneumaticHub port.
     public static final int pneumaticHub = 50;
 
-    // Sets max and min pressures for the compressor
+    // Sets max and min pressures for the compressor.
     public static final int minPressure = 80;
     public static final int maxPressure = 120;
   }
 
   public static final class DrawerConstants {
 
-    // Distance that the robot thinks the drawer wall is at
+    // Distance that the robot thinks the drawer wall is at.
     public static final int distanceWall = 450;
 
     // IDs that the solenoids in the drawer use
     public static final int drawerForwardID = 12;
     public static final int drawerReverseID = 13;
 
-    // Possible value that might be read by the ultrasonic if a cube is too close
+    // Possible value that might be read by the ultrasonic if a cube is too close.
     public static final int cubeNonsenseValue = 5000;
-    //sometimes the sensor can be overly sensitive of things aboce the drawer, this serves to cap that
+    // Sometimes the sensor can be overly sensitive of things aboce the drawer, this serves to cap that.
     public static final int tooHigh = 10000;
 
-    // IDs for the ultrasonic sensor
+    // IDs for the ultrasonic sensor.
     public static final int usPingID = 5;
     public static final int usEchoID = 4;
 
-    //Timer that the ultrasonic uses to extend the drawer
+    // Timer that the ultrasonic uses to extend the drawer.
     public static final int drawerTimer = 1;
   }
 
   public static final class GripperConstants {
 
-    // IDs that the solenoids in the gripper use
+    // IDs that the solenoids in the gripper use.
     public static final int gripperOpenID = 14;
     public static final int gripperCloseID = 15;
   }
 
   public static final class DrawerCommandConstants {
 
-    //used to give the gripper time to open before drawer moves
+    // Used to give the gripper time to open before drawer moves.
     public static final double DrawerDelay = 0.1;
   }
 }
