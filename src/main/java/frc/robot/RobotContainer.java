@@ -11,6 +11,7 @@ import frc.robot.commands.DrawerCommand;
 import frc.robot.commands.GripperCommand;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.ZeroArmCommand;
+import frc.robot.commands.autoCommands.AutoPath;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drawer;
 import frc.robot.subsystems.Gripper;
@@ -94,7 +95,7 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return null;
+        return new AutoPath(s_Swerve);
 
     }
 }
