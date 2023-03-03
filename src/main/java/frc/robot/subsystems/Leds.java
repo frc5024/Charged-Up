@@ -38,6 +38,7 @@ private static Spark lEDhub_Rev = new Spark(Constants.LedsConstants.ledID);
         if (metaData.isFirstRun()) {
             lEDhub_Rev.set(Constants.LedsConstants.lEDcolour_GREEN);
         }
+     
     }
 
     // Method for LED__YELLOW State
@@ -46,6 +47,7 @@ private static Spark lEDhub_Rev = new Spark(Constants.LedsConstants.ledID);
         if (metaData.isFirstRun()) {
             lEDhub_Rev.set(Constants.LedsConstants.lEDcolour_YELLOW);
         }
+        
     }
 
     // Method for LED_Purple State
@@ -54,6 +56,7 @@ private static Spark lEDhub_Rev = new Spark(Constants.LedsConstants.ledID);
         if (metaData.isFirstRun()) {
             lEDhub_Rev.set(Constants.LedsConstants.lEDcolour_PURPLE);
         }
+        
     }
 
     public void makeLEDgreen() {
@@ -72,4 +75,5 @@ private static Spark lEDhub_Rev = new Spark(Constants.LedsConstants.ledID);
     public void periodic() {
         stateMachine.update();
     }
+
 }
