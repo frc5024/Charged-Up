@@ -6,8 +6,9 @@ import frc.robot.liblite.StateMachine;
 import frc.robot.liblite.StateMetadata;
 
 public class Leds extends SubsystemBase {
+    
     private static Spark LEDhub_Rev = new Spark(9);
-    private static double LEDcolour_GREEN = 0.71;
+    private static double LEDcolour_GREEN = 0.77;
     private static double LEDcolour_YELLOW = 0.69;
     private static double LEDcolour_PURPLE = 0.91;
 
@@ -29,9 +30,7 @@ public class Leds extends SubsystemBase {
         stateMachine.addState(LEDStates.LED_YELLOW, this::handleLEDyellow);
         stateMachine.addState(LEDStates.LED_PURPLE, this::handleLEDpurple);
 
-        // Initialize LED to Green
-        LEDhub_Rev.set(LEDcolour_GREEN);
-    }
+          }
 
     // Method for LED_GREEN State
     public void handleLEDgreen(StateMetadata<LEDStates> metaData) {
@@ -39,6 +38,7 @@ public class Leds extends SubsystemBase {
         if (metaData.isFirstRun()) {
             LEDhub_Rev.set(LEDcolour_GREEN);
         }
+     
     }
 
     // Method for LED__YELLOW State
@@ -47,6 +47,7 @@ public class Leds extends SubsystemBase {
         if (metaData.isFirstRun()) {
             LEDhub_Rev.set(LEDcolour_YELLOW);
         }
+        
     }
 
     // Method for LED_GREEN State
@@ -55,6 +56,7 @@ public class Leds extends SubsystemBase {
         if (metaData.isFirstRun()) {
             LEDhub_Rev.set(LEDcolour_PURPLE);
         }
+        
     }
 
     public void makeLEDgreen() {
@@ -74,4 +76,5 @@ public class Leds extends SubsystemBase {
         stateMachine.update();
 
     }
+
 }
