@@ -51,9 +51,9 @@ public class RobotContainer {
     private final JoystickButton gripperOpen = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
 
     /* Subsystems */
-    private final Swerve s_Swerve = new Swerve();
+    private final Swerve s_Swerve = Swerve.getInstance();
     private final Arm s_arm = Arm.getInstance();
-    //Gets instances for the two classes used in the button bidings
+    // Gets instances for the two classes used in the button bidings.
     private final Drawer s_Drawer = Drawer.getInstance();
     private final Gripper s_Gripper = Gripper.getInstance();
 
@@ -63,7 +63,7 @@ public class RobotContainer {
                         () -> -driver.getRawAxis(strafeAxis),
                         () -> -driver.getRawAxis(rotationAxis), () -> robotCentric.getAsBoolean()));
 
-        // Configure the button binding
+        // Configure the button binding.
         configureButtonBindings();
     }
 
@@ -84,11 +84,11 @@ public class RobotContainer {
         shelfPosition.onTrue(new ArmCommand(Constants.ArmConstants.shelfPosition, false));
         zeroEncoder.onTrue(new ZeroArmCommand());
 
-        //When a button is pressed runs its respective method inside drawer
+        // When a button is pressed runs its respective method inside drawer.
         drawerExtender.onTrue(new DrawerCommand(true));
         drawerRetractor.onTrue(new DrawerCommand(false));
 
-        //When a button is pressed runs its respective method inside gripperCommand
+        // When a button is pressed runs its respective method inside gripperCommand.
         gripperOpen.onTrue(new GripperCommand(true));
         gripperClose.onTrue(new GripperCommand(false));
 
