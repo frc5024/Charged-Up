@@ -4,12 +4,11 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.liblite.StateMachine;
 import frc.robot.liblite.StateMetadata;
+import frc.robot.Constants;
 
 public class Leds extends SubsystemBase {
-    private static Spark LEDhub_Rev = new Spark(9);
-    private static double LEDcolour_GREEN = 0.71;
-    private static double LEDcolour_YELLOW = 0.69;
-    private static double LEDcolour_PURPLE = 0.91;
+  
+private static Spark lEDhub_Rev = new Spark(Constants.LedsConstants.ledID);  
 
     public enum LEDStates {
 
@@ -30,14 +29,14 @@ public class Leds extends SubsystemBase {
         stateMachine.addState(LEDStates.LED_PURPLE, this::handleLEDpurple);
 
         // Initialize LED to Green
-        LEDhub_Rev.set(LEDcolour_GREEN);
+        lEDhub_Rev.set(Constants.LedsConstants.lEDcolour_GREEN);
     }
 
     // Method for LED_GREEN State
     public void handleLEDgreen(StateMetadata<LEDStates> metaData) {
         // Sets the LED to green
         if (metaData.isFirstRun()) {
-            LEDhub_Rev.set(LEDcolour_GREEN);
+            lEDhub_Rev.set(Constants.LedsConstants.lEDcolour_GREEN);
         }
     }
 
@@ -45,15 +44,15 @@ public class Leds extends SubsystemBase {
     public void handleLEDyellow(StateMetadata<LEDStates> metaData) {
         // Sets the LED to yellow
         if (metaData.isFirstRun()) {
-            LEDhub_Rev.set(LEDcolour_YELLOW);
+            lEDhub_Rev.set(Constants.LedsConstants.lEDcolour_YELLOW);
         }
     }
 
-    // Method for LED_GREEN State
+    // Method for LED_Purple State
     public void handleLEDpurple(StateMetadata<LEDStates> metaData) {
         // Sets the LED to purple
         if (metaData.isFirstRun()) {
-            LEDhub_Rev.set(LEDcolour_PURPLE);
+            lEDhub_Rev.set(Constants.LedsConstants.lEDcolour_PURPLE);
         }
     }
 
@@ -72,6 +71,5 @@ public class Leds extends SubsystemBase {
     @Override
     public void periodic() {
         stateMachine.update();
-
     }
 }

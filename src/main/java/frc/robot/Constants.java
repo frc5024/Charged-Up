@@ -145,4 +145,12 @@ public final class Constants {
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
     }
+
+    public static final class LedsConstants{
+
+        public static final int ledID = 9;
+        public static final double lEDcolour_GREEN = 0.71;
+        public static final double lEDcolour_YELLOW = 0.69;
+        public static final double lEDcolour_PURPLE = 0.91;
+    }
 }

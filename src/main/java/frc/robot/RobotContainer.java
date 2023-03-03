@@ -34,9 +34,11 @@ public class RobotContainer {
     /* operator Buttons */
     private final JoystickButton makeLEDpurple = new JoystickButton(operator, XboxController.Button.kX.value);
     private final JoystickButton makeLEDyellow = new JoystickButton(operator, XboxController.Button.kY.value);
+    private final JoystickButton makeLEDgreen = new JoystickButton(operator, XboxController.Button.kA.value);
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
+    private final Leds s_Leds = new Leds();
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -64,7 +66,10 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-
+        
+        makeLEDgreen.onTrue(new InstantCommand(() -> s_Leds.makeLEDgreen()));
+        makeLEDyellow.onTrue(new InstantCommand(() -> s_Leds.makeLEDyellow()));
+        makeLEDpurple.onTrue(new InstantCommand(() -> s_Leds.makeLEDpurple()));
     }
 
     /**
