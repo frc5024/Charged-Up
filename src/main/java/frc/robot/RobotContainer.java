@@ -95,7 +95,7 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return new AutoPath();
+        return new AutoPath(s_Swerve);
 
     }
 }

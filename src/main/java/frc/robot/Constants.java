@@ -22,7 +22,7 @@ public final class Constants {
     /* Drivetrain Constants */
     public static final double trackWidth = 0.584; //TODO: This must be tuned to specific robot
     public static final double wheelBase = 0.584; //TODO: This must be tuned to specific robot
-    public static final double wheelCircumference = chosenModule.wheelCircumference;
+    public static final double wheelCircumference = chosenModule.wheelCircumference*0.85;
 
     /* Swerve Kinematics 
      * No need to ever change this unless you are not doing a traditional rectangular/square 4 module swerve */
