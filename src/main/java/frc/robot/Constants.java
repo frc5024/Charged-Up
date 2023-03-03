@@ -13,8 +13,8 @@ public final class Constants {
   public static final double stickDeadband = 0.1;
 
   public static final class Swerve {
-    public static final int pigeonID = 1;
-    public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
+    public static final int AHRS = 1;
+    public static final boolean invertGyro = true; // Always ensure Gyro is CCW+ CW-
 
     public static final COTSFalconSwerveConstants chosenModule = //TODO: This must be tuned to specific robot
         COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L2);
@@ -22,7 +22,7 @@ public final class Constants {
     /* Drivetrain Constants */
     public static final double trackWidth = 0.584; //TODO: This must be tuned to specific robot
     public static final double wheelBase = 0.584; //TODO: This must be tuned to specific robot
-    public static final double wheelCircumference = chosenModule.wheelCircumference;
+    public static final double wheelCircumference = chosenModule.wheelCircumference*0.85;
 
     /* Swerve Kinematics 
      * No need to ever change this unless you are not doing a traditional rectangular/square 4 module swerve */
@@ -95,7 +95,7 @@ public final class Constants {
       public static final int driveMotorID = 11;
       public static final int angleMotorID = 12;
       public static final int canCoderID = 1;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(183.164);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(183.603);
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
     }
@@ -105,7 +105,7 @@ public final class Constants {
       public static final int driveMotorID = 31;
       public static final int angleMotorID = 32;
       public static final int canCoderID = 3;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(235.283);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(235.107);
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
     }
@@ -115,7 +115,7 @@ public final class Constants {
       public static final int driveMotorID = 21;
       public static final int angleMotorID = 22;
       public static final int canCoderID = 2;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(298.828);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(299.001);
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
     }
@@ -125,7 +125,7 @@ public final class Constants {
       public static final int driveMotorID = 41;
       public static final int angleMotorID = 42;
       public static final int canCoderID = 4;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(231.503);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(231.152);
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
     }
@@ -185,21 +185,21 @@ public final class Constants {
   public static class DrawerConstants {
 
     // Distance that the robot thinks the drawer wall is at
-    public static final int distanceWall = 250;
+    public static final int distanceWall = 450;
 
     // IDs that the solenoids in the drawer use
     public static final int drawerForwardID = 12;
     public static final int drawerReverseID = 13;
 
     // Possible value that might be read by the ultrasonic if a piece is too close
-    public static final int cubeNonsenseValue = 5000;
+    public static final int cubeNonsenseValue = 50000;
 
     // IDs for the ultrasonic sensor
     public static final int usPingID = 5;
     public static final int usEchoID = 4;
 
     //Timer that the ultrasonic uses to extend the drawer
-    public static final int drawerTimer = 2;
+    public static final int drawerTimer = 1;
   }
 
   public static class GripperConstants {
