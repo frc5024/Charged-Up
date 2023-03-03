@@ -1,14 +1,18 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.liblite.StateMachine;
 import frc.robot.liblite.StateMetadata;
-import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 public class Leds extends SubsystemBase {
-  
-private static Spark lEDhub_Rev = new Spark(Constants.LedsConstants.ledID);  
+
+    private static Spark lEDhub_Rev = new Spark(Constants.LedsConstants.ledID);
+
+    public int ledsDegrees = 0;
 
     public enum LEDStates {
 
@@ -38,7 +42,7 @@ private static Spark lEDhub_Rev = new Spark(Constants.LedsConstants.ledID);
         if (metaData.isFirstRun()) {
             lEDhub_Rev.set(Constants.LedsConstants.lEDcolour_GREEN);
         }
-     
+
     }
 
     // Method for LED__YELLOW State
@@ -47,7 +51,7 @@ private static Spark lEDhub_Rev = new Spark(Constants.LedsConstants.ledID);
         if (metaData.isFirstRun()) {
             lEDhub_Rev.set(Constants.LedsConstants.lEDcolour_YELLOW);
         }
-        
+
     }
 
     // Method for LED_Purple State
@@ -56,7 +60,7 @@ private static Spark lEDhub_Rev = new Spark(Constants.LedsConstants.ledID);
         if (metaData.isFirstRun()) {
             lEDhub_Rev.set(Constants.LedsConstants.lEDcolour_PURPLE);
         }
-        
+
     }
 
     public void makeLEDgreen() {
@@ -71,8 +75,19 @@ private static Spark lEDhub_Rev = new Spark(Constants.LedsConstants.ledID);
         stateMachine.setState(LEDStates.LED_PURPLE);
     }
 
+    
+    public static int DPadAsButton(int degrees, int target){
+        if(degrees==target){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
     @Override
     public void periodic() {
+
+        
         stateMachine.update();
     }
 

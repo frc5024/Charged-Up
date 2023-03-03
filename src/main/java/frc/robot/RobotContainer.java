@@ -1,9 +1,7 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -12,13 +10,16 @@ import frc.robot.commands.DrawerCommand;
 import frc.robot.commands.GripperCommand;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.ZeroArmCommand;
-import frc.robot.subsystems.*;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Drawer;
+import frc.robot.subsystems.Gripper;
+import frc.robot.subsystems.Leds;
+import frc.robot.subsystems.Swerve;
 
 public class RobotContainer {
-
     /* Controllers */
     private final Joystick driver = new Joystick(0);
-    private final Joystick operator = new Joystick(1);
+    public final Joystick operator = new Joystick(1);
 
     /* Drive Controls */
     private final int translationAxis = XboxController.Axis.kLeftY.value;
@@ -42,18 +43,20 @@ public class RobotContainer {
     private final JoystickButton gripperOpen = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
 
     /* operator Buttons */
-    private final JoystickButton makeLEDpurple = new JoystickButton(operator, XboxController.Button.kX.value);
-    private final JoystickButton makeLEDyellow = new JoystickButton(operator, XboxController.Button.kY.value);
-    private final JoystickButton makeLEDgreen = new JoystickButton(operator, XboxController.Button.kA.value);
+    private final JoystickButton makeLEDpurple = new JoystickButton(operator,
+            Leds.DPadAsButton(operator.getPOV(), Constants.Controllers.dPadRight));
+    private final JoystickButton makeLEDyellow = new JoystickButton(operator,
+            Leds.DPadAsButton(operator.getPOV(), Constants.Controllers.dPadLeft));
+    private final JoystickButton makeLEDgreen = new JoystickButton(operator,
+            Leds.DPadAsButton(operator.getPOV(), Constants.Controllers.dPadUp));
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
     private final Arm s_arm = Arm.getInstance();
     //Gets instances for the two classes used in the button bidings
     private final Drawer s_Drawer = Drawer.getInstance();
-    private final Gripper s_Gripper = Gripper.getInstance();   
+    private final Gripper s_Gripper = Gripper.getInstance();
     private final Leds s_Leds = new Leds();
-
 
     public RobotContainer() {
         s_Swerve.setDefaultCommand(
@@ -65,11 +68,10 @@ public class RobotContainer {
         configureButtonBindings();
     }
 
-
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        
+
         /* Operator Buttons */
         scoreMid.onTrue(new ArmCommand(Constants.ArmConstants.midArmPosition, true));
         scoreHybrid.onTrue(new ArmCommand(Constants.ArmConstants.hybridArmPosition, true));

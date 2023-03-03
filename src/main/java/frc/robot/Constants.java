@@ -171,6 +171,10 @@ public final class Constants {
     public static final int driverController = 0;
     public static final int operatorController = 1;
 
+    public static final int dPadUp = 0;
+    public static final int dPadRight = 90;
+    public static final int dPadDown = 180;
+    public static final int dPadLeft = 270;
   }
 
   public static class PneumaticConstants {
@@ -215,11 +219,11 @@ public final class Constants {
     public static final double gripperVSDrawer = 0.1;
   }
 
-    public static final class LedsConstants{
+  public static final class LedsConstants {
 
-        public static final int ledID = 9;
-        public static final double lEDcolour_GREEN = 0.71;
-        public static final double lEDcolour_YELLOW = 0.69;
-        public static final double lEDcolour_PURPLE = 0.91;
-    }
+    public static final int ledID = 9;
+    public static final double lEDcolour_GREEN = 0.71;
+    public static final double lEDcolour_YELLOW = 0.69;
+    public static final double lEDcolour_PURPLE = 0.91;
+  }
 }
