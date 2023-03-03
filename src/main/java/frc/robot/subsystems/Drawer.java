@@ -28,9 +28,6 @@ public class Drawer extends SubsystemBase {
     // Stores the distance that the ultrasoic is detecting
     private double distanceMillimeters = 0.0;
 
-    // Changes based on the output from the ultrasonic
-    private Boolean objectIn = false;
-
     // Stores the current state of the drawer
     public boolean drawerExtended;
 
@@ -104,17 +101,6 @@ public class Drawer extends SubsystemBase {
             drawerExtended = true;
         }
 
-        // Stores the distance (in MM) being detected by the ultrasonic inside the
-        // "distanceMillimeters" variable
-        distanceMillimeters = m_rangeFinder.getRangeMM();
-
-        // Checks if the distance being detected by the ultrasonic is smaller than the
-        // distance to the wall
-        // or if it is greater than 5000 (happens when an object is too close)
-        // It also has a timer that checks for how long an object has been in,
-        // after an object has been in for a certain period of time retracts drawer,
-        // f the object leaves the timer restarts
-
     }
 
     // Sets the drawer to extended state
@@ -122,7 +108,6 @@ public class Drawer extends SubsystemBase {
 
         stateMachine.setState(DrawerStates.DRAWEROUT);
 
-        
     }
 
     // Sets the drawer to retracted state
@@ -135,17 +120,21 @@ public class Drawer extends SubsystemBase {
     @Override
     public void periodic() {
         stateMachine.update();
-
+        //Logic for drawer
+        //if distance from sensor is less than the distance wall an object must be in
+        //the timer operates as a sensitivity adjuster. Somrthing has to stay in before it retracts
+        distanceMillimeters = m_rangeFinder.getRangeMM();
         if ((distanceMillimeters < Constants.DrawerConstants.distanceWall
-                || (distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue))) {
+                || (distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue)) && (drawerExtended == true)) {
 
             timer.start();
 
         }
 
         if (timer.get() >= Constants.DrawerConstants.drawerTimer) {
-            if (distanceMillimeters < Constants.DrawerConstants.distanceWall
-                    || distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue) {
+            if ((distanceMillimeters < Constants.DrawerConstants.distanceWall
+                    || distanceMillimeters >= Constants.DrawerConstants.cubeNonsenseValue)
+                    && (drawerExtended == true)) {
                 timer.stop();
                 timer.reset();
                 retractDrawer();
@@ -155,8 +144,6 @@ public class Drawer extends SubsystemBase {
                 timer.reset();
             }
         }
-
-        System.out.println("Distance millimeters: " + distanceMillimeters);
 
     }
 
