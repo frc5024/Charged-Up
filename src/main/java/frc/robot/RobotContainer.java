@@ -11,8 +11,7 @@ import frc.robot.commands.DrawerCommand;
 import frc.robot.commands.GripperCommand;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.ZeroArmCommand;
-import frc.robot.commands.autoCommands.AutoPath;
-import frc.robot.commands.autoCommands.ScoreLeaveAuto;
+import frc.robot.autos.Auto4;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drawer;
 import frc.robot.subsystems.Gripper;
@@ -95,8 +94,10 @@ public class RobotContainer {
 
     }
 
+    /* 
     public Command getAutonomousCommand() {
-        return new ScoreLeaveAuto();
+        return new Auto4();
 
     }
+    */
 }
