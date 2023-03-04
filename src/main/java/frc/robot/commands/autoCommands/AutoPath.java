@@ -20,7 +20,7 @@ public class AutoPath extends SequentialCommandGroup {
 
     // Creates path with default velocity settings.
     public AutoPath(String path) {
-        this(path, new PathConstraints(Constants.AutoConstants.maxVelocity));
+        this(path, new PathConstraints(Constants.AutoConstants.maxVelocity, Constants.AutoConstants.maxAcceleration));
     }
 
     // Creates path with specified velocity settings.

@@ -145,7 +145,8 @@ public final class Constants {
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
         kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
 
-    public static final PathConstraints maxVelocity = (4, 3);
+    public static final double maxVelocity = 4.0;
+    public static final double maxAcceleration = 3.0;
   }
 
   // Create constants for the Arm subsystem
