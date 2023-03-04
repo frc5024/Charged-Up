@@ -19,7 +19,7 @@ public class TeleopSwerve extends CommandBase {
     private BooleanSupplier robotCentricSup;
 
     public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup) {
-        this.s_Swerve = s_Swerve;
+        this.s_Swerve = Swerve.getInstance();
         addRequirements(s_Swerve);
 
         this.translationSup = translationSup;

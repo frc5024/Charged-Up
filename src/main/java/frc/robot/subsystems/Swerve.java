@@ -1,6 +1,10 @@
 package frc.robot.subsystems;
 
+<<<<<<< HEAD
+import com.ctre.phoenix.sensors.Pigeon2;
+=======
 import com.kauailabs.navx.frc.AHRS;
+>>>>>>> origin/master
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -20,6 +24,23 @@ import frc.robot.SwerveModule;
 public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
+<<<<<<< HEAD
+    public Pigeon2 gyro;
+    public double speedModifier;
+    private static Swerve mInstance = null;
+
+    // Makes it a singleton.
+    public static Swerve getInstance() {
+        if (mInstance == null) {
+            mInstance = new Swerve();
+        }
+        return mInstance;
+    }
+
+    private Swerve() {
+        gyro = new Pigeon2(Constants.Swerve.pigeonID);
+        gyro.configFactoryDefault();
+=======
     public AHRS gyro;
 
     private static Swerve mInstance;
@@ -32,7 +53,9 @@ public class Swerve extends SubsystemBase {
 
     public Swerve() {
         gyro = new AHRS(SPI.Port.kMXP);
+>>>>>>> origin/master
         zeroGyro();
+        speedModifier = 1.0;
 
         mSwerveMods = new SwerveModule[] {
                 new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -53,14 +76,14 @@ public class Swerve extends SubsystemBase {
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
         SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
-                        translation.getX(),
-                        translation.getY(),
-                        rotation,
+                        translation.getX() * speedModifier,
+                        translation.getY() * speedModifier,
+                        rotation * speedModifier,
                         getYaw())
                         : new ChassisSpeeds(
-                                translation.getX(),
-                                translation.getY(),
-                                rotation));
+                                translation.getX() * speedModifier,
+                                translation.getY() * speedModifier,
+                                rotation * speedModifier));
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
 
         for (SwerveModule mod : mSwerveMods) {
@@ -102,7 +125,11 @@ public class Swerve extends SubsystemBase {
     }
 
     public void zeroGyro() {
+<<<<<<< HEAD
+        gyro.setYaw(0);
+=======
         gyro.zeroYaw();
+>>>>>>> origin/master
     }
 
     public Rotation2d getYaw() {

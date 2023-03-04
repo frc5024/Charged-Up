@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DrawerCommand;
 import frc.robot.commands.GripperCommand;
+import frc.robot.commands.SlowCommand;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.ZeroArmCommand;
 import frc.robot.commands.autoCommands.AutoPath;
@@ -40,6 +41,9 @@ public class RobotContainer {
 
     private final JoystickButton drawerExtender = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton drawerRetractor = new JoystickButton(driver, XboxController.Button.kStart.value);
+    private final JoystickButton slowMode = new JoystickButton(driver, XboxController.Button.kX.value);
+    private final JoystickButton strafeLeft = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton strafeRight = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
 
     /* Operator Buttons */
     private final JoystickButton scoreMid = new JoystickButton(operator, XboxController.Button.kY.value);
@@ -51,7 +55,7 @@ public class RobotContainer {
     private final JoystickButton gripperOpen = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
 
     /* Subsystems */
-    private final Swerve s_Swerve = new Swerve();
+    private final Swerve s_Swerve = Swerve.getInstance();
     private final Arm s_arm = Arm.getInstance();
     //Gets instances for the two classes used in the button bidings
     private final Drawer s_Drawer = Drawer.getInstance();
@@ -60,11 +64,26 @@ public class RobotContainer {
     public RobotContainer() {
         s_Swerve.setDefaultCommand(
                 new TeleopSwerve(s_Swerve, () -> -driver.getRawAxis(translationAxis),
-                        () -> -driver.getRawAxis(strafeAxis),
+                        () -> -getStrafe(),
                         () -> -driver.getRawAxis(rotationAxis), () -> false));
 
         // Configure the button binding
         configureButtonBindings();
+    }
+
+    private double getStrafe() {
+
+        double strafe = driver.getRawAxis(strafeAxis);
+
+        if (strafeRight.getAsBoolean()) {
+            strafe = 1;
+        }
+
+        if (strafeLeft.getAsBoolean()) {
+            strafe = -1;
+        }
+
+        return strafe;
     }
 
     /**
@@ -76,6 +95,9 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+        slowMode.onTrue(new SlowCommand());
+        //strafeLeft.whileTrue(new Strafe(-1));
+        //strafeRight.whileTrue(new Strafe(1));
 
         /* Operator Buttons */
         scoreMid.onTrue(new ArmCommand(Constants.ArmConstants.midArmPosition, true));
