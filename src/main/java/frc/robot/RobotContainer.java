@@ -12,7 +12,7 @@ import frc.robot.commands.GripperCommand;
 import frc.robot.commands.SlowCommand;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.ZeroArmCommand;
-import frc.robot.commands.autoCommands.AutoPath;
+import frc.robot.autos.Auto4;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drawer;
 import frc.robot.subsystems.Gripper;
@@ -57,7 +57,7 @@ public class RobotContainer {
     /* Subsystems */
     private final Swerve s_Swerve = Swerve.getInstance();
     private final Arm s_arm = Arm.getInstance();
-    //Gets instances for the two classes used in the button bidings
+    // Gets instances for the two classes used in the button bidings.
     private final Drawer s_Drawer = Drawer.getInstance();
     private final Gripper s_Gripper = Gripper.getInstance();
 
@@ -67,7 +67,7 @@ public class RobotContainer {
                         () -> -getStrafe(),
                         () -> -driver.getRawAxis(rotationAxis), () -> false));
 
-        // Configure the button binding
+        // Configure the button binding.
         configureButtonBindings();
     }
 
@@ -106,18 +106,14 @@ public class RobotContainer {
         shelfPosition.onTrue(new ArmCommand(Constants.ArmConstants.shelfPosition, false));
         zeroEncoder.onTrue(new ZeroArmCommand());
 
-        //When a button is pressed runs its respective method inside drawer
+        // When a button is pressed runs its respective method inside drawer.
         drawerExtender.onTrue(new DrawerCommand(true));
         drawerRetractor.onTrue(new DrawerCommand(false));
 
-        //When a button is pressed runs its respective method inside gripperCommand
+        // When a button is pressed runs its respective method inside gripperCommand.
         gripperOpen.onTrue(new GripperCommand(true));
         gripperClose.onTrue(new GripperCommand(false));
 
     }
 
-    public Command getAutonomousCommand() {
-        return new AutoPath(s_Swerve);
-
-    }
 }

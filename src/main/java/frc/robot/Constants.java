@@ -22,7 +22,7 @@ public final class Constants {
     /* Drivetrain Constants */
     public static final double trackWidth = 0.584; //TODO: This must be tuned to specific robot
     public static final double wheelBase = 0.584; //TODO: This must be tuned to specific robot
-    public static final double wheelCircumference = chosenModule.wheelCircumference*0.85;
+    public static final double wheelCircumference = chosenModule.wheelCircumference*0.78;
 
     /* Swerve Kinematics 
      * No need to ever change this unless you are not doing a traditional rectangular/square 4 module swerve */
@@ -144,6 +144,9 @@ public final class Constants {
     /* Constraint for the motion profilied robot angle controller */
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
         kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+
+    public static final double maxVelocity = 4.0;
+    public static final double maxAcceleration = 3.0;
   }
 
   // Create constants for the Arm subsystem

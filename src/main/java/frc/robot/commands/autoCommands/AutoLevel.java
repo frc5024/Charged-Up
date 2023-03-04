@@ -12,26 +12,22 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Swerve;
 
-
 public class AutoLevel extends CommandBase {
-  
-  // create new NavX object
-  AHRS gyro = new AHRS();
 
-  PIDController pid = new PIDController(0.07, 0, 0.0);
+  PIDController pid = new PIDController(0.06, 0, 0.0);
 
   Timer timer = new Timer();
 
-  // grab swerve singleton
+  // Grab swerve singleton.
   Swerve s_Swerve = Swerve.getInstance();
 
-  boolean levelingMode = false;
+  AHRS gyro = s_Swerve.gyro;
+
   boolean timerRunning;
 
-  /** Creates a new AutoLevel. */
   public AutoLevel() {
-    // Use addRequirements() here to declare subsystem dependencies.
 
+    // Declaring subsystem dependencies.
     addRequirements(s_Swerve);
   }
 
@@ -44,48 +40,37 @@ public class AutoLevel extends CommandBase {
   @Override
   public void execute() {
 
-    // if in leveling mode, attempt to balance, if not, drive forward until robot is
+    // Set motor speed.
+    s_Swerve.drive(new Translation2d(-pid.calculate(gyro.getPitch()), 0), 0, false, true);
 
-      // set motor speed
-      s_Swerve.drive(new Translation2d(-pid.calculate(gyro.getPitch()), 0), 0, false, true);
-
-    /* else if (!levelingMode) {
-
-      // drive forward to get onto charge station
-      s_Swerve.drive(new Translation2d(1.2, 0), 0, false, true);
-
-      // switch to leveling mode when angle is great enough
-      if ( Math.abs(gyro.getPitch()) > 3 ) levelingMode = true;
-    }
-    */
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
 
-    // stop motors
-    s_Swerve.drive(new Translation2d(0,0), 0, false, true);
+    // Stop motors.
+    s_Swerve.drive(new Translation2d(0, 0), 0, false, true);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
 
-    // Guard Clause
-    if (Math.abs(gyro.getPitch()) > 1){
+    // Guard Clause.
+    if (Math.abs(gyro.getPitch()) > 1) {
       timer.reset();
       timerRunning = false;
       return false;
     }
 
-    // Start if not started
-    if(!timerRunning){
+    // Start if not started. 
+    if (!timerRunning) {
       timer.start();
       timerRunning = true;
     }
-    
-    // Check for completion
+
+    // Check for completion.
     return timer.hasElapsed(3);
   }
 }
