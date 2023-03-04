@@ -1,10 +1,6 @@
 package frc.robot.subsystems;
 
-<<<<<<< HEAD
-import com.ctre.phoenix.sensors.Pigeon2;
-=======
 import com.kauailabs.navx.frc.AHRS;
->>>>>>> origin/master
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -24,26 +20,11 @@ import frc.robot.SwerveModule;
 public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
-<<<<<<< HEAD
-    public Pigeon2 gyro;
-    public double speedModifier;
-    private static Swerve mInstance = null;
-
-    // Makes it a singleton.
-    public static Swerve getInstance() {
-        if (mInstance == null) {
-            mInstance = new Swerve();
-        }
-        return mInstance;
-    }
-
-    private Swerve() {
-        gyro = new Pigeon2(Constants.Swerve.pigeonID);
-        gyro.configFactoryDefault();
-=======
     public AHRS gyro;
+    public double speedModifier;
 
     private static Swerve mInstance;
+
     public static Swerve getInstance() {
         if (mInstance == null) {
             mInstance = new Swerve();
@@ -53,7 +34,6 @@ public class Swerve extends SubsystemBase {
 
     public Swerve() {
         gyro = new AHRS(SPI.Port.kMXP);
->>>>>>> origin/master
         zeroGyro();
         speedModifier = 1.0;
 
@@ -125,11 +105,7 @@ public class Swerve extends SubsystemBase {
     }
 
     public void zeroGyro() {
-<<<<<<< HEAD
-        gyro.setYaw(0);
-=======
         gyro.zeroYaw();
->>>>>>> origin/master
     }
 
     public Rotation2d getYaw() {
