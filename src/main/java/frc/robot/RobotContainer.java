@@ -94,10 +94,4 @@ public class RobotContainer {
 
     }
 
-    /* 
-    public Command getAutonomousCommand() {
-        return new Auto4();
-
-    }
-    */
 }

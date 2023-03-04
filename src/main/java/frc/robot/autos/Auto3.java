@@ -11,7 +11,6 @@ public class Auto3 extends SequentialCommandGroup {
 
         // Play command sequence.
         addCommands(new GripperCommand(false),
-                new ZeroArmCommand(),
                 new AutoPath("Path3"));
     }
 

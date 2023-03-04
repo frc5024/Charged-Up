@@ -144,6 +144,8 @@ public final class Constants {
     /* Constraint for the motion profilied robot angle controller */
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
         kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+
+    public static final PathConstraints maxVelocity = (4, 3);
   }
 
   // Create constants for the Arm subsystem
