@@ -12,26 +12,24 @@ import com.pathplanner.lib.auto.SwerveAutoBuilder;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
-import frc.robot.commands.ArmCommand;
-import frc.robot.commands.GripperCommand;
-import frc.robot.commands.ZeroArmCommand;
 import frc.robot.subsystems.Swerve;
 
 public class AutoPath extends SequentialCommandGroup {
 
-    ArmCommand scoreMid = new ArmCommand(Constants.ArmConstants.midArmPosition, true);
-    GripperCommand close = new GripperCommand(false);
-    ZeroArmCommand zeroArm = new ZeroArmCommand();
-    AutoLevel level = new AutoLevel();
-    GripperCommand closeClaw = new GripperCommand(false);
+    Swerve driveSubsystem = Swerve.getInstance();
 
-    /* Creates new auto path */
-    public AutoPath(Swerve driveSubsystem) {
+    // Creates path with default velocity settings.
+    public AutoPath(String path) {
+        this(path, new PathConstraints(4, 3));
+    }
+
+    // Creates path with specified velocity settings.
+    public AutoPath(String path, PathConstraints pathConstraints) {
 
         // Loads chosen auto path from PathPlanner.
         List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup(
-                "Path1",
-                new PathConstraints(4, 3));
+                path,
+                pathConstraints);
 
         HashMap<String, Command> eventMap = new HashMap<>();
 
@@ -44,13 +42,12 @@ public class AutoPath extends SequentialCommandGroup {
                 new PIDConstants(0.5, 0.0, 0.0), // PID constants to correct for rotation error (Creates rotation controller).
                 driveSubsystem::setModuleStates,
                 eventMap,
-                false, // Mirrored depending on alliance color.
+                true, // Mirrored depending on alliance color.
                 driveSubsystem
 
         );
 
         Command fullAuto = AutoBuilder.fullAuto(pathGroup);
-        addCommands(closeClaw, scoreMid, zeroArm, fullAuto, level);
-        //addCommands(fullAuto);
+        addCommands(fullAuto);
     }
 }
