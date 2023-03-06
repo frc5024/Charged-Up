@@ -1,0 +1,9 @@
+{
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/AutoTab/SendableChooser[0]": "String Chooser",
+      "/Shuffleboard/PoseEstimation/Field": "Field2d"
+    }
+  }
+}

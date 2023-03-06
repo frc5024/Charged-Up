@@ -1,21 +1,26 @@
 package frc.robot;
 
+import org.photonvision.PhotonCamera;
+
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.AimAndRangeCommand;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DrawerCommand;
+import frc.robot.commands.DriveToBestTagCommand;
 import frc.robot.commands.GripperCommand;
 import frc.robot.commands.SlowCommand;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.ZeroArmCommand;
-import frc.robot.autos.Auto4;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drawer;
 import frc.robot.subsystems.Gripper;
+import frc.robot.subsystems.PoseEstimator;
 import frc.robot.subsystems.Swerve;
 
 /**
@@ -29,6 +34,8 @@ public class RobotContainer {
     /* Controllers */
     private final Joystick driver = new Joystick(0);
     private final Joystick operator = new Joystick(1);
+
+    private final CommandXboxController cameraController = new CommandXboxController(2);
 
     /* Drive Controls */
     private final int translationAxis = XboxController.Axis.kLeftY.value;
@@ -56,11 +63,24 @@ public class RobotContainer {
 
     /* Subsystems */
     private final Swerve s_Swerve = Swerve.getInstance();
+    private final PhotonCamera aprilTagCamera = new PhotonCamera("REAR_CAMERA");
+    private final PhotonCamera retroReflectiveCamera = new PhotonCamera("REAR_CAMERA");
+    private final PoseEstimator poseEstimator = new PoseEstimator(s_Swerve, aprilTagCamera);
+
     private final Arm s_arm = Arm.getInstance();
     // Gets instances for the two classes used in the button bidings.
     private final Drawer s_Drawer = Drawer.getInstance();
     private final Gripper s_Gripper = Gripper.getInstance();
 
+    /* Commands */
+    private final DriveToBestTagCommand driveToBestTagCommand = new DriveToBestTagCommand(this.aprilTagCamera,
+            this.s_Swerve, poseEstimator::getCurrentPose);
+    private final AimAndRangeCommand aimAndRangeCommand = new AimAndRangeCommand(this.retroReflectiveCamera,
+            this.s_Swerve, poseEstimator::getCurrentPose);
+
+    /**
+     * 
+     */
     public RobotContainer() {
         s_Swerve.setDefaultCommand(
                 new TeleopSwerve(s_Swerve, () -> -driver.getRawAxis(translationAxis),
@@ -71,8 +91,11 @@ public class RobotContainer {
         configureButtonBindings();
     }
 
+    /**
+     * 
+     * @return
+     */
     private double getStrafe() {
-
         double strafe = driver.getRawAxis(strafeAxis);
 
         if (strafeRight.getAsBoolean()) {
@@ -114,6 +137,17 @@ public class RobotContainer {
         gripperOpen.onTrue(new GripperCommand(true));
         gripperClose.onTrue(new GripperCommand(false));
 
+        // PhotonCamera Testing
+        cameraController.b().whileTrue(driveToBestTagCommand);
+        cameraController.y().whileTrue(aimAndRangeCommand);
+
     }
 
+    /**
+     * Called when the alliance reported by the driverstation/FMS changes.
+     * @param alliance new alliance value
+     */
+    public void onAllianceChanged(Alliance alliance) {
+        poseEstimator.setAlliance(alliance);
+    }
 }

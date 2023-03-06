@@ -53,22 +53,38 @@ public class Swerve extends SubsystemBase {
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
     }
 
-    public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
-        SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
-                fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
-                        translation.getX() * speedModifier,
-                        translation.getY() * speedModifier,
-                        rotation * speedModifier,
-                        getYaw())
-                        : new ChassisSpeeds(
-                                translation.getX() * speedModifier,
-                                translation.getY() * speedModifier,
-                                rotation * speedModifier));
+    /**
+     * 
+     */
+    public void drive(ChassisSpeeds chassisSpeeds, boolean isOpenLoop) {
+        SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(chassisSpeeds);
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
 
         for (SwerveModule mod : mSwerveMods) {
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
         }
+    }
+
+    /**
+     * 
+     */
+    public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
+        ChassisSpeeds chassisSpeeds = null;
+
+        if (fieldRelative) {
+            chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+                    translation.getX() * speedModifier,
+                    translation.getY() * speedModifier,
+                    rotation * speedModifier,
+                    getYaw());
+        } else {
+            chassisSpeeds = new ChassisSpeeds(
+                    translation.getX() * speedModifier,
+                    translation.getY() * speedModifier,
+                    rotation * speedModifier);
+        }
+
+        drive(chassisSpeeds, isOpenLoop);
     }
 
     /* Used by SwerveControllerCommand in Auto */
@@ -117,6 +133,13 @@ public class Swerve extends SubsystemBase {
         for (SwerveModule mod : mSwerveMods) {
             mod.resetToAbsolute();
         }
+    }
+
+    /**
+     *
+     */
+    public void stop() {
+        drive(new ChassisSpeeds(), false);
     }
 
     @Override
