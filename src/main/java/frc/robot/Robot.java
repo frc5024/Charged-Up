@@ -108,21 +108,21 @@ public class Robot extends TimedRobot {
     // Schedule auto command chosen on Shuffleboard.
     switch (autoChooser.getSelected()) {
 
-      case 1:
-        m_autonomousCommand = new Auto1();
-        break;
-      case 2:
-        m_autonomousCommand = new Auto2();
-        break;
-      case 3:
-        m_autonomousCommand = new Auto3();
-        break;
-      case 4:
-        m_autonomousCommand = new Auto4();
-        break;
+    case 1:
+      m_autonomousCommand = new Auto1();
+      break;
+    case 2:
+      m_autonomousCommand = new Auto2();
+      break;
+    case 3:
+      m_autonomousCommand = new Auto3();
+      break;
+    case 4:
+      m_autonomousCommand = new Auto4();
+      break;
 
-      default:
-        break;
+    default:
+      break;
     }
 
     if (m_autonomousCommand != null) {
