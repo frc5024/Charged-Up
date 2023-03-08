@@ -12,24 +12,18 @@ import com.pathplanner.lib.auto.SwerveAutoBuilder;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
-import frc.robot.commands.ArmCommand;
-import frc.robot.commands.GripperCommand;
-import frc.robot.commands.ZeroArmCommand;
 import frc.robot.subsystems.Swerve;
 
 public class AutoPath extends SequentialCommandGroup {
-    ArmCommand scoreMid = new ArmCommand(Constants.ArmConstants.midArmPosition, true);
-    GripperCommand close = new GripperCommand(false);
-    ZeroArmCommand zeroArm = new ZeroArmCommand();
-    AutoLevel level = new AutoLevel();
+    Swerve driveSubsystem = Swerve.getInstance();
 
-    public AutoPath(Swerve driveSubsystem) {
+    public AutoPath(String pathName) {
         // This will load the file "FullAuto.path" and generate it with a max velocity
         // of 4 m/s and a max acceleration of 3 m/s^2
         // for every path in the group
         List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup(
-                "Path1",
-                new PathConstraints(4, 3));
+                pathName,
+                new PathConstraints(3, 2));
         // This is just an example event map. It would be better to have a constant,
         // global event map
         // in your code that will be used by all path following commands.
@@ -57,6 +51,6 @@ public class AutoPath extends SequentialCommandGroup {
         );
 
         Command fullAuto = autoBuilder.fullAuto(pathGroup);
-        addCommands(close, scoreMid, zeroArm, fullAuto, level);
+        addCommands(fullAuto);
     }
 }

@@ -12,6 +12,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -23,6 +24,7 @@ public class Swerve extends SubsystemBase {
     public AHRS gyro;
 
     private static Swerve mInstance;
+
     public static Swerve getInstance() {
         if (mInstance == null) {
             mInstance = new Swerve();
@@ -32,6 +34,7 @@ public class Swerve extends SubsystemBase {
 
     public Swerve() {
         gyro = new AHRS(SPI.Port.kMXP);
+        Shuffleboard.getTab("Gyro").add(gyro);
         zeroGyro();
 
         mSwerveMods = new SwerveModule[] {
@@ -121,6 +124,7 @@ public class Swerve extends SubsystemBase {
         swerveOdometry.update(getYaw(), getModulePositions());
 
         for (SwerveModule mod : mSwerveMods) {
+            SmartDashboard.putNumber("GYRO ", getYaw().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);

@@ -11,7 +11,7 @@ import frc.robot.commands.DrawerCommand;
 import frc.robot.commands.GripperCommand;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.ZeroArmCommand;
-import frc.robot.commands.autoCommands.AutoPath;
+import frc.robot.commands.autoCommands.JoshAuto;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drawer;
 import frc.robot.subsystems.Gripper;
@@ -51,7 +51,7 @@ public class RobotContainer {
     private final JoystickButton gripperOpen = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
 
     /* Subsystems */
-    private final Swerve s_Swerve = new Swerve();
+    private final Swerve s_Swerve = Swerve.getInstance();
     private final Arm s_arm = Arm.getInstance();
     //Gets instances for the two classes used in the button bidings
     private final Drawer s_Drawer = Drawer.getInstance();
@@ -95,7 +95,7 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return new AutoPath(s_Swerve);
+        return new JoshAuto();
 
     }
 }
