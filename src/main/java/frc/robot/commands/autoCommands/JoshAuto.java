@@ -21,9 +21,10 @@ public class JoshAuto extends SequentialCommandGroup {
         new AutoPath("Path3"),
         new GripperCommand(true),
         new ArmCommand(Constants.ArmConstants.hybridArmPosition, true),
-        new GripperCommand(false),
-        new ArmCommand(Constants.ArmConstants.midArmPosition, false),
-        new AutoPath("Path4"),
-        new AutoLevel());
+        new GripperCommand(false)
+        // new ArmCommand(Constants.ArmConstants.midArmPosition, false),
+        // new AutoPath("Path4"),
+        // new AutoLevel()
+        );
   }
 }
