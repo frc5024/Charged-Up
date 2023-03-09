@@ -3,7 +3,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ArmCommand;
@@ -12,7 +11,6 @@ import frc.robot.commands.GripperCommand;
 import frc.robot.commands.SlowCommand;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.ZeroArmCommand;
-import frc.robot.autos.Auto4;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drawer;
 import frc.robot.subsystems.Gripper;
@@ -100,8 +98,8 @@ public class RobotContainer {
         //strafeRight.whileTrue(new Strafe(1));
 
         /* Operator Buttons */
-        scoreMid.onTrue(new ArmCommand(Constants.ArmConstants.midArmPosition, true));
-        scoreHybrid.onTrue(new ArmCommand(Constants.ArmConstants.hybridArmPosition, true));
+        scoreMid.onTrue(new ArmCommand(Constants.ArmConstants.midArmPosition, false));
+        scoreHybrid.onTrue(new ArmCommand(Constants.ArmConstants.hybridArmPosition, false));
         scoreClosed.onTrue(new ArmCommand(Constants.ArmConstants.midArmPosition, false));
         shelfPosition.onTrue(new ArmCommand(Constants.ArmConstants.shelfPosition, false));
         zeroEncoder.onTrue(new ZeroArmCommand());
