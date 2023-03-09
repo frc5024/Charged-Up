@@ -98,7 +98,7 @@ public class RobotContainer {
         //strafeRight.whileTrue(new Strafe(1));
 
         /* Operator Buttons */
-        scoreMid.onTrue(new ArmCommand(Constants.ArmConstants.midArmPosition, false));
+        scoreMid.onTrue(new ArmCommand(Constants.ArmConstants.midArmPosition, false)); // Set as false to ensure that claw doesn't open upon reaching its desired position.
         scoreHybrid.onTrue(new ArmCommand(Constants.ArmConstants.hybridArmPosition, false));
         scoreClosed.onTrue(new ArmCommand(Constants.ArmConstants.midArmPosition, false));
         shelfPosition.onTrue(new ArmCommand(Constants.ArmConstants.shelfPosition, false));
