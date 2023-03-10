@@ -15,8 +15,9 @@ public class Auto2 extends SequentialCommandGroup {
     public Auto2() {
 
         // Play command sequence.
+        // Added Instant command to reset the speed of the Swerve to 100% to ensure that it is not in slowmode and can successfully auto level.
         addCommands(new InstantCommand(() -> {
-            Swerve.getInstance().speedModifier = 1.00;
+            Swerve.getInstance().speedModifier = Constants.SlowConstants.oneHundredPercentModifier;
         }), new GripperCommand(false),
                 new ArmCommand(Constants.ArmConstants.midArmPosition, true),
                 new ZeroArmCommand(),

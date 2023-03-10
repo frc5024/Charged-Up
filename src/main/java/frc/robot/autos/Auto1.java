@@ -20,7 +20,10 @@ public class Auto1 extends SequentialCommandGroup {
         PathConstraints velocity = new PathConstraints(1.25, 1);
 
         // Play command sequence.
-        addCommands(new InstantCommand(() -> {Swerve.getInstance().speedModifier = 1.00;}),new GripperCommand(false),
+        // Added Instant command to reset the speed of the Swerve to 100% to ensure that it is not in slowmode and can successfully auto level.
+        addCommands(new InstantCommand(() -> {
+            Swerve.getInstance().speedModifier = Constants.SlowConstants.oneHundredPercentModifier;
+        }), new GripperCommand(false),
                 new ArmCommand(Constants.ArmConstants.midArmPosition, true),
                 new ZeroArmCommand(),
                 new AutoPath("Path1", velocity),
