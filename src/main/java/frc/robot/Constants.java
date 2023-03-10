@@ -22,7 +22,7 @@ public final class Constants {
     /* Drivetrain Constants */
     public static final double trackWidth = 0.584; //TODO: This must be tuned to specific robot
     public static final double wheelBase = 0.584; //TODO: This must be tuned to specific robot
-    public static final double wheelCircumference = chosenModule.wheelCircumference*0.78;
+    public static final double wheelCircumference = chosenModule.wheelCircumference * 0.78;
 
     /* Swerve Kinematics 
      * No need to ever change this unless you are not doing a traditional rectangular/square 4 module swerve */
@@ -217,4 +217,13 @@ public final class Constants {
     //used to give the gripper time to open before drawer moves
     public static final double gripperVSDrawer = 0.1;
   }
+
+  public static class SlowConstants {
+
+    // Double values for 100% and 30%
+    public static final double oneHundredPercentModifier = 1.00;
+    public static final double thirtyPercentModifier = 0.30;
+
+  }
+
 }
