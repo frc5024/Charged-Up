@@ -49,12 +49,12 @@ public class Robot extends TimedRobot {
 
     autoChooser = new SendableChooser<>();
 
-    autoChooser.addOption("Auto1", 1);
-    autoChooser.addOption("Auto2", 2);
-    autoChooser.addOption("Auto3", 3);
-    autoChooser.addOption("Auto4", 4);
-    autoChooser.addOption("Auto5", 5);
-    autoChooser.addOption("Auto6", 6);
+    autoChooser.addOption("Middle", 1);
+    autoChooser.addOption("Left-J", 2);
+    autoChooser.addOption("Straight", 3);
+    autoChooser.addOption("Drift", 4);
+    autoChooser.addOption("Right-J", 5);
+    autoChooser.addOption("Don't Touch", 6);
 
     Shuffleboard.getTab("AutoTab").add(autoChooser);
 
