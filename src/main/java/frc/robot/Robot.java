@@ -55,6 +55,7 @@ public class Robot extends TimedRobot {
     autoChooser.addOption("Drift", 4);
     autoChooser.addOption("Right-J", 5);
     autoChooser.addOption("Don't Touch", 6);
+    autoChooser.addOption("Config-1M", 7);
 
     Shuffleboard.getTab("AutoTab").add(autoChooser);
 
