@@ -17,6 +17,7 @@ import frc.robot.autos.Auto3;
 import frc.robot.autos.Auto4;
 import frc.robot.autos.Auto5;
 import frc.robot.autos.Auto6;
+import frc.robot.autos.Auto7;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -130,6 +131,9 @@ public class Robot extends TimedRobot {
       break;
     case 6:
       m_autonomousCommand = new Auto6();
+      break;
+    case 7:
+      m_autonomousCommand = new Auto7();
       break;
 
     default:
