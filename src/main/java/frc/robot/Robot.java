@@ -15,6 +15,9 @@ import frc.robot.autos.Auto1;
 import frc.robot.autos.Auto2;
 import frc.robot.autos.Auto3;
 import frc.robot.autos.Auto4;
+import frc.robot.autos.Auto5;
+import frc.robot.autos.Auto6;
+import frc.robot.autos.Auto7;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -47,10 +50,13 @@ public class Robot extends TimedRobot {
 
     autoChooser = new SendableChooser<>();
 
-    autoChooser.addOption("Auto1", 1);
-    autoChooser.addOption("Auto2", 2);
-    autoChooser.addOption("Auto3", 3);
-    autoChooser.addOption("Auto4", 4);
+    autoChooser.addOption("Middle", 1);
+    autoChooser.addOption("Left-J", 2);
+    autoChooser.addOption("Straight", 3);
+    autoChooser.addOption("Drift", 4);
+    autoChooser.addOption("Right-J", 5);
+    autoChooser.addOption("Don't Touch", 6);
+    autoChooser.addOption("Config-1M", 7);
 
     Shuffleboard.getTab("AutoTab").add(autoChooser);
 
@@ -119,6 +125,15 @@ public class Robot extends TimedRobot {
       break;
     case 4:
       m_autonomousCommand = new Auto4();
+      break;
+    case 5:
+      m_autonomousCommand = new Auto5();
+      break;
+    case 6:
+      m_autonomousCommand = new Auto6();
+      break;
+    case 7:
+      m_autonomousCommand = new Auto7();
       break;
 
     default:

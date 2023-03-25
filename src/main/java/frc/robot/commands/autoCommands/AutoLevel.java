@@ -14,7 +14,7 @@ import frc.robot.subsystems.Swerve;
 
 public class AutoLevel extends CommandBase {
 
-  PIDController pid = new PIDController(0.06, 0, 0.0);
+  PIDController pid = new PIDController(0.04, 0, 0.0);
 
   Timer timer = new Timer();
 
