@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DrawerCommand;
 import frc.robot.commands.GripperCommand;
@@ -43,13 +44,6 @@ public class RobotContainer {
     private final JoystickButton gripperOpen = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
 
     /* operator Buttons */
-    private final JoystickButton makeLEDpurple = new JoystickButton(operator,
-            Leds.DPadAsButton(operator.getPOV(), Constants.Controllers.dPadRight));
-    private final JoystickButton makeLEDyellow = new JoystickButton(operator,
-            Leds.DPadAsButton(operator.getPOV(), Constants.Controllers.dPadLeft));
-    private final JoystickButton makeLEDgreen = new JoystickButton(operator,
-            Leds.DPadAsButton(operator.getPOV(), Constants.Controllers.dPadUp));
-
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
     private final Arm s_arm = Arm.getInstance();
@@ -58,6 +52,11 @@ public class RobotContainer {
     private final Gripper s_Gripper = Gripper.getInstance();
     private final Leds s_Leds = new Leds();
 
+    // Maps Leds to Dpad 0=u0, 90=right, 180=down, 270=left
+    private final POVButton upButton = new POVButton(operator, 0, operator.getPOV());
+    private final POVButton rightButton = new POVButton(operator, 90, operator.getPOV());
+    private final POVButton downButton = new POVButton(operator, 270, operator.getPOV());
+    private final POVButton leftButton = new POVButton(operator, 270, operator.getPOV());
     public RobotContainer() {
         s_Swerve.setDefaultCommand(
                 new TeleopSwerve(s_Swerve, () -> -driver.getRawAxis(translationAxis),
@@ -87,9 +86,11 @@ public class RobotContainer {
         gripperOpen.onTrue(new GripperCommand(true));
         gripperClose.onTrue(new GripperCommand(false));
 
-        makeLEDgreen.onTrue(new InstantCommand(() -> s_Leds.makeLEDgreen()));
-        makeLEDyellow.onTrue(new InstantCommand(() -> s_Leds.makeLEDyellow()));
-        makeLEDpurple.onTrue(new InstantCommand(() -> s_Leds.makeLEDpurple()));
+        // When DPads are pressed, the LEDS turn their respective colour
+        upButton.onTrue(new InstantCommand(() -> s_Leds.makeLEDgreen()));
+        rightButton.onTrue(new InstantCommand(() -> s_Leds.makeLEDyellow()));
+        downButton.onTrue(new InstantCommand(() -> s_Leds.makeLEDpurple()));
+        leftButton.onTrue(new InstantCommand(() -> s_Leds.makeLEDblack()));
     }
 
     public Command getAutonomousCommand() {

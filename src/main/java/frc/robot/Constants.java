@@ -225,5 +225,6 @@ public final class Constants {
     public static final double lEDcolour_GREEN = 0.71;
     public static final double lEDcolour_YELLOW = 0.69;
     public static final double lEDcolour_PURPLE = 0.91;
+    public static final double lEDcolour_BLACK = 0.99;
   }
 }

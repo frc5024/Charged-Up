@@ -9,7 +9,6 @@ import frc.robot.liblite.StateMetadata;
 import frc.robot.RobotContainer;
 
 public class Leds extends SubsystemBase {
-
     private static Spark lEDhub_Rev = new Spark(Constants.LedsConstants.ledID);
 
     public int ledsDegrees = 0;
@@ -17,7 +16,7 @@ public class Leds extends SubsystemBase {
     public enum LEDStates {
 
         // Simplified state where the drawer is retracted
-        LED_GREEN, LED_YELLOW, LED_PURPLE;
+        LED_GREEN, LED_YELLOW, LED_PURPLE,LED_BLACK;
 
     }
 
@@ -28,9 +27,10 @@ public class Leds extends SubsystemBase {
         stateMachine = new StateMachine<>("LED Statemachine");
 
         // Assigns the states to their methods
-        stateMachine.setDefaultState(LEDStates.LED_GREEN, this::handleLEDgreen);
+        stateMachine.addState(LEDStates.LED_GREEN, this::handleLEDgreen);
         stateMachine.addState(LEDStates.LED_YELLOW, this::handleLEDyellow);
         stateMachine.addState(LEDStates.LED_PURPLE, this::handleLEDpurple);
+        stateMachine.setDefaultState(LEDStates.LED_PURPLE, this::handleLEDblack);
 
         // Initialize LED to Green
         lEDhub_Rev.set(Constants.LedsConstants.lEDcolour_GREEN);
@@ -63,6 +63,15 @@ public class Leds extends SubsystemBase {
 
     }
 
+    public void handleLEDblack(StateMetadata<LEDStates> metaData) {
+        // Sets the LED to purple
+        if (metaData.isFirstRun()) {
+            lEDhub_Rev.set(Constants.LedsConstants.lEDcolour_BLACK);
+        }
+
+    }
+
+
     public void makeLEDgreen() {
         stateMachine.setState(LEDStates.LED_GREEN);
     }
@@ -74,19 +83,14 @@ public class Leds extends SubsystemBase {
     public void makeLEDpurple() {
         stateMachine.setState(LEDStates.LED_PURPLE);
     }
-
     
-    public static int DPadAsButton(int degrees, int target){
-        if(degrees==target){
-            return 1;
-        }else{
-            return 0;
-        }
+    public void makeLEDblack() {
+        stateMachine.setState(LEDStates.LED_BLACK);
     }
 
     @Override
     public void periodic() {
-
+        
         
         stateMachine.update();
     }
