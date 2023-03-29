@@ -1,12 +1,10 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.liblite.StateMachine;
 import frc.robot.liblite.StateMetadata;
-import frc.robot.RobotContainer;
 
 public class Leds extends SubsystemBase {
     private static Spark lEDhub_Rev = new Spark(Constants.LedsConstants.ledID);
@@ -15,7 +13,6 @@ public class Leds extends SubsystemBase {
 
     public enum LEDStates {
 
-        // Simplified state where the drawer is retracted
         LED_GREEN, LED_YELLOW, LED_PURPLE,LED_BLACK;
 
     }
