@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DrawerCommand;
 import frc.robot.commands.GripperCommand;
@@ -14,6 +15,7 @@ import frc.robot.commands.ZeroArmCommand;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drawer;
 import frc.robot.subsystems.Gripper;
+import frc.robot.subsystems.Leds;
 import frc.robot.subsystems.Swerve;
 
 /**
@@ -52,12 +54,18 @@ public class RobotContainer {
     private final JoystickButton gripperClose = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
     private final JoystickButton gripperOpen = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
 
+    //private final POVButton upButton = new POVButton(operator, 0, operator.getPOV());
+    //private final POVButton rightButton = new POVButton(operator, 90, operator.getPOV());
+    //private final POVButton downButton = new POVButton(operator, 270, operator.getPOV());
+    //private final POVButton leftButton = new POVButton(operator, 270, operator.getPOV());
+
     /* Subsystems */
     private final Swerve s_Swerve = Swerve.getInstance();
     private final Arm s_arm = Arm.getInstance();
     // Gets instances for the two classes used in the button bidings.
     private final Drawer s_Drawer = Drawer.getInstance();
     private final Gripper s_Gripper = Gripper.getInstance();
+    private final Leds s_Leds = new Leds();
 
     public RobotContainer() {
         s_Swerve.setDefaultCommand(
@@ -111,6 +119,12 @@ public class RobotContainer {
         // When a button is pressed runs its respective method inside gripperCommand.
         gripperOpen.onTrue(new GripperCommand(true));
         gripperClose.onTrue(new GripperCommand(false));
+
+         // When DPads are pressed, the LEDS turn their respective colour
+       // upButton.onTrue(new InstantCommand(() -> s_Leds.makeLEDgreen()));
+       // rightButton.onTrue(new InstantCommand(() -> s_Leds.makeLEDyellow()));
+       // downButton.onTrue(new InstantCommand(() -> s_Leds.makeLEDpurple()));
+       // leftButton.onTrue(new InstantCommand(() -> s_Leds.makeLEDblack()));
 
     }
 
