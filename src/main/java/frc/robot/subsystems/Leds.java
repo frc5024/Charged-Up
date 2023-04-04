@@ -30,14 +30,14 @@ public class Leds extends SubsystemBase {
         stateMachine.setDefaultState(LEDStates.LED_PURPLE, this::handleLEDblack);
 
         // Initialize LED to Green
-        lEDhub_Rev.set(Constants.LedsConstants.lEDcolour_GREEN);
+       
     }
 
     // Method for LED_GREEN State
     public void handleLEDgreen(StateMetadata<LEDStates> metaData) {
         // Sets the LED to green
         if (metaData.isFirstRun()) {
-            lEDhub_Rev.set(Constants.LedsConstants.lEDcolour_GREEN);
+            
         }
 
     }

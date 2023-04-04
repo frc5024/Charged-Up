@@ -1,13 +1,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Drawer;
 import frc.robot.subsystems.Gripper;
 
 public class DrawerCommand extends CommandBase {
-
+    private static Spark lEDhub_Rev = new Spark(Constants.LedsConstants.ledID);
     private Drawer drawer;
     private Gripper gripper;
 
@@ -53,12 +54,15 @@ public class DrawerCommand extends CommandBase {
         if (shouldExtend == true) {
         
             drawer.extendDrawer();
+            lEDhub_Rev.set(Constants.LedsConstants.lEDcolour_GREEN);
+        
         }
 
         if (shouldExtend == false) {
 
             
             drawer.retractDrawer();
+            lEDhub_Rev.set(Constants.LedsConstants.lEDcolour_RED);
         }
     }
 
