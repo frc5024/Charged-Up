@@ -225,5 +225,12 @@ public final class Constants {
     public static final double thirtyPercentModifier = 0.30;
 
   }
+  public static class LedsConstants {
 
+    public static final int ledID = 9;
+    public static final double lEDcolour_GREEN = 0.71;
+    public static final double lEDcolour_RED = 0.61;
+   
+
+  }
 }
