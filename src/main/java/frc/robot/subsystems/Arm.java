@@ -16,7 +16,7 @@ import frc.robot.liblite.StateMetadata;
 public class Arm extends SubsystemBase {
     private static Arm mInstance = null;
 
-    private TalonSRX topMotor;
+    public TalonSRX topMotor;
     private TalonSRX bottomMotor;
 
     private DigitalInput innerLimitSwitch;
@@ -222,7 +222,7 @@ public class Arm extends SubsystemBase {
     * Sets the percent speed of the arm motors to the input value.
     */
     public void setSpeed(double speed) {
-        speed = MathUtil.clamp(speed, -0.25, 0.25);
+        speed = MathUtil.clamp(speed, -0.35, 0.35);
         topMotor.set(ControlMode.PercentOutput, (speed));
         bottomMotor.set(ControlMode.PercentOutput, (speed));
 

@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Gripper;
 
-public class ArmCommand extends CommandBase {
+public class ThrowCommand extends CommandBase {
 
   private Arm arm;
 
@@ -16,30 +16,21 @@ public class ArmCommand extends CommandBase {
 
   private int position;
 
-  private boolean openGrabber;
+  /** Creates a new ThrowCommand. */
+  public ThrowCommand(int position) {
 
-  /** Creates a new Armcommand. */
-  public ArmCommand(int position, boolean openGrabber) {
-
-    // Intializes subsystems and variables.
     arm = Arm.getInstance();
     gripper = Gripper.getInstance();
     this.position = position;
-    this.openGrabber = openGrabber;
 
   }
 
-  public ArmCommand(boolean finished) {
+  public ThrowCommand() {
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // Set the arms desried position and start the moving process.
-    arm.setDesiredPosition(position);
-    arm.setReleaseOnFinish(openGrabber);
-    arm.startMoving();
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -51,21 +42,13 @@ public class ArmCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
 
-    // Make sure arm is ready to dispatch,
-    // In case the command is ending on an interruption.
-    if (arm.readyToDispatch()) {
-      // Open the gripper
-      gripper.openGripper();
-
-    }
+    gripper.openGripper();
 
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // End command when arm is ready to dispatch the game piece.
-    return arm.isNotMoving();
-
+    return arm.topMotor.getSelectedSensorPosition() < position;
   }
 }

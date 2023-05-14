@@ -46,8 +46,9 @@ public class RobotContainer {
     /* Operator Buttons */
     private final JoystickButton scoreMid = new JoystickButton(operator, XboxController.Button.kY.value);
     private final JoystickButton scoreHybrid = new JoystickButton(operator, XboxController.Button.kA.value);
-    private final JoystickButton scoreClosed = new JoystickButton(operator, XboxController.Button.kB.value);
+    private final JoystickButton singleSub = new JoystickButton(operator, XboxController.Button.kB.value);
     private final JoystickButton shelfPosition = new JoystickButton(operator, XboxController.Button.kStart.value);
+    private final JoystickButton shelfCone = new JoystickButton(operator, XboxController.Button.kBack.value);
     private final JoystickButton zeroEncoder = new JoystickButton(operator, XboxController.Button.kX.value);
     private final JoystickButton gripperClose = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
     private final JoystickButton gripperOpen = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
@@ -100,9 +101,10 @@ public class RobotContainer {
         /* Operator Buttons */
         scoreMid.onTrue(new ArmCommand(Constants.ArmConstants.midArmPosition, false)); // Set as false to ensure that claw doesn't open upon reaching its desired position.
         scoreHybrid.onTrue(new ArmCommand(Constants.ArmConstants.hybridArmPosition, false));
-        scoreClosed.onTrue(new ArmCommand(Constants.ArmConstants.midArmPosition, false));
         shelfPosition.onTrue(new ArmCommand(Constants.ArmConstants.shelfPosition, false));
         zeroEncoder.onTrue(new ZeroArmCommand());
+        singleSub.onTrue(new ArmCommand(-2200, false));
+        shelfCone.onTrue(new ArmCommand(-2300, false));
 
         // When a button is pressed runs its respective method inside drawer.
         drawerExtender.onTrue(new DrawerCommand(true));

@@ -159,7 +159,7 @@ public final class Constants {
 
     public static final double armSpeed = 0.15;
 
-    public static final int midArmPosition = -2500;
+    public static final int midArmPosition = -2480;
     public static final int hybridArmPosition = -3240;
     public static final int shelfPosition = -755;
 
