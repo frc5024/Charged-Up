@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ArmCommand;
@@ -10,6 +11,7 @@ import frc.robot.commands.DrawerCommand;
 import frc.robot.commands.GripperCommand;
 import frc.robot.commands.SlowCommand;
 import frc.robot.commands.TeleopSwerve;
+import frc.robot.commands.ThrowCommand;
 import frc.robot.commands.ZeroArmCommand;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drawer;
@@ -36,7 +38,6 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kBack.value);
-
     private final JoystickButton drawerExtender = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton drawerRetractor = new JoystickButton(driver, XboxController.Button.kStart.value);
     private final JoystickButton slowMode = new JoystickButton(driver, XboxController.Button.kX.value);
@@ -48,7 +49,7 @@ public class RobotContainer {
     private final JoystickButton scoreHybrid = new JoystickButton(operator, XboxController.Button.kA.value);
     private final JoystickButton singleSub = new JoystickButton(operator, XboxController.Button.kB.value);
     private final JoystickButton shelfPosition = new JoystickButton(operator, XboxController.Button.kStart.value);
-    private final JoystickButton shelfCone = new JoystickButton(operator, XboxController.Button.kBack.value);
+    private final JoystickButton throwButton = new JoystickButton(operator, XboxController.Button.kBack.value);
     private final JoystickButton zeroEncoder = new JoystickButton(operator, XboxController.Button.kX.value);
     private final JoystickButton gripperClose = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
     private final JoystickButton gripperOpen = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
@@ -104,7 +105,7 @@ public class RobotContainer {
         shelfPosition.onTrue(new ArmCommand(Constants.ArmConstants.shelfPosition, false));
         zeroEncoder.onTrue(new ZeroArmCommand());
         singleSub.onTrue(new ArmCommand(-2200, false));
-        shelfCone.onTrue(new ArmCommand(-2300, false));
+        throwButton.onTrue(Commands.parallel(new ThrowCommand(-1100), new ArmCommand(-2600, false)));
 
         // When a button is pressed runs its respective method inside drawer.
         drawerExtender.onTrue(new DrawerCommand(true));
